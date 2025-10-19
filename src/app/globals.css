@@ -76,6 +76,24 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Custom brand colors to override default framework colors */
+  --color-blue-600: #2a1232;
+  --color-blue-700: #2a1232;
+  --color-purple-500: #3a1945;
+  --color-purple-600: #3a1945;
+  --color-purple-700: #3a1945;
+  --color-purple-900: #3a1945;
+  --color-slate-700: #2a1232;
+  --color-slate-800: #2a1232;
+  --color-slate-900: #2a1232;
+  --color-gray-100: #e8e1d4;
+  --color-gray-200: #e8e1d4;
+  --color-gray-300: #e8e1d4;
+  --color-gray-400: #e8e1d4;
+  --color-gray-500: #e8e1d4;
+  --color-gray-600: #e8e1d4;
+  --color-gray-700: #e8e1d4;
 }
 
 .dark {
@@ -131,18 +149,25 @@
     max-width: 100vw;
   }
   
-  /* Proxima Nova Extrabold for all titles */
+  /* Scandia Bold for all titles */
   h1, h2, h3, h4, h5, h6 {
-    font-family: "proxima-nova", sans-serif !important;
-    font-weight: 800 !important;
+    font-family: "scandia", sans-serif !important;
+    font-weight: 700 !important;
     font-style: normal !important;
   }
   
   /* SplitText specific styling */
   .split-parent, .split-char, .split-word, .split-line {
-    font-family: "proxima-nova", sans-serif !important;
-    font-weight: 800 !important;
+    font-family: "scandia", sans-serif !important;
+    font-weight: 700 !important;
     font-style: normal !important;
+  }
+  
+  /* Josefin Sans Italic for subheads */
+  .subhead, .subtitle, .subheading, .text-xl, .text-lg, .text-base {
+    font-family: "josefin-sans", sans-serif !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
   }
   
   /* Halcom Regular for all body text */

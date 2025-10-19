@@ -5,11 +5,8 @@ import SplitText from "./SplitText";
 
 export default function Header() {
   return (
-    <div className="relative h-[85vh] w-full bg-black">
-      {/* Solid black background - using bg-black on the container itself */}
-      
-      {/* Custom purple background layer behind interactive effect */}
-      <div className="absolute inset-0 z-0" style={{ backgroundColor: '#7c3f7b' }}></div>
+    <div className="relative h-[85vh] w-full bg-[#85417f]">
+      {/* Solid background color */}
       
       {/* Liquid Ether effect layer - now on top but behind text */}
       <div className="absolute inset-0 z-10 animate-fade-in-background">
@@ -141,7 +138,10 @@ export default function Header() {
                   transform: translateY(-3px) scale(1.05);
                   box-shadow: 
                     0 10px 40px rgba(255, 255, 255, 0.15),
-                    0 0 20px rgba(255, 255, 255, 0.1);
+                    0 0 20px rgba(255, 255, 255, 0.1),
+                    0 0 15px #f7ba40,
+                    0 0 30px rgba(247, 186, 64, 0.4),
+                    inset 0 0 0 1px #f7ba40;
                   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
                 }
                 

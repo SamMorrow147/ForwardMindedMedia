@@ -360,7 +360,7 @@ export const StaggeredMenu = ({
         {(() => {
           // Create multiple layers for staggered effect
           const layerColors = [
-            '#f9ba40', // First shape - orange/yellow
+            '#f7ba40', // First shape - orange/yellow
             '#7c3f7b', // Second shape - purple (matching your brand)
             '#ffffff'  // Final shape - white background
           ];

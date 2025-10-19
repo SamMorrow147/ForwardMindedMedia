@@ -5,10 +5,11 @@ import LanyardSection from "@/components/LanyardSection";
 import TrueFocusSection from "@/components/TrueFocusSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialSection from "@/components/TestimonialSection";
+import ProfileCardsRow from "@/components/ProfileCardsRow";
 import LogoSection from "@/components/LogoSection";
 import Footer from "@/components/Footer";
 import GradualBlur from "@/components/GradualBlur";
-import StaggeredMenu from "@/components/StaggeredMenu";
+import { StaggeredMenu } from "@/components/StaggeredMenu";
 import AdobeFonts from "@/components/AdobeFonts";
 
 export default function Home() {
@@ -54,6 +55,7 @@ export default function Home() {
       <LanyardSection />
       <TrueFocusSection />
       <ServicesSection />
+      <ProfileCardsRow />
       <TestimonialSection />
       <LogoSection />
       <Footer />

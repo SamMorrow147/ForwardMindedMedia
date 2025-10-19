@@ -28,7 +28,7 @@ export default function LanyardSection() {
     { icon: <SiFigma />, name: "Figma" }
   ], []);
   return (
-    <section className="h-screen bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-visible pt-0 md:pt-16">
+    <section className="h-screen bg-[#2a1232] relative overflow-visible pt-0 md:pt-16">
       {/* Full-width Lanyard container - spans entire section but hangs on left */}
       <div className="absolute inset-0 z-10 lanyard-container">
         <Lanyard 
@@ -53,13 +53,14 @@ export default function LanyardSection() {
               animateBy="words"
               direction="top"
               as="h2"
-              className="text-white text-4xl font-bold mb-4"
+              className="text-white text-5xl font-bold mb-4"
               threshold={0.1}
               rootMargin="0px 0px -10% 0px"
               animationFrom={{ filter: "blur(10px)", opacity: 0, y: -20 }}
               animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
               textAlign="left"
               style={{ width: '100%' }}
+              onAnimationComplete={() => {}}
             />
             <p className="text-gray-300 text-lg mb-8 leading-relaxed">
               Forward Minded Media is a full-service marketing agency, with the belief that marketing should be a true partnership, not just another expense. We help businesses leave the status quo behind by delivering creative, impactful solutions that drive real growth.
@@ -85,7 +86,7 @@ export default function LanyardSection() {
                   className={`flex items-center justify-center text-5xl ${
                     index === techLogos.length - 1 ? 'ml-6 mr-12' : 'mx-6'
                   }`}
-                  style={{ color: '#f9ba40' }}
+                  style={{ color: '#f7ba40' }}
                   title={logo.name}
                 >
                   {logo.icon}
@@ -134,7 +135,10 @@ export default function LanyardSection() {
           transform: translateY(-2px) scale(1.02);
           box-shadow: 
             0 8px 25px rgba(255, 255, 255, 0.1),
-            0 0 15px rgba(255, 255, 255, 0.05);
+            0 0 15px rgba(255, 255, 255, 0.05),
+            0 0 12px #f7ba40,
+            0 0 25px rgba(247, 186, 64, 0.4),
+            inset 0 0 0 1px #f7ba40;
         }
         
         .glass-button-lanyard:hover::before {

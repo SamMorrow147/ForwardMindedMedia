@@ -1,0 +1,57 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Snap scrolling for better mobile experience */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* Smooth transitions for navigation dots */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Card container styling */
+.cards-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure cards are not cut off */
+.cards-row-container {
+  width: 100%;
+  max-width: none;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+  .cards-container {
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/* Desktop hover effects */
+@media (min-width: 769px) {
+  .cards-container:hover {
+    cursor: grab;
+  }
+  
+  .cards-container:active {
+    cursor: grabbing;
+  }
+}

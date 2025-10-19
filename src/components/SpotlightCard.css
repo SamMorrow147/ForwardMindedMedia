@@ -1,8 +1,8 @@
 .card-spotlight {
   --glow-sens: 30;
   --color-sens: calc(var(--glow-sens) + 20);
-  --glow-color: 280deg 90% 70%;
-  --card-bg: linear-gradient(8deg, #111 75%, color-mix(in hsl, #111, white 2.5%) 75.5%);
+  --glow-color: 45deg 90% 70%;
+  --card-bg: linear-gradient(8deg, #3a1945 75%, color-mix(in hsl, #3a1945, white 2.5%) 75.5%);
   
   position: relative;
   border-radius: 1.5rem;
@@ -62,14 +62,14 @@
   background:
     linear-gradient(var(--card-bg) 0 100%) padding-box,
     linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
-    radial-gradient(at 80% 55%, hsla(268,100%,76%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 69% 34%, hsla(349,100%,74%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 8% 6%, hsla(136,100%,78%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 41% 38%, hsla(192,100%,64%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 86% 85%, hsla(186,100%,74%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 82% 18%, hsla(52,100%,65%,1) 0px, transparent 50%) border-box,
-    radial-gradient(at 51% 4%, hsla(12,100%,72%,1) 0px, transparent 50%) border-box,
-    linear-gradient(#5227FF 0 100%) border-box;
+    radial-gradient(at 80% 55%, hsla(45,100%,76%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 69% 34%, hsla(300,100%,74%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 8% 6%, hsla(50,100%,78%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 41% 38%, hsla(280,100%,64%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 86% 85%, hsla(55,100%,74%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 82% 18%, hsla(320,100%,65%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 51% 4%, hsla(40,100%,72%,1) 0px, transparent 50%) border-box,
+    linear-gradient(#f7ba40 0 100%) border-box;
   
   opacity: calc((var(--pointer-distance) - var(--color-sens)) / (100 - var(--color-sens)));
   

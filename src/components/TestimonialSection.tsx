@@ -98,7 +98,7 @@ export default function TestimonialSection() {
   ];
 
   return (
-    <section className="py-20" style={{ backgroundColor: '#482547' }}>
+    <section className="py-20 bg-slate-900">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -144,8 +144,8 @@ export default function TestimonialSection() {
                     {/* Quote Icon */}
                     <div className="mb-6 flex justify-center">
                       <svg 
-                        className="w-12 h-12 text-gray-400" 
-                        fill="currentColor" 
+                        className="w-12 h-12" 
+                        fill="#f7ba40" 
                         viewBox="0 0 24 24"
                       >
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
@@ -227,12 +227,13 @@ export default function TestimonialSection() {
         
         .relative::before {
           left: 0;
-          background: linear-gradient(to right, #482547, transparent);
+          background: linear-gradient(to right, #0f172a, transparent);
+          width: 60px; /* Add padding from first card */
         }
         
         .relative::after {
           right: 0;
-          background: linear-gradient(to left, #482547, transparent);
+          background: linear-gradient(to left, #0f172a, transparent);
         }
         
         /* Mobile adjustments - hide left gradient and reduce right gradient */
