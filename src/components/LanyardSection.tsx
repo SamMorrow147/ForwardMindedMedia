@@ -28,7 +28,7 @@ export default function LanyardSection() {
     { icon: <SiFigma />, name: "Figma" }
   ], []);
   return (
-    <section className="h-screen bg-[#2a1232] relative overflow-visible pt-0 md:pt-16">
+    <section className="min-h-[70vh] bg-[#2a1232] relative overflow-visible pt-0 md:pt-16">
       {/* Full-width Lanyard container - spans entire section but hangs on left */}
       <div className="absolute inset-0 z-10 lanyard-container">
         <Lanyard 
@@ -73,7 +73,7 @@ export default function LanyardSection() {
           </div>
           
           {/* Bottom section - Tech Logos */}
-          <div className="w-full max-w-lg overflow-hidden">
+          <div className="w-full max-w-lg overflow-hidden marquee-wrapper hidden md:block">
             <Marquee 
               gradient={false} 
               speed={60} 
@@ -187,6 +187,12 @@ export default function LanyardSection() {
             width: 100% !important;
             margin-bottom: 14rem !important;
           }
+          
+          /* Reduce marquee padding on tablet/mobile */
+          .marquee-wrapper :global(.py-4) {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+          }
         }
         
         @media (max-width: 480px) {
@@ -211,6 +217,12 @@ export default function LanyardSection() {
             margin-left: auto !important;
             margin-right: 0 !important;
             display: block !important;
+          }
+          
+          /* Reduce marquee padding even more on small mobile */
+          .marquee-wrapper :global(.py-4) {
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
           }
         }
         

@@ -12,10 +12,16 @@
 /* Snap scrolling for better mobile experience */
 .snap-x {
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-mandatory {
+  scroll-snap-type: x mandatory;
 }
 
 .snap-center {
   scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 /* Smooth transitions for navigation dots */

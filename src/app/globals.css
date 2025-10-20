@@ -177,3 +177,18 @@
     font-style: normal;
   }
 }
+
+/* Mobile Marquee Padding Fix */
+@media (max-width: 768px) {
+  .marquee-wrapper > div {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee-wrapper > div {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+}

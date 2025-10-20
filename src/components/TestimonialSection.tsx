@@ -98,7 +98,7 @@ export default function TestimonialSection() {
   ];
 
   return (
-    <section className="py-20 bg-slate-900">
+    <section className="py-20 bg-gradient-to-b from-[#3a1945] to-[#2a1232]">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -213,37 +213,24 @@ export default function TestimonialSection() {
           font-style: normal !important;
         }
         
-        /* Fade effect on edges */
-        .relative::before,
+        /* Fade effect on right edge only */
         .relative::after {
           content: '';
           position: absolute;
           top: 0;
           bottom: 24px; /* Account for padding-bottom */
-          width: 40px;
+          right: 0;
+          width: 100px;
           pointer-events: none;
           z-index: 10;
+          background: linear-gradient(to left, rgba(42, 18, 50, 1), rgba(42, 18, 50, 0.8) 30%, rgba(42, 18, 50, 0));
         }
         
-        .relative::before {
-          left: 0;
-          background: linear-gradient(to right, #0f172a, transparent);
-          width: 60px; /* Add padding from first card */
-        }
-        
-        .relative::after {
-          right: 0;
-          background: linear-gradient(to left, #0f172a, transparent);
-        }
-        
-        /* Mobile adjustments - hide left gradient and reduce right gradient */
+        /* Mobile adjustments - smaller gradient */
         @media (max-width: 768px) {
-          .relative::before {
-            display: none; /* Hide left gradient on mobile */
-          }
-          
           .relative::after {
-            width: 20px; /* Smaller right gradient on mobile */
+            width: 60px;
+            background: linear-gradient(to left, rgba(42, 18, 50, 1), rgba(42, 18, 50, 0.6) 40%, rgba(42, 18, 50, 0));
           }
         }
       `}</style>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring, useDragControls } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useDragControls } from 'framer-motion';
 import ProfileCard from './ProfileCard';
 import './ProfileCardsRow.css';
 
@@ -19,13 +19,14 @@ const ProfileCardsRow = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   
-  // Framer Motion values for smooth scrolling
+  // Framer Motion values for smooth scrolling (desktop only)
   const x = useMotionValue(0);
   const springX = useSpring(x, { 
-    stiffness: 100, 
-    damping: 20,
-    mass: 0.8
+    stiffness: 300, 
+    damping: 30,
+    mass: 0.5
   });
   const dragControls = useDragControls();
 
@@ -79,12 +80,14 @@ const ProfileCardsRow = () => {
   // Handle window resize and initial setup
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      setIsMobile(width < 768);
     };
 
     // Set initial width
     if (typeof window !== 'undefined') {
-      setWindowWidth(window.innerWidth);
+      handleResize();
       window.addEventListener('resize', handleResize);
     }
 
@@ -129,50 +132,55 @@ const ProfileCardsRow = () => {
     );
   }
 
+  // Responsive card sizing
+  const mobileCardWidth = 300;
+  const mobileGap = 32; // 2rem
+  const mobileTotalWidth = profiles.length * (mobileCardWidth + mobileGap) - mobileGap;
+
   return (
     <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center py-20">
       <div className="text-center mb-12 px-4">
-        <h2 className="text-white text-5xl font-bold mb-4">Our Team</h2>
-        <p className="text-gray-300 text-xl">Meet the talented individuals behind Forward Minded Media</p>
+        <h2 className={`text-white font-bold mb-4 ${isMobile ? 'text-4xl' : 'text-5xl'}`}>Our Team</h2>
+        <p className={`text-gray-300 ${isMobile ? 'text-lg' : 'text-xl'}`}>Meet the talented individuals behind Forward Minded Media</p>
       </div>
 
-
-      {/* Cards Container - Full Width with Framer Motion */}
+      {/* Cards Container - Framer Motion for all devices */}
       <div className="w-full overflow-x-hidden overflow-y-visible">
         <motion.div
           ref={containerRef}
           className="flex"
           style={{
             x: springX,
-            width: totalWidth,
-            paddingLeft: '6rem',
-            paddingRight: '6rem',
-            paddingTop: '4rem',
-            paddingBottom: '4rem',
+            width: isMobile ? mobileTotalWidth : totalWidth,
+            paddingLeft: isMobile ? '2rem' : '6rem',
+            paddingRight: isMobile ? '2rem' : '6rem',
+            paddingTop: isMobile ? '3rem' : '4rem',
+            paddingBottom: isMobile ? '3rem' : '4rem',
             cursor: isDragging ? 'grabbing' : 'grab'
           }}
           drag="x"
           dragControls={dragControls}
           dragConstraints={{ 
-            left: -(totalWidth - windowWidth + 12 * 16), 
+            left: isMobile 
+              ? -(mobileTotalWidth - windowWidth + 4 * 16)
+              : -(totalWidth - windowWidth + 12 * 16), 
             right: 0 
           }}
-          dragElastic={0.05}
-          dragMomentum={true}
-          dragTransition={{ bounceStiffness: 300, bounceDamping: 20 }}
+          dragElastic={0.02}
+          dragMomentum={false}
+          dragTransition={{ bounceStiffness: 600, bounceDamping: 40 }}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
-          whileDrag={{ scale: 1.01 }}
-          transition={{ type: "spring", stiffness: 100, damping: 20, mass: 0.8 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30, mass: 0.5 }}
         >
           {profiles.map((profile, index) => (
             <motion.div
               key={index}
-              className="flex-shrink-0 mr-16"
+              className={isMobile ? "flex-shrink-0 mr-8" : "flex-shrink-0 mr-16"}
               style={{ 
-                minWidth: '420px',
-                maxWidth: '420px',
-                width: '420px'
+                minWidth: isMobile ? '300px' : '420px',
+                maxWidth: isMobile ? '300px' : '420px',
+                width: isMobile ? '300px' : '420px'
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -181,11 +189,11 @@ const ProfileCardsRow = () => {
                 duration: 0.4,
                 ease: "easeOut"
               }}
-              whileHover={{ 
+              whileHover={!isMobile ? { 
                 scale: 1.03, 
                 y: -5,
                 transition: { duration: 0.2, ease: "easeOut" }
-              }}
+              } : undefined}
               whileTap={{ 
                 scale: 0.98,
                 transition: { duration: 0.1 }
@@ -200,7 +208,7 @@ const ProfileCardsRow = () => {
                 avatarUrl={profile.avatarUrl}
                 iconUrl={profile.iconUrl}
                 showUserInfo={true}
-                enableTilt={true}
+                enableTilt={!isMobile}
                 enableMobileTilt={false}
                 onContactClick={() => console.log(`Contact ${profile.name}`)}
               />
@@ -210,10 +218,11 @@ const ProfileCardsRow = () => {
       </div>
 
       {/* Mobile Swipe Indicator */}
-      <div className="md:hidden mt-8 text-center">
-        <p className="text-gray-400 text-sm">← Swipe to explore →</p>
-      </div>
-
+      {isMobile && (
+        <div className="mt-4 text-center">
+          <p className="text-gray-400 text-sm">← Swipe to explore →</p>
+        </div>
+      )}
     </section>
   );
 };
