@@ -1,5 +1,6 @@
 "use client";
 
+import VideoHero from "@/components/VideoHero";
 import Header from "@/components/Header";
 import LanyardSection from "@/components/LanyardSection";
 import TrueFocusSection from "@/components/TrueFocusSection";
@@ -50,6 +51,9 @@ export default function Home() {
         onMenuOpen={() => console.log('Menu opened')}
         onMenuClose={() => console.log('Menu closed')}
       />
+      
+      {/* Video Hero Section - NEW TOP SECTION */}
+      <VideoHero />
       
       <Header />
       <LanyardSection />
