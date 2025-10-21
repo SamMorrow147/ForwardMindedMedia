@@ -1,7 +1,7 @@
 "use client";
 
 interface ServiceIconProps {
-  type: 'advertising' | 'design' | 'apparel' | 'promotional' | 'media' | 'podcast';
+  type: 'advertising' | 'design' | 'apparel' | 'promotional' | 'media' | 'podcast' | 'ai' | 'website';
   size?: number;
   color?: string;
   className?: string;
@@ -80,6 +80,28 @@ const ServiceIcon: React.FC<ServiceIconProps> = ({
             <path d="M19 10v2a7 7 0 01-14 0v-2"/>
             <line x1="12" y1="19" x2="12" y2="23"/>
             <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        );
+      
+      case 'ai':
+        return (
+          <svg {...commonProps}>
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+            <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+            <path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"/>
+            <path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        );
+      
+      case 'website':
+        return (
+          <svg {...commonProps}>
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+            <path d="M8 7h8M8 11h8M8 15h4"/>
           </svg>
         );
       

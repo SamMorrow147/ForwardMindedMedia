@@ -9,15 +9,15 @@ import TestimonialSection from "@/components/TestimonialSection";
 import ProfileCardsRow from "@/components/ProfileCardsRow";
 import Footer from "@/components/Footer";
 import GradualBlur from "@/components/GradualBlur";
-import { StaggeredMenu } from "@/components/StaggeredMenu";
+import StaggeredMenu from "@/components/StaggeredMenu";
 import AdobeFonts from "@/components/AdobeFonts";
 
 export default function Home() {
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/about' },
+    { label: 'What We Do', ariaLabel: 'View our services', link: '/services' },
     { label: 'Portfolio', ariaLabel: 'View our work', link: '/portfolio' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
@@ -56,10 +56,10 @@ export default function Home() {
       
       <Header />
       <LanyardSection />
-      <TrueFocusSection />
       <ServicesSection />
       <ProfileCardsRow />
       <TestimonialSection />
+      <TrueFocusSection />
       <Footer />
       
       {/* Global page-level blur effect at the bottom of the screen */}

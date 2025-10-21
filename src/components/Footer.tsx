@@ -38,6 +38,7 @@ export default function Footer() {
                 rootMargin="0px 0px -10% 0px"
                 animationFrom={{ filter: "blur(10px)", opacity: 0, y: -20 }}
                 animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
+                onAnimationComplete={() => {}}
               />
             </div>
             <p className="text-gray-300 leading-relaxed mb-6">
@@ -75,8 +76,8 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Home</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">About Us</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Services</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Who We Are</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">What We Do</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Portfolio</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Blog</a></li>
               <li><a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>

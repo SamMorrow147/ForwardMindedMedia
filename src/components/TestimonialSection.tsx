@@ -98,25 +98,15 @@ export default function TestimonialSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#3a1945] to-[#2a1232]">
+    <section className="pb-20 bg-gradient-to-b from-[#3a1945] to-[#2a1232]">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <BlurText
-            text="What Our Clients Say"
-            delay={150}
-            animateBy="words"
-            direction="top"
-            as="h2"
-            className="text-5xl font-bold text-white mb-6 text-center w-full blur-text-title"
-            threshold={0.1}
-            rootMargin="0px 0px -10% 0px"
-            animationFrom={{ filter: "blur(10px)", opacity: 0, y: -20 }}
-            animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
-            onAnimationComplete={() => console.log('Title animation completed!')}
-          />
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with Forward Minded Media.
+          <h2 className="ThreeDee text-white mb-6">
+            What Our Clients Say
+          </h2>
+          <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">
+            Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us at <strong>Forward Minded Media</strong>.
           </p>
         </div>
 

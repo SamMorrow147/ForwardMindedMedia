@@ -192,3 +192,154 @@
     padding-bottom: 0.25rem !important;
   }
 }
+
+/* 3D Text Effect Styles - Compiled CSS */
+@import url('https://fonts.googleapis.com/css?family=Arvo:700,700italic');
+
+.ThreeDee {
+  letter-spacing: 0.07em;
+  line-height: 1.1em;
+  margin: 0 auto 0;
+  display: block;
+  padding: 0.2em 0 5px 0;
+  text-align: center;
+  min-width: 8em;
+  width: 75%;
+  max-width: 16em;
+  font: italic 700 96px 'Arvo', 'Helvetica Neue';
+  font-weight: bold;
+  color: #85417f;
+  text-shadow:
+    /* Highlight 100% */
+    0 0.015em 0 #d16cc7,
+    
+    /* Vertical Stack: 40% Shadow */
+    0 0.03em 0.015em #6d3568,
+    
+    /* Vertical Stack: 36% Shadow */
+    0 0.045em 0.03em #5f2f5a,
+    
+    /* Vertical Stack: 34% Shadow */
+    0 0.06em 0.03em #51294d,
+    
+    /* Vertical Stack: 31% Shadow */
+    0 0.09em 0.015em #432340,
+    
+    /* Immediate Sharp Shadow */
+    0 0.09em 0.045em rgba(0, 0, 0, 0.5),
+    
+    /* Sharp Top Shadow */
+    0 0 0.075em rgba(0, 0, 0, 0.2),
+    
+    /* Small Side Shadows */
+    0 0.03em 0.12em rgba(0, 0, 0, 0.3),
+    
+    /* Main Bottom Shadow, Blurred */
+    0 0.15em 0.18em rgba(0, 0, 0, 0.25),
+    
+    /* Large Diffused Bottom Shadow */
+    0 0.3em 0.3em rgba(0, 0, 0, 0.15);
+}
+
+.ThreeDee:hover {
+  /* Removed background hover effect */
+}
+
+/* White text with purple highlight variant */
+.ThreeDee-white-purple {
+  color: #ffffff !important;
+  text-shadow:
+    /* Highlight 100% - Brighter Purple */
+    0 0.015em 0 #a855f7,
+    
+    /* Extended Vertical Stack - more layers for depth */
+    0 0.02em 0 #9333ea,
+    0 0.03em 0 #7e22ce,
+    0 0.04em 0 #6b21a8,
+    0 0.05em 0 #581c87,
+    0 0.06em 0 #4c1d95,
+    0 0.07em 0 #3b0764,
+    0 0.08em 0 #2e0a52,
+    0 0.09em 0 #1e0638,
+    0 0.1em 0 #0f0320,
+    
+    /* Immediate Sharp Shadow */
+    0 0.1em 0.02em rgba(0, 0, 0, 0.5),
+    
+    /* Sharp Top Shadow */
+    0 0 0.075em rgba(0, 0, 0, 0.2),
+    
+    /* Small Side Shadows */
+    0 0.03em 0.12em rgba(0, 0, 0, 0.3),
+    
+    /* Main Bottom Shadow, Blurred */
+    0 0.15em 0.18em rgba(0, 0, 0, 0.25),
+    
+    /* Large Diffused Bottom Shadow */
+    0 0.3em 0.3em rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive 3D Text */
+@media (max-width: 768px) {
+  .ThreeDee {
+    font-size: 4.5rem;
+    width: 90% !important;
+    min-width: auto !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ThreeDee {
+    font-size: 4.5rem;
+    width: 95% !important;
+    min-width: auto !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+/* Transparent Spotlight Card */
+.transparent-spotlight.card-spotlight {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  --card-bg: transparent !important;
+  border: none !important;
+  padding: 1.5rem !important;
+  box-shadow: none !important;
+}
+
+/* GlassSurface - Dark Purple Tint for Safari/Fallback */
+.lanyard-glass-surface.glass-surface--fallback {
+  background: rgba(58, 25, 69, 0.4) !important;
+  backdrop-filter: blur(20px) saturate(1.2) brightness(0.8) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.2) brightness(0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+}
+
+.transparent-spotlight.card-spotlight::before {
+  display: none !important;
+}
+
+.transparent-spotlight.card-spotlight::after {
+  background:
+    linear-gradient(transparent 0 100%) padding-box,
+    linear-gradient(transparent 0% 100%) border-box,
+    radial-gradient(at 80% 55%, hsla(45,100%,76%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 69% 34%, hsla(300,100%,74%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 8% 6%, hsla(50,100%,78%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 41% 38%, hsla(280,100%,64%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 86% 85%, hsla(55,100%,74%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 82% 18%, hsla(320,100%,65%,1) 0px, transparent 50%) border-box,
+    radial-gradient(at 51% 4%, hsla(40,100%,72%,1) 0px, transparent 50%) border-box,
+    transparent border-box !important;
+}

@@ -10,7 +10,7 @@
 /* Screens 360px and above */
 @media (min-width: 360px) {
   .video-hero-section {
-    height: 50vh !important;
+    height: 35vh !important;
   }
 }
 

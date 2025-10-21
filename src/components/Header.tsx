@@ -2,10 +2,11 @@
 
 import LiquidEther from "./LiquidEther";
 import SplitText from "./SplitText";
+import RotatingText from "./RotatingText";
 
 export default function Header() {
   return (
-    <div className="relative h-[85vh] w-full bg-[#85417f]">
+    <div className="relative h-[70vh] w-full bg-[#85417f]">
       {/* Solid background color */}
       
       {/* Liquid Ether effect layer - now on top but behind text */}
@@ -16,29 +17,35 @@ export default function Header() {
           {/* Content layer - with pointer-events-none to allow mouse through */}
           <header className="relative z-20 flex items-center justify-center h-full pointer-events-none">
             <div className="text-center">
-              <SplitText
-                text="Today is the Day"
-                tag="h1"
-                className="text-white text-6xl font-bold pointer-events-auto mb-4"
-                delay={75}
-                duration={0.4}
-                ease="power3.out"
-                splitType="chars"
-                from={{ opacity: 0, y: 50 }}
-                to={{ opacity: 1, y: 0 }}
-                textAlign="center"
-                immediate={true}
-                startDelay={0.8}
-                onLetterAnimationComplete={() => {}}
-              />
+              <h1 className="ThreeDee ThreeDee-white-purple pointer-events-auto mb-4" style={{ fontSize: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3em', flexWrap: 'wrap', fontFamily: '"scandia", sans-serif', fontWeight: 700, fontStyle: 'normal' }}>
+                <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontStyle: 'inherit' }}>Moving Your</span>
+                <RotatingText
+                  texts={['Brand', 'Business', 'Vision', 'Message', 'Story', 'Ideas']}
+                  mainClassName="inline-flex"
+                  staggerFrom="last"
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "-120%" }}
+                  staggerDuration={0.025}
+                  splitLevelClassName="overflow-hidden"
+                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                  rotationInterval={2000}
+                />
+                <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontStyle: 'inherit' }}>Forward</span>
+              </h1>
               <p className="text-white/80 text-xl font-light tracking-wide opacity-0 animate-fade-in-delayed mb-8" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'normal' }}>
                 Leave the status quo behind.
               </p>
               
               {/* Glassmorphism Let's Go Button */}
-              <div className="opacity-0 animate-fade-in-button">
+              <div className="opacity-0 animate-fade-in-button flex justify-center">
                 <button className="glass-button pointer-events-auto">
-                  Let&apos;s Go!
+                  <span>Let&apos;s Go!</span>
+                  <div className="button-arrow">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </button>
               </div>
               
@@ -88,10 +95,10 @@ export default function Header() {
                 }
                 
                 .glass-button {
-                  width: 160px;
+                  width: 200px;
                   height: 60px;
-                  font-family: "proxima-nova", sans-serif;
-                  font-weight: 800;
+                  font-family: "scandia", sans-serif;
+                  font-weight: 700;
                   font-size: 18px;
                   text-transform: uppercase;
                   letter-spacing: 1px;
@@ -105,6 +112,10 @@ export default function Header() {
                   position: relative;
                   overflow: hidden;
                   z-index: 1;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 12px;
                 }
                 
                 .glass-button::before {
@@ -160,6 +171,50 @@ export default function Header() {
                   box-shadow: 
                     0 5px 20px rgba(255, 255, 255, 0.2),
                     0 0 15px rgba(255, 255, 255, 0.15);
+                }
+
+                .button-arrow {
+                  position: relative;
+                  transform: rotate(270deg);
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  width: 20px;
+                  height: 20px;
+                }
+
+                .button-arrow span {
+                  display: block;
+                  width: 10px;
+                  height: 10px;
+                  border-bottom: 2px solid #f7ba40;
+                  border-right: 2px solid #f7ba40;
+                  transform: rotate(45deg);
+                  margin: -5px;
+                  animation: arrowAnimate 2s infinite;
+                }
+
+                .button-arrow span:nth-child(2) {
+                  animation-delay: -0.2s;
+                }
+
+                .button-arrow span:nth-child(3) {
+                  animation-delay: -0.4s;
+                }
+
+                @keyframes arrowAnimate {
+                  0% {
+                    opacity: 0;
+                    transform: rotate(45deg) translate(-10px, -10px);
+                  }
+                  50% {
+                    opacity: 1;
+                  }
+                  100% {
+                    opacity: 0;
+                    transform: rotate(45deg) translate(10px, 10px);
+                  }
                 }
               `}</style>
             </div>

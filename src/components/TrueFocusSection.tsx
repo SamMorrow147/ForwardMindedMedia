@@ -11,7 +11,7 @@ export default function TrueFocusSection() {
           <div className="text-center md:text-right max-w-lg">
             <div className="text-black">
               <TrueFocus 
-                sentence="Focus Forward"
+                sentence="We Focus Forward"
                 manualMode={false}
                 blurAmount={5}
                 borderColor="#864280"

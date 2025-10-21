@@ -138,10 +138,12 @@ const ProfileCardsRow = () => {
   const mobileTotalWidth = profiles.length * (mobileCardWidth + mobileGap) - mobileGap;
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center py-20">
+    <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center pt-20 pb-0">
       <div className="text-center mb-12 px-4">
-        <h2 className={`text-white font-bold mb-4 ${isMobile ? 'text-4xl' : 'text-5xl'}`}>Our Team</h2>
-        <p className={`text-gray-300 ${isMobile ? 'text-lg' : 'text-xl'}`}>Meet the talented individuals behind Forward Minded Media</p>
+        <h2 className="ThreeDee text-white mb-6">Our Team</h2>
+        <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
+          Meet the talented individuals behind <strong>Forward Minded Media</strong>
+        </p>
       </div>
 
       {/* Cards Container - Framer Motion for all devices */}
@@ -217,12 +219,88 @@ const ProfileCardsRow = () => {
         </motion.div>
       </div>
 
-      {/* Mobile Swipe Indicator */}
+      {/* Animated Arrow - Mobile Only */}
       {isMobile && (
-        <div className="mt-4 text-center">
-          <p className="text-gray-400 text-sm">← Swipe to explore →</p>
+        <div className="arrow-wrapper">
+          <div className="arrow-container">
+            <div className="arrow">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
         </div>
       )}
+
+      <style jsx>{`
+        .arrow-wrapper {
+          width: 100%;
+          overflow: visible;
+          position: relative;
+          min-height: 150px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: 2rem;
+          margin-top: -3rem;
+        }
+
+        .arrow-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: auto;
+          height: auto;
+          overflow: visible;
+          position: relative;
+        }
+
+        .arrow {
+          position: relative;
+          transform: rotate(270deg);
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 80px;
+          min-width: 80px;
+        }
+
+        .arrow span {
+          display: block;
+          width: 1.5rem;
+          height: 1.5rem;
+          border-bottom: 3px solid #f7ba40;
+          border-right: 3px solid #f7ba40;
+          transform: rotate(45deg);
+          margin: -10px;
+          animation: animate 2s infinite;
+        }
+
+        .arrow span:nth-child(2) {
+          animation-delay: -0.2s;
+        }
+
+        .arrow span:nth-child(3) {
+          animation-delay: -0.4s;
+        }
+
+        @keyframes animate {
+          0% {
+            opacity: 0;
+            transform: rotate(45deg) translate(-20px, -20px);
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: rotate(45deg) translate(20px, 20px);
+          }
+        }
+      `}</style>
+
     </section>
   );
 };

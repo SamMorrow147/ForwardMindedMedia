@@ -240,7 +240,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, lanyardPosition = [0, 4, 0] }) {
           useMap
           map={texture}
           repeat={[-4, 1]}
-          lineWidth={1}
+          lineWidth={0.75}
         />
       </mesh>
     </>

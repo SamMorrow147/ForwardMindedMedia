@@ -11,7 +11,10 @@ const TrueFocus = ({
   animationDuration = 0.5,
   pauseBetweenAnimations = 1
 }) => {
-  const words = sentence.split(' ');
+  // Custom word grouping for "We Focus Forward" - treat "We Focus" as one unit
+  const words = sentence === 'We Focus Forward' 
+    ? ['We Focus', 'Forward'] 
+    : sentence.split(' ');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastActiveIndex, setLastActiveIndex] = useState(null);
   const containerRef = useRef(null);
