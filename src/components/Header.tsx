@@ -9,6 +9,26 @@ export default function Header() {
     <div className="relative h-[70vh] w-full bg-[#85417f]">
       {/* Solid background color */}
       
+      {/* Left side overlay image */}
+      <div className="absolute left-0 top-0 h-full z-5 pointer-events-none flex items-center">
+        <img 
+          src="/left-side.png" 
+          alt="" 
+          className="w-auto object-contain"
+          style={{ opacity: 0.15, height: '70%' }}
+        />
+      </div>
+      
+      {/* Right side overlay image */}
+      <div className="absolute right-0 top-0 h-full z-5 pointer-events-none flex items-center">
+        <img 
+          src="/right-side.png" 
+          alt="" 
+          className="w-auto object-contain"
+          style={{ opacity: 0.15, height: '70%' }}
+        />
+      </div>
+      
       {/* Liquid Ether effect layer - now on top but behind text */}
       <div className="absolute inset-0 z-10 animate-fade-in-background">
         <LiquidEther resolution={0.4} isBounce={true} />
@@ -17,21 +37,26 @@ export default function Header() {
           {/* Content layer - with pointer-events-none to allow mouse through */}
           <header className="relative z-20 flex items-center justify-center h-full pointer-events-none">
             <div className="text-center">
-              <h1 className="ThreeDee ThreeDee-white-purple pointer-events-auto mb-4" style={{ fontSize: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3em', flexWrap: 'wrap', fontFamily: '"scandia", sans-serif', fontWeight: 700, fontStyle: 'normal' }}>
-                <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontStyle: 'inherit' }}>Moving Your</span>
-                <RotatingText
-                  texts={['Brand', 'Business', 'Vision', 'Message', 'Story', 'Ideas']}
-                  mainClassName="inline-flex"
-                  staggerFrom="last"
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "-120%" }}
-                  staggerDuration={0.025}
-                  splitLevelClassName="overflow-hidden"
-                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  rotationInterval={2000}
-                />
-                <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontStyle: 'inherit' }}>Forward</span>
+              <h1 className="ThreeDee ThreeDee-white-purple pointer-events-auto mb-4 header-title" style={{ fontSize: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.1em', fontFamily: '"scandia", sans-serif', fontWeight: 700, fontStyle: 'normal' }}>
+                <span className="mobile-only regular-weight" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Moving</span>
+                <span className="desktop-only regular-weight" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Moving Your</span>
+                <span className="mobile-only regular-weight" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Your</span>
+                <span className="rotating-word-wrapper bold-weight" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 700 }}>
+                  <RotatingText
+                    texts={['Brand', 'Business', 'Vision', 'Message', 'Story', 'Ideas']}
+                    mainClassName="inline-flex"
+                    staggerFrom="last"
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "-120%" }}
+                    staggerDuration={0.025}
+                    splitLevelClassName="overflow-hidden"
+                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                    rotationInterval={2000}
+                  />
+                </span>
+                <span className="desktop-inline regular-weight" style={{ display: 'inline-flex', fontWeight: 400 }}>Forward</span>
+                <span className="mobile-only regular-weight" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Forward</span>
               </h1>
               <p className="text-white/80 text-xl font-light tracking-wide opacity-0 animate-fade-in-delayed mb-8" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'normal' }}>
                 Leave the status quo behind.
@@ -40,7 +65,7 @@ export default function Header() {
               {/* Glassmorphism Let's Go Button */}
               <div className="opacity-0 animate-fade-in-button flex justify-center">
                 <button className="glass-button pointer-events-auto">
-                  <span>Let&apos;s Go!</span>
+                  <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontSize: 'inherit', letterSpacing: 'inherit' }}>Let&apos;s Go!</span>
                   <div className="button-arrow">
                     <span></span>
                     <span></span>
@@ -50,6 +75,101 @@ export default function Header() {
               </div>
               
               <style jsx>{`
+                /* Header title responsive layout */
+                .header-title {
+                  font-size: 60px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.1em;
+                  font-family: "scandia", sans-serif;
+                  font-weight: 700;
+                  font-style: normal;
+                }
+                
+                .header-title span {
+                  font-family: inherit;
+                  font-style: inherit;
+                }
+                
+                .regular-weight {
+                  font-weight: 400 !important;
+                }
+                
+                .bold-weight {
+                  font-weight: 700 !important;
+                }
+                
+                /* Mobile: Show on mobile, hide on desktop */
+                .mobile-only {
+                  display: none;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.3em;
+                }
+                
+                /* Desktop: Hide on mobile, show on desktop */
+                .desktop-only {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.3em;
+                }
+                
+                .desktop-inline {
+                  display: inline-flex;
+                }
+                
+                .rotating-word-wrapper {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.3em;
+                }
+                
+                /* Mobile styles */
+                @media (max-width: 767px) {
+                  .mobile-only {
+                    display: flex;
+                  }
+                  
+                  .desktop-only {
+                    display: none;
+                  }
+                  
+                  .desktop-inline {
+                    display: none;
+                  }
+                  
+                  .rotating-word-wrapper {
+                    display: flex;
+                  }
+                  
+                  .header-title {
+                    font-size: 48px;
+                  }
+                }
+                
+                /* Desktop styles */
+                @media (min-width: 768px) {
+                  .mobile-only {
+                    display: none;
+                  }
+                  
+                  .desktop-only {
+                    display: flex;
+                  }
+                  
+                  .desktop-inline {
+                    display: inline-flex;
+                  }
+                  
+                  .rotating-word-wrapper {
+                    display: inline-flex;
+                  }
+                }
+                
                 @keyframes fadeInBackground {
                   0% {
                     opacity: 0;

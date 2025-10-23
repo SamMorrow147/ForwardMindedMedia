@@ -280,16 +280,30 @@
 
 .sm-panel-item {
   position: relative;
-  color: #000;
-  font-weight: 600;
-  font-size: 3.5rem;
+  color: #85417f;
+  font-family: 'Arvo', 'Helvetica Neue', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 3rem;
   cursor: pointer;
-  line-height: 1;
-  letter-spacing: -2px;
-  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: 0.07em;
+  text-transform: none;
+  text-shadow:
+    /* Highlight 100% - Pink highlight */
+    0 0.015em 0 #d16cc7,
+    /* Vertical Stack: 40% Shadow */
+    0 0.03em 0 #6d3568,
+    /* Vertical Stack: 36% Shadow */
+    0 0.045em 0 #5f2f5a,
+    /* Vertical Stack: 34% Shadow */
+    0 0.06em 0 #51294d,
+    /* Vertical Stack: 31% Shadow */
+    0 0.09em 0 #432340;
   transition:
     background 0.25s,
-    color 0.25s;
+    color 0.25s,
+    text-shadow 0.25s;
   display: inline-block;
   text-decoration: none;
   padding-right: 1.4em;
@@ -324,7 +338,15 @@
 }
 
 .sm-panel-item:hover {
-  color: var(--sm-accent, #5227ff);
+  color: #a855f7;
+  text-shadow:
+    /* Brighter Purple highlight */
+    0 0.015em 0 #e9d5ff,
+    /* Vertical Stack */
+    0 0.03em 0 #9333ea,
+    0 0.045em 0 #7e22ce,
+    0 0.06em 0 #6b21a8,
+    0 0.09em 0 #581c87;
 }
 
 .sm-panel-list[data-numbering] {
@@ -361,8 +383,8 @@
   }
   
   .sm-panel-item {
-    font-size: 2.5rem;
-    letter-spacing: -1px;
+    font-size: 2.2rem;
+    letter-spacing: 0.07em;
   }
 }
 
@@ -385,8 +407,8 @@
   }
   
   .sm-panel-item {
-    font-size: 2rem;
-    letter-spacing: -1px;
+    font-size: 1.8rem;
+    letter-spacing: 0.07em;
     padding-right: 1em;
   }
   
@@ -416,8 +438,8 @@
   }
   
   .sm-panel-item {
-    font-size: 1.8rem;
-    letter-spacing: -0.5px;
+    font-size: 1.5rem;
+    letter-spacing: 0.07em;
   }
   
   .sm-logo-img {

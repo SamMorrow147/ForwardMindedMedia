@@ -55,7 +55,7 @@ export default function ServicesSection() {
       <div className="container mx-auto px-6">
         {/* Section Header - Centered */}
         <div className="mb-16 text-center">
-          <h2 className="ThreeDee text-white mb-6 mx-auto" style={{ fontSize: '3.2rem' }}>What We Do</h2>
+          <h2 className="ThreeDee text-white mb-6 mx-auto">What We Do</h2>
           <p className="text-lg text-gray-300 max-w-4xl mx-auto">
             Full-service. In-house. Zero fluff. Just smart strategy, sharp creative, and a team that gives a damn.
           </p>

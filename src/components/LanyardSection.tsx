@@ -2,11 +2,12 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Lanyard from "./Lanyard";
 import BlurText from "./BlurText";
 import SpotlightCard from "./SpotlightCard";
 import GlassSurface from "./GlassSurface";
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiFigma } from 'react-icons/si';
+
+import Lanyard from "./Lanyard";
 
 // Client-only marquee to avoid hydration issues
 const Marquee = dynamic(() => import('react-fast-marquee'), { ssr: false });

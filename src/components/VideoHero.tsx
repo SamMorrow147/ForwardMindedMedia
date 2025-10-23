@@ -25,7 +25,7 @@ export default function VideoHero() {
           autoPlay
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/FMM_compressed.mp4" type="video/mp4" />
           Your browser does not support the video tag.
