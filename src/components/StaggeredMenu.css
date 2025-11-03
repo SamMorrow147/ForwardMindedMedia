@@ -281,25 +281,25 @@
 .sm-panel-item {
   position: relative;
   color: #85417f;
-  font-family: 'Arvo', 'Helvetica Neue', serif;
+  font-family: "scandia-web", sans-serif;
   font-weight: 700;
-  font-style: italic;
-  font-size: 3rem;
+  font-style: normal;
+  font-size: 2.5rem;
   cursor: pointer;
   line-height: 1.1;
   letter-spacing: 0.07em;
   text-transform: none;
   text-shadow:
-    /* Highlight 100% - Pink highlight */
-    0 0.015em 0 #d16cc7,
-    /* Vertical Stack: 40% Shadow */
-    0 0.03em 0 #6d3568,
-    /* Vertical Stack: 36% Shadow */
-    0 0.045em 0 #5f2f5a,
-    /* Vertical Stack: 34% Shadow */
-    0 0.06em 0 #51294d,
-    /* Vertical Stack: 31% Shadow */
-    0 0.09em 0 #432340;
+    /* Subtle glossy highlight */
+    0 0.008em 0 #d16cc7,
+    
+    /* Light vertical stack for depth without bulk */
+    0 0.015em 0.003em rgba(109, 53, 104, 0.5),
+    0 0.022em 0.005em rgba(95, 47, 90, 0.4),
+    0 0.03em 0.007em rgba(81, 41, 77, 0.3),
+    
+    /* Subtle diffused shadow for dimension */
+    0 0.04em 0.06em rgba(0, 0, 0, 0.15);
   transition:
     background 0.25s,
     color 0.25s,
@@ -331,22 +331,28 @@
   opacity: 1;
 }
 
-.sm-panel-itemLabel {
+.sm-panel-item .sm-panel-itemLabel {
   display: inline-block;
   will-change: transform;
   transform-origin: 50% 100%;
+  font-family: "scandia-web", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .sm-panel-item:hover {
-  color: #a855f7;
+  color: #f7ba40;
   text-shadow:
-    /* Brighter Purple highlight */
-    0 0.015em 0 #e9d5ff,
-    /* Vertical Stack */
-    0 0.03em 0 #9333ea,
-    0 0.045em 0 #7e22ce,
-    0 0.06em 0 #6b21a8,
-    0 0.09em 0 #581c87;
+    /* Subtle golden highlight on hover */
+    0 0.008em 0 #fef3c7,
+    
+    /* Light vertical stack with warmer tones */
+    0 0.015em 0.003em rgba(217, 119, 6, 0.5),
+    0 0.022em 0.005em rgba(180, 83, 9, 0.4),
+    0 0.03em 0.007em rgba(146, 64, 14, 0.3),
+    
+    /* Subtle diffused shadow */
+    0 0.04em 0.06em rgba(0, 0, 0, 0.15);
 }
 
 .sm-panel-list[data-numbering] {
@@ -383,7 +389,7 @@
   }
   
   .sm-panel-item {
-    font-size: 2.2rem;
+    font-size: 2rem;
     letter-spacing: 0.07em;
   }
 }
@@ -407,7 +413,7 @@
   }
   
   .sm-panel-item {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     letter-spacing: 0.07em;
     padding-right: 1em;
   }
@@ -438,7 +444,7 @@
   }
   
   .sm-panel-item {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     letter-spacing: 0.07em;
   }
   

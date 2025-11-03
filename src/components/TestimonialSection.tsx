@@ -102,7 +102,7 @@ export default function TestimonialSection() {
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="ThreeDee text-white mb-6">
+          <h2 className="ThreeDee text-white mb-6" style={{ paddingLeft: 0, paddingRight: 0 }}>
             What Our Clients Say
           </h2>
           <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">

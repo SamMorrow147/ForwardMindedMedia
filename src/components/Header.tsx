@@ -37,7 +37,7 @@ export default function Header() {
           {/* Content layer - with pointer-events-none to allow mouse through */}
           <header className="relative z-20 flex items-center justify-center h-full pointer-events-none">
             <div className="text-center">
-              <h1 className="ThreeDee ThreeDee-white-purple pointer-events-auto mb-4 header-title" style={{ fontSize: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.1em', fontFamily: '"scandia", sans-serif', fontWeight: 700, fontStyle: 'normal' }}>
+              <h1 className="ThreeDee ThreeDee-white-purple pointer-events-auto mb-4 header-title" style={{ fontSize: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.1em', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}>
                 <span className="mobile-only regular-weight" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Moving</span>
                 <span className="desktop-only regular-weight" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Moving Your</span>
                 <span className="mobile-only regular-weight" style={{ display: 'none', alignItems: 'center', justifyContent: 'center', gap: '0.3em', fontWeight: 400 }}>Your</span>
@@ -83,7 +83,7 @@ export default function Header() {
                   align-items: center;
                   justify-content: center;
                   gap: 0.1em;
-                  font-family: "scandia", sans-serif;
+                  font-family: "scandia-web", sans-serif;
                   font-weight: 700;
                   font-style: normal;
                 }
@@ -217,7 +217,7 @@ export default function Header() {
                 .glass-button {
                   width: 200px;
                   height: 60px;
-                  font-family: "scandia", sans-serif;
+                  font-family: "scandia-web", sans-serif;
                   font-weight: 700;
                   font-size: 18px;
                   text-transform: uppercase;

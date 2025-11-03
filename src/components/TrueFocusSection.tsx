@@ -32,7 +32,7 @@ export default function TrueFocusSection() {
                 .glass-button {
                   width: 160px;
                   height: 60px;
-                  font-family: "scandia", sans-serif;
+                  font-family: "scandia-web", sans-serif;
                   font-weight: 700;
                   font-size: 18px;
                   text-transform: uppercase;

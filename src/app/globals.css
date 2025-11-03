@@ -151,14 +151,14 @@
   
   /* Scandia Bold for all titles */
   h1, h2, h3, h4, h5, h6 {
-    font-family: "scandia", sans-serif !important;
+    font-family: "scandia-web", sans-serif !important;
     font-weight: 700 !important;
     font-style: normal !important;
   }
   
   /* SplitText specific styling */
   .split-parent, .split-char, .split-word, .split-line {
-    font-family: "scandia", sans-serif !important;
+    font-family: "scandia-web", sans-serif !important;
     font-weight: 700 !important;
     font-style: normal !important;
   }
@@ -174,6 +174,14 @@
   p, span, div, a, li, td, th, label, input, textarea, button {
     font-family: "halcom", sans-serif;
     font-weight: 400;
+    font-style: normal;
+  }
+  
+  /* Scandia Bold for navigation items - override generic span selector */
+  .sm-panel-item,
+  .sm-panel-item .sm-panel-itemLabel {
+    font-family: "scandia-web", sans-serif;
+    font-weight: 700;
     font-style: normal;
   }
 }
@@ -204,7 +212,7 @@
   padding: 0.2em 0 5px 0;
   text-align: center;
   min-width: 8em;
-  width: 75%;
+  width: 100%;
   max-width: 16em;
   font: italic 700 96px 'Arvo', 'Helvetica Neue';
   font-weight: bold;

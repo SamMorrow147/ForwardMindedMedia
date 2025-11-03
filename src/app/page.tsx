@@ -1,6 +1,7 @@
 "use client";
 
-import VideoHero from "@/components/VideoHero";
+// import VideoHero from "@/components/VideoHero"; // Hidden
+import Logo3DSection from "@/components/Logo3DSection";
 import Header from "@/components/Header";
 import LanyardSection from "@/components/LanyardSection";
 import TrueFocusSection from "@/components/TrueFocusSection";
@@ -51,8 +52,11 @@ export default function Home() {
         onMenuClose={() => console.log('Menu closed')}
       />
       
-      {/* Video Hero Section - NEW TOP SECTION */}
-      <VideoHero />
+      {/* 3D Logo Section - Replaces Video Hero */}
+      <Logo3DSection />
+      
+      {/* Video Hero Section - Hidden */}
+      {/* <VideoHero /> */}
       
       <Header />
       <LanyardSection />
