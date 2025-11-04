@@ -46,12 +46,13 @@ const AnimatedLights = () => {
   );
 };
 
-const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }: { 
+const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, isMobile }: { 
   url: string; 
   scrollProgress: number; 
   mousePosition: { x: number; y: number };
   isDragging: boolean;
   dragRotation: { x: number; y: number };
+  isMobile: boolean;
 }) => {
   const gltf = useGLTF(url);
   const meshRef = useRef<THREE.Group>(null);
@@ -133,8 +134,15 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }:
       const targetY = 0 + (scrollProgress * 1.2);
       outerRef.current.position.y = targetY;
       
-      // Keep scale at 1
-      outerRef.current.scale.setScalar(1);
+      // Scale: zoom in on mobile as you scroll, keep at 1 on desktop
+      if (isMobile) {
+        // Zoom from 1 to 1.5 as you scroll
+        const zoomScale = 1 + (scrollProgress * 0.5);
+        outerRef.current.scale.setScalar(zoomScale);
+      } else {
+        // Keep scale at 1 on desktop
+        outerRef.current.scale.setScalar(1);
+      }
       
       // Trigger re-render when animating
       state.invalidate();
@@ -219,70 +227,24 @@ export default function Logo3DSection() {
       dragStart.current = { x: 0, y: 0 };
     };
 
-    // Touch event handlers for mobile
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        const touch = e.touches[0];
-        dragStart.current = { x: touch.clientX, y: touch.clientY };
-        dragStartRotation.current = { ...dragRotation };
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        const touch = e.touches[0];
-        
-        const deltaX = touch.clientX - dragStart.current.x;
-        const deltaY = touch.clientY - dragStart.current.y;
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        
-        // If moved more than 5 pixels, start dragging
-        if (!isDragging && distance > 5 && dragStart.current.x !== 0) {
-          setIsDragging(true);
-        }
-        
-        // Handle dragging
-        if (isDragging) {
-          // Convert drag distance to rotation (inverted Y for natural feel)
-          const rotationX = dragStartRotation.current.x - (deltaY * 0.01);
-          const rotationY = dragStartRotation.current.y + (deltaX * 0.01);
-          
-          setDragRotation({ x: rotationX, y: rotationY });
-        }
-      }
-    };
-
-    const handleTouchEnd = () => {
-      if (isDragging) {
-        setIsDragging(false);
-        // Rotation will smoothly return to auto state via lerp
-      }
-      // Reset drag start position
-      dragStart.current = { x: 0, y: 0 };
-    };
-
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd);
-    window.addEventListener('touchcancel', handleTouchEnd);
+    
+    // Only add mouse events on desktop
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      window.addEventListener('mousedown', handleMouseDown);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('touchcancel', handleTouchEnd);
       window.removeEventListener('resize', checkMobile);
     };
-  }, [isDragging, dragRotation]);
+  }, [isDragging, dragRotation, isMobile]);
 
   if (!mounted) {
     return (
@@ -352,6 +314,7 @@ export default function Logo3DSection() {
             mousePosition={isMobile ? { x: 0, y: 0 } : mousePosition}
             isDragging={isDragging}
             dragRotation={dragRotation}
+            isMobile={isMobile}
           />
         </Suspense>
       </Canvas>
