@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useRef, useLayoutEffect, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, invalidate } from '@react-three/fiber';
 import { useGLTF, useProgress, Html, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 import DotGrid from './DotGrid';
@@ -19,20 +19,23 @@ const AnimatedLights = () => {
   const light1Ref = useRef<THREE.DirectionalLight>(null);
   const light2Ref = useRef<THREE.DirectionalLight>(null);
   
-  useFrame(({ clock }) => {
+  useFrame(({ clock, invalidate }) => {
     const time = clock.getElapsedTime();
     
     if (light1Ref.current) {
-      // Rotate light around the scene
-      light1Ref.current.position.x = Math.sin(time * 0.3) * 5;
-      light1Ref.current.position.z = Math.cos(time * 0.3) * 5;
+      // Rotate light around the scene (slower for less CPU usage)
+      light1Ref.current.position.x = Math.sin(time * 0.2) * 5;
+      light1Ref.current.position.z = Math.cos(time * 0.2) * 5;
     }
     
     if (light2Ref.current) {
-      // Counter-rotate the second light
-      light2Ref.current.position.x = Math.cos(time * 0.4) * 4;
-      light2Ref.current.position.z = Math.sin(time * 0.4) * 4;
+      // Counter-rotate the second light (slower for less CPU usage)
+      light2Ref.current.position.x = Math.cos(time * 0.25) * 4;
+      light2Ref.current.position.z = Math.sin(time * 0.25) * 4;
     }
+    
+    // Trigger re-render for smooth animation
+    invalidate();
   });
   
   return (
@@ -98,6 +101,7 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }:
         if (introProgress.current >= 1) {
           setIntroComplete(true);
         }
+        state.invalidate();
         return;
       }
       
@@ -131,6 +135,9 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }:
       
       // Keep scale at 1
       outerRef.current.scale.setScalar(1);
+      
+      // Trigger re-render when animating
+      state.invalidate();
     }
   });
 
@@ -268,6 +275,9 @@ export default function Logo3DSection() {
       {/* 3D Logo Canvas */}
       <Canvas
         shadows
+        frameloop="demand"
+        dpr={[1, 2]}
+        performance={{ min: 0.5 }}
         camera={{ 
           position: [0, 0, isMobile ? 6 : 5], 
           fov: isMobile ? 60 : 50 

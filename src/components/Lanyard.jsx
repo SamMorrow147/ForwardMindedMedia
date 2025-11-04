@@ -44,7 +44,10 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
     <div ref={wrapperRef} className="lanyard-wrapper">
       <Canvas
         camera={{ position: position, fov: fov }}
-        gl={{ alpha: transparent }}
+        frameloop="demand"
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
+        gl={{ alpha: transparent, antialias: false }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
@@ -166,6 +169,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, lanyardPosition = [0, 4, 0] }) {
       vec.add(dir.multiplyScalar(state.camera.position.length()));
       [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
       card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z });
+      state.invalidate();
     }
     if (fixed.current) {
       [j1, j2].forEach(ref => {
@@ -184,6 +188,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, lanyardPosition = [0, 4, 0] }) {
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+      state.invalidate();
     }
   });
 
