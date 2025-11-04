@@ -130,16 +130,20 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
       outerRef.current.rotation.x = currentRotation.current.x;
       outerRef.current.rotation.y = currentRotation.current.y;
       
-      // Move up: scroll parallax only (starting from 0)
-      const targetY = 0 + (scrollProgress * 1.2);
-      outerRef.current.position.y = targetY;
-      
-      // Scale: zoom in on mobile as you scroll, keep at 1 on desktop
+      // Position: different behavior for mobile vs desktop
       if (isMobile) {
-        // Zoom from 1 to 1.5 as you scroll
-        const zoomScale = 1 + (scrollProgress * 0.5);
+        // Mobile: move downward slowly as you scroll
+        const targetY = 0 - (scrollProgress * 0.5);
+        outerRef.current.position.y = targetY;
+        
+        // Zoom from 1 to 2 as you scroll (more dramatic)
+        const zoomScale = 1 + (scrollProgress * 1.0);
         outerRef.current.scale.setScalar(zoomScale);
       } else {
+        // Desktop: move upward as you scroll
+        const targetY = 0 + (scrollProgress * 1.2);
+        outerRef.current.position.y = targetY;
+        
         // Keep scale at 1 on desktop
         outerRef.current.scale.setScalar(1);
       }
