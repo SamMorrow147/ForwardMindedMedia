@@ -262,11 +262,16 @@
 
 .pc-avatar-content .avatar {
   width: 100%;
+  height: auto;
   position: absolute;
   left: 50%;
   transform: translateX(-50%) scale(1);
   bottom: 2px;
   opacity: calc(1.75 - var(--pointer-from-center));
+  min-opacity: 0.5;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .pc-avatar-content::before {

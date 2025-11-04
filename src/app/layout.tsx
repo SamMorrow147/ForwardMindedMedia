@@ -29,6 +29,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/qhq4tmi.css" />
+        <link rel="preload" href="/Person.png" as="image" />
+        <link rel="preload" href="/Asset-1-8x.png" as="image" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
