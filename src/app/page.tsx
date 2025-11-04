@@ -17,9 +17,10 @@ export default function Home() {
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/about' },
-    { label: 'What We Do', ariaLabel: 'View our services', link: '/services' },
-    { label: 'Portfolio', ariaLabel: 'View our work', link: '/portfolio' },
+    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '#who-we-are' },
+    { label: 'What We Do', ariaLabel: 'View our services', link: '#what-we-do' },
+    { label: 'Our Team', ariaLabel: 'Meet our team', link: '#our-team' },
+    { label: 'Testimonials', ariaLabel: 'Read testimonials', link: '#testimonials' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 
@@ -59,10 +60,18 @@ export default function Home() {
       {/* <VideoHero /> */}
       
       <Header />
-      <LanyardSection />
-      <ServicesSection />
-      <ProfileCardsRow />
-      <TestimonialSection />
+      <div id="who-we-are">
+        <LanyardSection />
+      </div>
+      <div id="what-we-do">
+        <ServicesSection />
+      </div>
+      <div id="our-team">
+        <ProfileCardsRow />
+      </div>
+      <div id="testimonials">
+        <TestimonialSection />
+      </div>
       <TrueFocusSection />
       <Footer />
       

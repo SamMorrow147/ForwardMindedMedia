@@ -420,7 +420,25 @@ export const StaggeredMenu = ({
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a className="sm-panel-item" href={it.link} aria-label={it.ariaLabel} data-index={idx + 1}>
+                  <a 
+                    className="sm-panel-item" 
+                    href={it.link} 
+                    aria-label={it.ariaLabel} 
+                    data-index={idx + 1}
+                    onClick={(e) => {
+                      // If it's an anchor link, close the menu and scroll smoothly
+                      if (it.link.startsWith('#')) {
+                        e.preventDefault();
+                        toggleMenu();
+                        setTimeout(() => {
+                          const element = document.querySelector(it.link);
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }, 300);
+                      }
+                    }}
+                  >
                     <span className="sm-panel-itemLabel">{it.label}</span>
                   </a>
                 </li>

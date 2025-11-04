@@ -149,6 +149,11 @@
     max-width: 100vw;
   }
   
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
   /* Scandia Bold for all titles */
   h1, h2, h3, h4, h5, h6 {
     font-family: "scandia-web", sans-serif !important;

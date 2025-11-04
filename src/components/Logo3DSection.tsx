@@ -92,8 +92,8 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }:
         // Scale up from 0 to 1
         outerRef.current.scale.setScalar(easeProgress);
         
-        // Move up from -2 to -0.3
-        outerRef.current.position.y = -2 + (1.7 * easeProgress);
+        // Move up from -2 to 0
+        outerRef.current.position.y = -2 + (2 * easeProgress);
         
         // Rotate in slightly
         outerRef.current.rotation.y = (1 - easeProgress) * Math.PI * 0.5;
@@ -129,8 +129,8 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation }:
       outerRef.current.rotation.x = currentRotation.current.x;
       outerRef.current.rotation.y = currentRotation.current.y;
       
-      // Move up: scroll parallax only (starting from -0.3)
-      const targetY = -0.3 + (scrollProgress * 1.2);
+      // Move up: scroll parallax only (starting from 0)
+      const targetY = 0 + (scrollProgress * 1.2);
       outerRef.current.position.y = targetY;
       
       // Keep scale at 1
@@ -238,7 +238,7 @@ export default function Logo3DSection() {
     return (
       <section style={{
         width: '100%',
-        height: isMobile ? '60vh' : '100vh',
+        height: isMobile ? '60vh' : '80vh',
         position: 'relative',
         backgroundColor: '#ffffff'
       }} />
@@ -248,7 +248,7 @@ export default function Logo3DSection() {
   return (
     <section style={{
       width: '100%',
-      height: isMobile ? '60vh' : '100vh',
+      height: isMobile ? '60vh' : '80vh',
       position: 'relative',
       backgroundColor: '#ffffff'
     }}>
@@ -290,9 +290,10 @@ export default function Logo3DSection() {
         
         <ambientLight intensity={0.6} />
         <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow />
-        <directionalLight position={[0, 2, 6]} intensity={1.8} />
+        <directionalLight position={[0, 0, 6]} intensity={1.3} />
         <AnimatedLights />
         <directionalLight position={[0, -1, -3]} intensity={0.8} />
+        <directionalLight position={[4, -3, 3]} intensity={1.5} />
 
         <Suspense fallback={<Loader />}>
           <Model 
