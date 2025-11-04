@@ -219,17 +219,67 @@ export default function Logo3DSection() {
       dragStart.current = { x: 0, y: 0 };
     };
 
+    // Touch event handlers for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        dragStart.current = { x: touch.clientX, y: touch.clientY };
+        dragStartRotation.current = { ...dragRotation };
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        
+        const deltaX = touch.clientX - dragStart.current.x;
+        const deltaY = touch.clientY - dragStart.current.y;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        
+        // If moved more than 5 pixels, start dragging
+        if (!isDragging && distance > 5 && dragStart.current.x !== 0) {
+          setIsDragging(true);
+        }
+        
+        // Handle dragging
+        if (isDragging) {
+          // Convert drag distance to rotation (inverted Y for natural feel)
+          const rotationX = dragStartRotation.current.x - (deltaY * 0.01);
+          const rotationY = dragStartRotation.current.y + (deltaX * 0.01);
+          
+          setDragRotation({ x: rotationX, y: rotationY });
+        }
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        // Rotation will smoothly return to auto state via lerp
+      }
+      // Reset drag start position
+      dragStart.current = { x: 0, y: 0 };
+    };
+
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchcancel', handleTouchEnd);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchEnd);
       window.removeEventListener('resize', checkMobile);
     };
   }, [isDragging, dragRotation]);
