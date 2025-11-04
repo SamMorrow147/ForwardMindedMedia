@@ -20,7 +20,8 @@ export default function Home() {
     { label: 'Who We Are', ariaLabel: 'Learn about us', link: '#who-we-are' },
     { label: 'What We Do', ariaLabel: 'View our services', link: '#what-we-do' },
     { label: 'Our Team', ariaLabel: 'Meet our team', link: '#our-team' },
-    { label: 'Testimonials', ariaLabel: 'Read testimonials', link: '#testimonials' },
+    { label: 'Clients', ariaLabel: 'Read client testimonials', link: '#clients' },
+    { label: 'Focus', ariaLabel: 'Our focus and vision', link: '#focus' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 
@@ -69,10 +70,12 @@ export default function Home() {
       <div id="our-team">
         <ProfileCardsRow />
       </div>
-      <div id="testimonials">
+      <div id="clients">
         <TestimonialSection />
       </div>
-      <TrueFocusSection />
+      <div id="focus">
+        <TrueFocusSection />
+      </div>
       <Footer />
       
       {/* Global page-level blur effect at the bottom of the screen */}

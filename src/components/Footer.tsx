@@ -66,11 +66,11 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li><a href="/" className="text-gray-300 hover:text-white transition-colors duration-300">Home</a></li>
-              <li><a href="/about" className="text-gray-300 hover:text-white transition-colors duration-300">Who We Are</a></li>
-              <li><a href="/services" className="text-gray-300 hover:text-white transition-colors duration-300">What We Do</a></li>
-              <li><a href="/team" className="text-gray-300 hover:text-white transition-colors duration-300">Our Team</a></li>
-              <li><a href="/clients" className="text-gray-300 hover:text-white transition-colors duration-300">Clients</a></li>
-              <li><a href="/focus" className="text-gray-300 hover:text-white transition-colors duration-300">Focus</a></li>
+              <li><a href="#who-we-are" className="text-gray-300 hover:text-white transition-colors duration-300">Who We Are</a></li>
+              <li><a href="#what-we-do" className="text-gray-300 hover:text-white transition-colors duration-300">What We Do</a></li>
+              <li><a href="#our-team" className="text-gray-300 hover:text-white transition-colors duration-300">Our Team</a></li>
+              <li><a href="#clients" className="text-gray-300 hover:text-white transition-colors duration-300">Clients</a></li>
+              <li><a href="#focus" className="text-gray-300 hover:text-white transition-colors duration-300">Focus</a></li>
               <li><a href="/contact" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>
             </ul>
           </div>
