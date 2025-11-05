@@ -37,7 +37,7 @@ const ProfileCardsRow = () => {
       handle: "sammorrow",
       status: "Available",
       avatarUrl: "/Person.png",
-      iconUrl: "/Asset-1-8x.png"
+      iconUrl: "/4x/Asset%203@8x.png"
     },
     {
       name: "Alex Chen",
@@ -45,7 +45,7 @@ const ProfileCardsRow = () => {
       handle: "alexchen",
       status: "Online",
       avatarUrl: "/Person.png",
-      iconUrl: "/Asset-1-8x.png"
+      iconUrl: "/4x/Asset%203@8x.png"
     },
     {
       name: "Sarah Johnson",
@@ -53,7 +53,7 @@ const ProfileCardsRow = () => {
       handle: "sarahj",
       status: "Busy",
       avatarUrl: "/Person.png",
-      iconUrl: "/Asset-1-8x.png"
+      iconUrl: "/4x/Asset%203@8x.png"
     },
     {
       name: "Mike Rodriguez",
@@ -61,7 +61,7 @@ const ProfileCardsRow = () => {
       handle: "mikerod",
       status: "Available",
       avatarUrl: "/Person.png",
-      iconUrl: "/Asset-1-8x.png"
+      iconUrl: "/4x/Asset%203@8x.png"
     },
     {
       name: "Emma Wilson",
@@ -69,7 +69,7 @@ const ProfileCardsRow = () => {
       handle: "emmaw",
       status: "Online",
       avatarUrl: "/Person.png",
-      iconUrl: "/Asset-1-8x.png"
+      iconUrl: "/4x/Asset%203@8x.png"
     }
   ];
 

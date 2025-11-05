@@ -132,8 +132,8 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
       
       // Position: different behavior for mobile vs desktop
       if (isMobile) {
-        // Mobile: move downward slowly as you scroll
-        const targetY = 0 - (scrollProgress * 0.5);
+        // Mobile: move downward more as you scroll
+        const targetY = 0 - (scrollProgress * 1.5);
         outerRef.current.position.y = targetY;
         
         // Zoom from 1 to 3 as you scroll (very dramatic)
@@ -256,7 +256,7 @@ export default function Logo3DSection() {
         width: '100%',
         height: isMobile ? '60vh' : '80vh',
         position: 'relative',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#e6e6e6'
       }} />
     );
   }
@@ -266,7 +266,7 @@ export default function Logo3DSection() {
       width: '100%',
       height: isMobile ? '60vh' : '80vh',
       position: 'relative',
-      backgroundColor: '#ffffff'
+      backgroundColor: '#e6e6e6'
     }}>
       {/* Animated Dot Grid Background */}
       <div style={{
@@ -277,14 +277,14 @@ export default function Logo3DSection() {
         <DotGrid
           dotSize={4}
           gap={25}
-          baseColor="#e0e0e0"
-          activeColor="#5227FF"
-          proximity={0}
-          speedTrigger={99999}
+          baseColor="#ffffff"
+          activeColor="#f6ba3e"
+          proximity={120}
+          speedTrigger={100}
           shockRadius={60}
           shockStrength={0.15}
-          resistance={5000}
-          returnDuration={0.3}
+          resistance={300}
+          returnDuration={0.15}
         />
       </div>
       
@@ -306,8 +306,7 @@ export default function Logo3DSection() {
         
         <ambientLight intensity={0.6} />
         <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow />
-        <directionalLight position={[0, 0, 6]} intensity={1.3} />
-        <AnimatedLights />
+        <directionalLight position={[0, 0, 6]} intensity={0.8} />
         <directionalLight position={[0, -1, -3]} intensity={0.8} />
         <directionalLight position={[4, -3, 3]} intensity={1.5} />
 

@@ -31,7 +31,7 @@ export default function Header() {
       
       {/* Liquid Ether effect layer - now on top but behind text */}
       <div className="absolute inset-0 z-10 animate-fade-in-background">
-        <LiquidEther resolution={0.4} isBounce={true} />
+        <LiquidEther resolution={0.4} isBounce={true} colors={['#5227FF', '#FF9FFC', '#ffeb78']} />
       </div>
       
           {/* Content layer - with pointer-events-none to allow mouse through */}
