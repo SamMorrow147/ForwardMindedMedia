@@ -136,8 +136,8 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
         const targetY = 0 - (scrollProgress * 0.5);
         outerRef.current.position.y = targetY;
         
-        // Zoom from 1 to 2 as you scroll (more dramatic)
-        const zoomScale = 1 + (scrollProgress * 1.0);
+        // Zoom from 1 to 3 as you scroll (very dramatic)
+        const zoomScale = 1 + (scrollProgress * 2.0);
         outerRef.current.scale.setScalar(zoomScale);
       } else {
         // Desktop: move upward as you scroll
@@ -313,7 +313,7 @@ export default function Logo3DSection() {
 
         <Suspense fallback={<Loader />}>
           <Model 
-            url="/forwardimindedmedia4.glb" 
+            url="/forwardimindedmedia6.glb" 
             scrollProgress={scrollProgress} 
             mousePosition={isMobile ? { x: 0, y: 0 } : mousePosition}
             isDragging={isDragging}
