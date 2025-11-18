@@ -2,9 +2,11 @@
 
 // import VideoHero from "@/components/VideoHero"; // Hidden
 import Logo3DSection from "@/components/Logo3DSection";
+import HeroTextSection from "@/components/HeroTextSection";
 import Header from "@/components/Header";
 import LanyardSection from "@/components/LanyardSection";
 import TrueFocusSection from "@/components/TrueFocusSection";
+import RecentProjectsSection from "@/components/RecentProjectsSection";
 import ServicesSection from "@/components/ServicesSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import ProfileCardsRow from "@/components/ProfileCardsRow";
@@ -57,21 +59,25 @@ export default function Home() {
       {/* 3D Logo Section - Replaces Video Hero */}
       <Logo3DSection />
       
+      {/* Hero Text Section */}
+      <HeroTextSection />
+      
       {/* Video Hero Section - Hidden */}
       {/* <VideoHero /> */}
       
       <Header />
+      <RecentProjectsSection />
+      <div id="clients">
+        <TestimonialSection />
+      </div>
+      <div id="our-team">
+        <ProfileCardsRow />
+      </div>
       <div id="who-we-are">
         <LanyardSection />
       </div>
       <div id="what-we-do">
         <ServicesSection />
-      </div>
-      <div id="our-team">
-        <ProfileCardsRow />
-      </div>
-      <div id="clients">
-        <TestimonialSection />
       </div>
       <div id="focus">
         <TrueFocusSection />

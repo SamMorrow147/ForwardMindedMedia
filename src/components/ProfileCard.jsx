@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import './ProfileCard.css';
 
 const DEFAULT_BEHIND_GRADIENT =
@@ -43,10 +43,13 @@ const ProfileCardComponent = ({
   status = 'Online',
   contactText = 'Contact',
   showUserInfo = true,
-  onContactClick = () => {}
+  onContactClick = () => {},
+  enableFlip = false,
+  backContent = null
 }) => {
   const wrapRef = useRef(null);
   const cardRef = useRef(null);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const animationHandlers = useMemo(() => {
     if (!enableTilt) return null;
@@ -193,6 +196,13 @@ const ProfileCardComponent = ({
     const deviceOrientationHandler = handleDeviceOrientation;
 
     const handleClick = () => {
+      // If flip is enabled, toggle flip state
+      if (enableFlip) {
+        setIsFlipped(prev => !prev);
+        return;
+      }
+      
+      // Otherwise, handle mobile tilt permission
       if (!enableMobileTilt || location.protocol !== 'https:') return;
       if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
         window.DeviceMotionEvent.requestPermission()
@@ -229,6 +239,7 @@ const ProfileCardComponent = ({
   }, [
     enableTilt,
     enableMobileTilt,
+    enableFlip,
     animationHandlers,
     handlePointerMove,
     handlePointerEnter,
@@ -251,64 +262,78 @@ const ProfileCardComponent = ({
   }, [onContactClick]);
 
   return (
-    <div ref={wrapRef} className={`pc-card-wrapper ${className}`.trim()} style={cardStyle}>
-      <section ref={cardRef} className="pc-card">
-        <div className="pc-inside">
-          <div className="pc-shine" />
-          <div className="pc-glare" />
-          <div className="pc-content pc-avatar-content">
-            <img
-              className="avatar"
-              src={avatarUrl}
-              alt={`${name || 'User'} avatar`}
-              loading="eager"
-              decoding="async"
-              onError={e => {
-                const target = e.target;
-                target.style.display = 'none';
-              }}
-            />
-            {showUserInfo && (
-              <div className="pc-user-info">
-                <div className="pc-user-details">
-                  <div className="pc-mini-avatar">
-                    <img
-                      src={miniAvatarUrl || avatarUrl}
-                      alt={`${name || 'User'} mini avatar`}
-                      loading="eager"
-                      decoding="async"
-                      onError={e => {
-                        const target = e.target;
-                        target.style.opacity = '0.5';
-                        target.src = avatarUrl;
-                      }}
-                    />
+    <div ref={wrapRef} className={`pc-card-wrapper ${isFlipped ? 'is-flipped' : ''} ${className}`.trim()} style={cardStyle}>
+      <div className="pc-flip-container" ref={cardRef}>
+        {/* Front of card */}
+        <section className={`pc-card pc-card-front-face ${isFlipped ? 'flipped-away' : ''}`}>
+          <div className="pc-inside">
+            <div className="pc-shine" />
+            <div className="pc-glare" />
+            <div className="pc-content pc-avatar-content">
+              <img
+                className="avatar"
+                src={avatarUrl}
+                alt={`${name || 'User'} avatar`}
+                loading="eager"
+                decoding="async"
+                onError={e => {
+                  const target = e.target;
+                  target.style.display = 'none';
+                }}
+              />
+              {showUserInfo && (
+                <div className="pc-user-info">
+                  <div className="pc-user-details">
+                    <div className="pc-mini-avatar">
+                      <img
+                        src={miniAvatarUrl || avatarUrl}
+                        alt={`${name || 'User'} mini avatar`}
+                        loading="eager"
+                        decoding="async"
+                        onError={e => {
+                          const target = e.target;
+                          target.style.opacity = '0.5';
+                          target.src = avatarUrl;
+                        }}
+                      />
+                    </div>
+                    <div className="pc-user-text">
+                      <div className="pc-handle">@{handle}</div>
+                      <div className="pc-status">{status}</div>
+                    </div>
                   </div>
-                  <div className="pc-user-text">
-                    <div className="pc-handle">@{handle}</div>
-                    <div className="pc-status">{status}</div>
-                  </div>
+                  <button
+                    className="pc-contact-btn"
+                    onClick={handleContactClick}
+                    style={{ pointerEvents: 'auto' }}
+                    type="button"
+                    aria-label={`Contact ${name || 'user'}`}
+                  >
+                    {contactText}
+                  </button>
                 </div>
-                <button
-                  className="pc-contact-btn"
-                  onClick={handleContactClick}
-                  style={{ pointerEvents: 'auto' }}
-                  type="button"
-                  aria-label={`Contact ${name || 'user'}`}
-                >
-                  {contactText}
-                </button>
+              )}
+            </div>
+            <div className="pc-content">
+              <div className="pc-details">
+                <h3>{name}</h3>
+                <p>{title}</p>
               </div>
-            )}
-          </div>
-          <div className="pc-content">
-            <div className="pc-details">
-              <h3>{name}</h3>
-              <p>{title}</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+        
+        {/* Back of card */}
+        {enableFlip && backContent && (
+          <div className={`pc-card pc-card-back-face ${!isFlipped ? 'flipped-away' : ''}`}>
+            <div className="pc-inside">
+              <div className="pc-content pc-card-back-content">
+                {backContent}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

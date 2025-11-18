@@ -91,29 +91,6 @@ export default function LanyardSection() {
               Learn More
             </button>
           </div>
-          
-          {/* Bottom section - Tech Logos */}
-          <div className="w-full max-w-lg overflow-hidden marquee-wrapper hidden md:block mobile-hide-marquee">
-            <Marquee 
-              gradient={false} 
-              speed={60} 
-              pauseOnHover={true}
-              className="py-4"
-            >
-              {techLogos.map((logo, index) => (
-                <div 
-                  key={`${logo.name}-${index}`}
-                  className={`flex items-center justify-center text-5xl ${
-                    index === techLogos.length - 1 ? 'ml-6 mr-12' : 'mx-6'
-                  }`}
-                  style={{ color: '#f7ba40' }}
-                  title={logo.name}
-                >
-                  {logo.icon}
-                </div>
-              ))}
-            </Marquee>
-          </div>
         </div>
       </div>
       

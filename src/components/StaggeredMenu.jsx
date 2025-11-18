@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
@@ -21,6 +21,7 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -289,16 +290,34 @@ export const StaggeredMenu = ({
     [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen]
   );
 
+  // Scroll detection to change button color
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // Consider "scrolled" when past 100px
+      setScrolled(scrollY > 100);
+    };
+    
+    handleScroll(); // Check initial state
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   React.useEffect(() => {
     if (toggleBtnRef.current) {
-      if (changeMenuColorOnOpen) {
-        const targetColor = openRef.current ? openMenuButtonColor : menuButtonColor;
-        gsap.set(toggleBtnRef.current, { color: targetColor });
+      let targetColor;
+      
+      if (openRef.current && changeMenuColorOnOpen) {
+        // Menu is open
+        targetColor = openMenuButtonColor;
       } else {
-        gsap.set(toggleBtnRef.current, { color: menuButtonColor });
+        // Menu is closed - use dark purple at top, white when scrolled
+        targetColor = scrolled ? menuButtonColor : '#2a1232';
       }
+      
+      gsap.set(toggleBtnRef.current, { color: targetColor });
     }
-  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
+  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor, scrolled]);
 
   const animateText = useCallback(opening => {
     const inner = textInnerRef.current;

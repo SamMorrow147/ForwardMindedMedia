@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useDragControls } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import ProfileCard from './ProfileCard';
 import './ProfileCardsRow.css';
 
@@ -15,67 +17,64 @@ interface ProfileData {
 }
 
 const ProfileCardsRow = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Framer Motion values for smooth scrolling (desktop only)
-  const x = useMotionValue(0);
-  const springX = useSpring(x, { 
-    stiffness: 300, 
-    damping: 30,
-    mass: 0.5
-  });
-  const dragControls = useDragControls();
+  const sliderRef = useRef<Slider>(null);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1920
+  );
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   const profiles: ProfileData[] = [
     {
-      name: "Name Here",
-      title: "CEO & Founder",
-      handle: "sammorrow",
+      name: "Jake",
+      title: "Title Here",
+      handle: "jake",
       status: "Available",
       avatarUrl: "/Person.png",
       iconUrl: "/4x/Asset%203@8x.png"
     },
     {
-      name: "Alex Chen",
-      title: "Creative Director",
-      handle: "alexchen",
+      name: "Kelsey",
+      title: "Title Here",
+      handle: "kelsey",
       status: "Online",
       avatarUrl: "/Person.png",
       iconUrl: "/4x/Asset%203@8x.png"
     },
     {
-      name: "Sarah Johnson",
-      title: "Lead Developer",
-      handle: "sarahj",
-      status: "Busy",
-      avatarUrl: "/Person.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "Mike Rodriguez",
-      title: "Design Lead",
-      handle: "mikerod",
+      name: "Addison",
+      title: "Title Here",
+      handle: "addison",
       status: "Available",
       avatarUrl: "/Person.png",
       iconUrl: "/4x/Asset%203@8x.png"
     },
     {
-      name: "Emma Wilson",
-      title: "Project Manager",
-      handle: "emmaw",
+      name: "Sam",
+      title: "Title Here",
+      handle: "sam",
       status: "Online",
       avatarUrl: "/Person.png",
+      iconUrl: "/4x/Asset%203@8x.png"
+    },
+    {
+      name: "And More...",
+      title: "Extended Team",
+      handle: "team",
+      status: "Ready",
+      avatarUrl: "/Group.png",
+      iconUrl: "/4x/Asset%203@8x.png"
+    },
+    {
+      name: "Maybe You?",
+      title: "Join Our Team",
+      handle: "careers",
+      status: "Hiring",
+      avatarUrl: "/MaybeYou.png",
       iconUrl: "/4x/Asset%203@8x.png"
     }
   ];
-
-  const cardWidth = 420; // Increased from 360px
-  const gap = 64; // 4rem = 64px
-  const totalWidth = profiles.length * (cardWidth + gap) - gap;
 
   // Handle window resize and initial setup
   useEffect(() => {
@@ -83,11 +82,21 @@ const ProfileCardsRow = () => {
       const width = window.innerWidth;
       setWindowWidth(width);
       setIsMobile(width < 768);
+      // Force slider to recalculate on resize
+      if (sliderRef.current) {
+        setTimeout(() => {
+          // Force a refresh by going to current slide
+          const currentSlide = (sliderRef.current as any)?.innerSlider?.state?.currentSlide || 0;
+          sliderRef.current?.slickGoTo(currentSlide);
+        }, 100);
+      }
     };
 
-    // Set initial width
+    // Set initial width immediately
     if (typeof window !== 'undefined') {
-      handleResize();
+      // Set initial values immediately to avoid delay
+      setWindowWidth(window.innerWidth);
+      setIsMobile(window.innerWidth < 768);
       window.addEventListener('resize', handleResize);
     }
 
@@ -98,44 +107,119 @@ const ProfileCardsRow = () => {
     };
   }, []);
 
-  const scrollToCard = (index: number) => {
-    const scrollPosition = -index * (cardWidth + gap);
-    x.set(scrollPosition);
-    setCurrentIndex(index);
+  // Force slider refresh after mount to ensure all slides render
+  useEffect(() => {
+    if (sliderRef.current) {
+      const timer = setTimeout(() => {
+        if (sliderRef.current) {
+          sliderRef.current.slickGoTo(0);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Helper function to get max slide for current viewport
+  const getMaxSlide = (slidesVisible: number) => {
+    const totalSlides = profiles.length;
+    // For partial slides (like 2.5), we need to ensure the last slide can be fully scrolled into view
+    // Max slide should be: totalSlides - slidesVisible (rounded up)
+    // This ensures we can't scroll past the point where the last slide is fully visible
+    return Math.max(0, Math.floor(totalSlides - slidesVisible));
   };
 
-  const handleDragStart = () => {
-    setIsDragging(true);
+  // Helper function to prevent over-scrolling
+  const handleAfterChange = (currentSlide: number, slidesVisible: number) => {
+    if (!isMobile && sliderRef.current) {
+      const maxSlide = getMaxSlide(slidesVisible);
+      
+      // If we've scrolled past the max, snap back immediately
+      if (currentSlide > maxSlide) {
+        // Use requestAnimationFrame for immediate update
+        requestAnimationFrame(() => {
+          if (sliderRef.current) {
+            sliderRef.current.slickGoTo(maxSlide);
+          }
+        });
+      }
+    }
   };
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    // Snap to nearest card
-    const currentX = x.get();
-    const newIndex = Math.round(-currentX / (cardWidth + gap));
-    const clampedIndex = Math.max(0, Math.min(newIndex, profiles.length - 1));
-    scrollToCard(clampedIndex);
+  // Handle arrow click to navigate to next card
+  const handleArrowClick = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickNext();
+    }
   };
 
-  // Don't render until window width is available
-  if (windowWidth === 0) {
-    return (
-      <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center py-20">
-        <div className="text-center mb-12 px-4">
-          <h2 className="text-white text-5xl font-bold mb-4">Our Team</h2>
-          <p className="text-gray-300 text-xl">Meet the talented individuals behind Forward Minded Media</p>
-        </div>
-        <div className="flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-        </div>
-      </section>
-    );
-  }
 
-  // Responsive card sizing
-  const mobileCardWidth = 300;
-  const mobileGap = 32; // 2rem
-  const mobileTotalWidth = profiles.length * (mobileCardWidth + mobileGap) - mobileGap;
+  // React Slick settings
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
+    draggable: true,
+    arrows: false, // Removed navigation arrows
+    accessibility: true,
+    initialSlide: 0,
+    edgeFriction: 0.35, // Add friction to prevent over-scrolling
+    variableWidth: true, // Allow cards to have their natural width
+    onInit: () => {
+      // Force slider to recalculate on init
+      if (sliderRef.current) {
+        sliderRef.current.slickGoTo(0);
+      }
+    },
+    afterChange: (currentSlide: number) => {
+      // On desktop, prevent scrolling past the last card
+      if (!isMobile && sliderRef.current) {
+        const totalSlides = profiles.length;
+        const maxSlide = totalSlides - 1;
+        
+        if (currentSlide > maxSlide) {
+          requestAnimationFrame(() => {
+            if (sliderRef.current) {
+              sliderRef.current.slickGoTo(maxSlide);
+            }
+          });
+        }
+      }
+    },
+    onSwipe: (direction: string) => {
+      // Prevent swiping past the last card on desktop
+      if (!isMobile && sliderRef.current) {
+        const totalSlides = profiles.length;
+        const maxSlide = totalSlides - 1;
+        const currentSlide = (sliderRef.current as any)?.innerSlider?.state?.currentSlide || 0;
+        
+        if (direction === 'left' && currentSlide >= maxSlide) {
+          requestAnimationFrame(() => {
+            if (sliderRef.current) {
+              sliderRef.current.slickGoTo(maxSlide);
+            }
+          });
+        }
+      }
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          variableWidth: true,
+          edgeFriction: 0.35,
+        }
+      }
+    ]
+  };
+
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center pt-20 pb-0">
@@ -146,91 +230,115 @@ const ProfileCardsRow = () => {
         </p>
       </div>
 
-      {/* Cards Container - Framer Motion for all devices */}
-      <div className="w-full overflow-x-hidden overflow-y-visible">
-        <motion.div
-          ref={containerRef}
-          className="flex"
-          style={{
-            x: springX,
-            width: isMobile ? mobileTotalWidth : totalWidth,
-            paddingLeft: isMobile ? '2rem' : '6rem',
-            paddingRight: isMobile ? '2rem' : '6rem',
-            paddingTop: isMobile ? '3rem' : '4rem',
-            paddingBottom: isMobile ? '3rem' : '4rem',
-            cursor: isDragging ? 'grabbing' : 'grab'
-          }}
-          drag="x"
-          dragControls={dragControls}
-          dragConstraints={{ 
-            left: isMobile 
-              ? -(mobileTotalWidth - windowWidth + 4 * 16)
-              : -(totalWidth - windowWidth + 12 * 16), 
-            right: 0 
-          }}
-          dragElastic={0.02}
-          dragMomentum={false}
-          dragTransition={{ bounceStiffness: 600, bounceDamping: 40 }}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          transition={{ type: "spring", stiffness: 300, damping: 30, mass: 0.5 }}
-        >
-          {profiles.map((profile, index) => (
-            <motion.div
-              key={index}
-              className={isMobile ? "flex-shrink-0 mr-8" : "flex-shrink-0 mr-16"}
-              style={{ 
-                minWidth: isMobile ? '300px' : '420px',
-                maxWidth: isMobile ? '300px' : '420px',
-                width: isMobile ? '300px' : '420px'
-              }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                delay: index * 0.05, 
-                duration: 0.4,
-                ease: "easeOut"
-              }}
-              whileHover={!isMobile ? { 
-                scale: 1.03, 
-                y: -5,
-                transition: { duration: 0.2, ease: "easeOut" }
-              } : undefined}
-              whileTap={{ 
-                scale: 0.98,
-                transition: { duration: 0.1 }
-              }}
-            >
-              <ProfileCard
-                name={profile.name}
-                title={profile.title}
-                handle={profile.handle}
-                status={profile.status}
-                contactText="Contact"
-                avatarUrl={profile.avatarUrl}
-                iconUrl={profile.iconUrl}
-                showUserInfo={true}
-                enableTilt={!isMobile}
-                enableMobileTilt={false}
-                onContactClick={() => console.log(`Contact ${profile.name}`)}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+      {/* Cards Container - React Slick */}
+      <div className="w-full profile-cards-slider-container">
+        <Slider ref={sliderRef} {...sliderSettings} className="profile-cards-slider">
+          {profiles.map((profile, index) => {
+            // Create back content for each card
+            let backContent: React.ReactNode = null;
+            
+            if (profile.name === "Jake" || profile.name === "Kelsey" || profile.name === "Addison" || profile.name === "Sam") {
+              backContent = (
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                  </div>
+                  <div style={{ textAlign: 'left', flex: 1, overflowY: 'auto' }}>
+                    <strong>Backstory:</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <strong>Fun Fact:</strong>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  </div>
+                </div>
+              );
+            } else if (profile.name === "And More...") {
+              backContent = (
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>And More...</h3>
+                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>Extended Team</p>
+                  </div>
+                  <div style={{ flex: 1, overflowY: 'auto' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>
+                      Behind every great campaign is an extensive network of talented professionals. Our team includes skilled account managers, creative content creators, expert videographers, innovative designers, and strategic media buyers—all working together to bring your vision to life and drive real results.
+                    </p>
+                  </div>
+                </div>
+              );
+            } else if (profile.name === "Maybe You?") {
+              backContent = (
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Maybe You?</h3>
+                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>Join Our Team</p>
+                  </div>
+                  <div style={{ flex: 1, overflowY: 'auto' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+                      We're always looking for talented, passionate people to join our team. If you're ready to challenge the status quo and create work that matters, we want to hear from you.
+                    </p>
+                    <a 
+                      href="/careers" 
+                      style={{ 
+                        color: '#f7ba40', 
+                        textDecoration: 'underline',
+                        fontSize: '1.1rem',
+                        fontWeight: 'bold',
+                        pointerEvents: 'auto'
+                      }}
+                    >
+                      View Open Positions →
+                    </a>
+                  </div>
+                </div>
+              );
+            }
+            
+            return (
+              <div key={index} className="profile-card-slide">
+                <ProfileCard
+                  name={profile.name}
+                  title={profile.title}
+                  handle={profile.handle}
+                  status={profile.status}
+                  contactText="Contact"
+                  avatarUrl={profile.avatarUrl}
+                  iconUrl={profile.iconUrl}
+                  showUserInfo={profile.name !== "Maybe You?"}
+                  enableTilt={!isMobile}
+                  enableMobileTilt={false}
+                  enableFlip={true}
+                  backContent={backContent as any}
+                  onContactClick={() => console.log(`Contact ${profile.name}`)}
+                />
+              </div>
+            );
+          })}
+        </Slider>
       </div>
 
-      {/* Animated Arrow - Mobile Only */}
-      {isMobile && (
-        <div className="arrow-wrapper">
-          <div className="arrow-container">
-            <div className="arrow">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+      {/* Animated Arrow - Desktop and Mobile */}
+      <div className="arrow-wrapper">
+        <div className="arrow-container">
+          <div 
+            className="arrow" 
+            onClick={handleArrowClick}
+            role="button"
+            aria-label="View next team member"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleArrowClick();
+              }
+            }}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
-      )}
+      </div>
 
       <style jsx>{`
         .arrow-wrapper {
@@ -265,6 +373,16 @@ const ProfileCardsRow = () => {
           justify-content: center;
           min-height: 80px;
           min-width: 80px;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .arrow:hover {
+          opacity: 0.8;
+          transform: rotate(270deg) scale(1.1);
+        }
+
+        .arrow:active {
+          transform: rotate(270deg) scale(0.95);
         }
 
         .arrow span {

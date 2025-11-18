@@ -1,0 +1,27 @@
+.text-type {
+  display: inline-block;
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.text-type__content {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.text-type__cursor {
+  margin-left: 0.25rem;
+  display: inline-block;
+  opacity: 1;
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}
+

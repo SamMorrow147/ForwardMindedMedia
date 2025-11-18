@@ -25,18 +25,18 @@ export default function TrueFocusSection() {
               every partnership is designed with one goal in mind - your success.
             </p>
             <button className="glass-button pointer-events-auto mt-8">
-              Let's Go!
+              Book a Discovery Call
             </button>
             
             <style jsx>{`
                 .glass-button {
-                  width: 160px;
+                  width: 300px;
                   height: 60px;
                   font-family: "scandia-web", sans-serif;
                   font-weight: 700;
-                  font-size: 18px;
+                  font-size: 16px;
                   text-transform: uppercase;
-                  letter-spacing: 1px;
+                  letter-spacing: 0.5px;
                   color: #fff;
                   background: 
                     linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),

@@ -1,0 +1,33 @@
+.scroll-reveal {
+  margin: 20px 0;
+}
+
+.scroll-reveal-wrapper .scroll-reveal {
+  margin: 0;
+}
+
+.scroll-reveal-text {
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: "josefin-sans", sans-serif;
+  font-style: normal;
+}
+
+.word {
+  display: inline-block;
+}
+
+/* Bold specific phrases using word position */
+.partnership-text .word:nth-last-child(-n+3) {
+  font-weight: 700;
+}
+
+.expertise-text .word:nth-last-child(-n+7) {
+  font-weight: 700;
+}
+
+.reach-text .word {
+  font-weight: 700;
+}
+

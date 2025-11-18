@@ -46,12 +46,10 @@ const AnimatedLights = () => {
   );
 };
 
-const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, isMobile }: { 
+const Model = ({ url, scrollProgress, mousePosition, isMobile }: { 
   url: string; 
   scrollProgress: number; 
   mousePosition: { x: number; y: number };
-  isDragging: boolean;
-  dragRotation: { x: number; y: number };
   isMobile: boolean;
 }) => {
   const gltf = useGLTF(url);
@@ -63,21 +61,44 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
 
   useLayoutEffect(() => {
     if (gltf.scene && meshRef.current) {
-      const box = new THREE.Box3().setFromObject(gltf.scene);
-      const center = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3());
+      // Suppress THREE.js NaN warnings during initial load
+      const originalWarn = console.warn;
+      const originalError = console.error;
+      console.warn = (...args) => {
+        if (args[0]?.includes?.('NaN') || args[0]?.includes?.('BufferGeometry')) return;
+        originalWarn.apply(console, args);
+      };
+      console.error = (...args) => {
+        if (args[0]?.includes?.('NaN') || args[0]?.includes?.('BufferGeometry')) return;
+        originalError.apply(console, args);
+      };
       
-      const maxDim = Math.max(size.x, size.y, size.z);
-      const scale = 5 / maxDim;
-      
-      meshRef.current.scale.setScalar(scale);
-      meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-      
-      // Start with logo scaled down for intro animation
-      if (outerRef.current) {
-        outerRef.current.scale.setScalar(0);
-        outerRef.current.position.y = -2;
+      try {
+        const box = new THREE.Box3().setFromObject(gltf.scene);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 5 / maxDim;
+        
+        meshRef.current.scale.setScalar(scale);
+        meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+        
+        // Start with logo scaled down for intro animation
+        if (outerRef.current) {
+          outerRef.current.scale.setScalar(0);
+          outerRef.current.position.y = -2;
+          outerRef.current.rotation.set(0, 0, 0);
+        }
+      } catch (error) {
+        console.warn('Error setting up 3D model');
       }
+      
+      // Restore console methods
+      setTimeout(() => {
+        console.warn = originalWarn;
+        console.error = originalError;
+      }, 1000);
     }
   }, [gltf.scene]);
 
@@ -107,23 +128,16 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
       }
       
       // Normal animations after intro
-      let targetRotationX, targetRotationY;
+      // Auto mode - scroll tilt + mouse hover (increased tilt for visibility)
+      const baseTiltX = 0.3; // Base forward tilt for perspective
+      const scrollRotationX = scrollProgress * -2.8;
+      const hoverTiltY = mousePosition.x * 0.4;
       
-      if (isDragging) {
-        // Manual drag mode - apply drag rotation directly
-        targetRotationX = dragRotation.x;
-        targetRotationY = dragRotation.y;
-      } else {
-        // Auto mode - scroll tilt + mouse hover (increased tilt for visibility)
-        const scrollRotationX = scrollProgress * -2.8;
-        const hoverTiltY = mousePosition.x * 0.4;
-        
-        targetRotationX = scrollRotationX;
-        targetRotationY = hoverTiltY;
-      }
+      const targetRotationX = baseTiltX + scrollRotationX;
+      const targetRotationY = hoverTiltY;
       
       // Smooth interpolation
-      const lerpFactor = isDragging ? 0.3 : 0.1; // Faster lerp during drag
+      const lerpFactor = 0.1;
       currentRotation.current.x += (targetRotationX - currentRotation.current.x) * lerpFactor;
       currentRotation.current.y += (targetRotationY - currentRotation.current.y) * lerpFactor;
       
@@ -140,11 +154,11 @@ const Model = ({ url, scrollProgress, mousePosition, isDragging, dragRotation, i
         const zoomScale = 1 + (scrollProgress * 2.0);
         outerRef.current.scale.setScalar(zoomScale);
       } else {
-        // Desktop: move upward as you scroll
-        const targetY = 0 + (scrollProgress * 1.2);
+        // Desktop: move upward slightly as you scroll (limited range)
+        const targetY = 0 + (Math.min(scrollProgress, 0.3) * 1.2);
         outerRef.current.position.y = targetY;
         
-        // Keep scale at 1 on desktop
+        // Keep scale at exactly 1 on desktop - no zooming
         outerRef.current.scale.setScalar(1);
       }
       
@@ -166,11 +180,7 @@ export default function Logo3DSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragRotation, setDragRotation] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  const dragStart = useRef({ x: 0, y: 0 });
-  const dragStartRotation = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     setMounted(true);
@@ -184,51 +194,16 @@ export default function Logo3DSection() {
     
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const maxScroll = 2000;
-      const progress = Math.min(scrollY / maxScroll, 1);
+      const maxScroll = 800; // Reduced from 2000 to limit scroll effect range
+      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
       setScrollProgress(progress);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse position to -1 to 1 range
+      // Normalize mouse position to -1 to 1 range for hover effect
       const x = (e.clientX / window.innerWidth) * 2 - 1;
       const y = (e.clientY / window.innerHeight) * 2 - 1;
       setMousePosition({ x, y });
-      
-      // Check if mouse has moved enough to consider it a drag
-      const deltaX = e.clientX - dragStart.current.x;
-      const deltaY = e.clientY - dragStart.current.y;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      
-      // If moved more than 5 pixels, start dragging
-      if (!isDragging && distance > 5 && dragStart.current.x !== 0) {
-        setIsDragging(true);
-      }
-      
-      // Handle dragging
-      if (isDragging) {
-        // Convert drag distance to rotation (inverted Y for natural feel)
-        const rotationX = dragStartRotation.current.x - (deltaY * 0.01);
-        const rotationY = dragStartRotation.current.y + (deltaX * 0.01);
-        
-        setDragRotation({ x: rotationX, y: rotationY });
-      }
-    };
-
-    const handleMouseDown = (e: MouseEvent) => {
-      dragStart.current = { x: e.clientX, y: e.clientY };
-      // Store current rotation as starting point
-      dragStartRotation.current = { ...dragRotation };
-      // Don't set isDragging yet - wait for actual movement
-    };
-
-    const handleMouseUp = () => {
-      if (isDragging) {
-        setIsDragging(false);
-        // Rotation will smoothly return to auto state via lerp
-      }
-      // Reset drag start position
-      dragStart.current = { x: 0, y: 0 };
     };
 
     handleScroll();
@@ -237,18 +212,14 @@ export default function Logo3DSection() {
     // Only add mouse events on desktop
     if (!isMobile) {
       window.addEventListener('mousemove', handleMouseMove, { passive: true });
-      window.addEventListener('mousedown', handleMouseDown);
-      window.addEventListener('mouseup', handleMouseUp);
     }
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('resize', checkMobile);
     };
-  }, [isDragging, dragRotation, isMobile]);
+  }, [isMobile]);
 
   if (!mounted) {
     return (
@@ -256,7 +227,7 @@ export default function Logo3DSection() {
         width: '100%',
         height: isMobile ? '60vh' : '80vh',
         position: 'relative',
-        backgroundColor: '#e6e6e6'
+        backgroundColor: '#e8e1d4'
       }} />
     );
   }
@@ -266,7 +237,7 @@ export default function Logo3DSection() {
       width: '100%',
       height: isMobile ? '60vh' : '80vh',
       position: 'relative',
-      backgroundColor: '#e6e6e6'
+      backgroundColor: '#e8e1d4'
     }}>
       {/* Animated Dot Grid Background */}
       <div style={{
@@ -304,19 +275,22 @@ export default function Logo3DSection() {
       >
         <Environment preset="sunset" background={false} />
         
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow />
-        <directionalLight position={[0, 0, 6]} intensity={0.8} />
-        <directionalLight position={[0, -1, -3]} intensity={0.8} />
-        <directionalLight position={[4, -3, 3]} intensity={1.5} />
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[0, 10, 3]} intensity={2.5} castShadow />
+        <directionalLight position={[0, 0, 6]} intensity={1.5} />
+        <directionalLight position={[0, -1, -3]} intensity={1.2} />
+        <directionalLight position={[4, -3, 3]} intensity={2.0} />
+        <directionalLight position={[-4, 2, 3]} intensity={1.5} />
+        <directionalLight position={[-5, 5, 3]} intensity={2.0} />
+        <directionalLight position={[-6, 0, 4]} intensity={3.0} />
+        <directionalLight position={[0, -8, 3]} intensity={2.5} />
+        <directionalLight position={[0, 8, -2]} intensity={3.5} />
 
         <Suspense fallback={<Loader />}>
           <Model 
-            url="/forwardimindedmedia6.glb" 
+            url="/forwardimindedmedia7.glb" 
             scrollProgress={scrollProgress} 
             mousePosition={isMobile ? { x: 0, y: 0 } : mousePosition}
-            isDragging={isDragging}
-            dragRotation={dragRotation}
             isMobile={isMobile}
           />
         </Suspense>

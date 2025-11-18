@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import SpotlightCard from "./SpotlightCard";
 import BlurText from "./BlurText";
+import LogoSlider from "./LogoSlider";
 
 export default function TestimonialSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -52,58 +53,68 @@ export default function TestimonialSection() {
   const handleTouchEnd = () => {
     setIsDragging(false);
   };
+
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      company: "TechStart Inc.",
-      role: "CEO & Founder",
-      testimonial: "Forward Minded Media transformed our digital presence completely. Their strategic approach and creative execution helped us increase our online engagement by 300% in just six months. The team's dedication and expertise are unmatched.",
+      name: "Jill Koehler",
+      company: "First National Bank",
+      role: "",
+      testimonial: "Their team consistently delivers creative, fun campaigns that help us reach the right audience",
       spotlightColor: "rgba(59, 130, 246, 0.2)", // Blue
     },
     {
-      name: "Michael Chen",
-      company: "GrowthCorp",
-      role: "Marketing Director",
-      testimonial: "Working with Forward Minded Media has been a game-changer for our business. Their innovative campaigns and data-driven strategies delivered results beyond our expectations. We saw a 250% ROI within the first quarter.",
+      name: "Katie McClellan",
+      company: "Infinite Youth Medical Spa",
+      role: "",
+      testimonial: "It feels like they're an extension of our own team — a true family company that genuinely cares about our success",
       spotlightColor: "rgba(168, 85, 247, 0.2)", // Purple
     },
     {
-      name: "Emily Rodriguez",
-      company: "Innovate Solutions",
-      role: "Brand Manager",
-      testimonial: "The creative team at Forward Minded Media brought our vision to life in ways we never imagined. Their attention to detail and ability to understand our brand essence resulted in campaigns that truly resonated with our audience.",
+      name: "Sarah Martinez",
+      company: "Local Business Co.",
+      role: "",
+      testimonial: "Forward Minded Media brought fresh ideas and authentic energy to our marketing. Their creative approach helped us connect with our community in meaningful ways.",
       spotlightColor: "rgba(34, 197, 94, 0.2)", // Green
     },
     {
       name: "David Thompson",
-      company: "NextGen Retail",
-      role: "VP of Marketing",
-      testimonial: "Forward Minded Media's comprehensive approach to marketing strategy helped us navigate a challenging market transition. Their expertise in both traditional and digital channels was exactly what we needed to stay competitive.",
+      company: "Regional Services",
+      role: "",
+      testimonial: "Working with them has been refreshing. They truly understand local businesses and deliver campaigns that resonate with our target audience.",
       spotlightColor: "rgba(249, 115, 22, 0.2)", // Orange
     },
     {
-      name: "Lisa Park",
-      company: "Creative Dynamics",
-      role: "Creative Director",
-      testimonial: "The collaboration with Forward Minded Media elevated our brand to new heights. Their team's creativity, professionalism, and strategic thinking made them an invaluable partner in our growth journey.",
+      name: "Lisa Chen",
+      company: "Main Street Boutique",
+      role: "",
+      testimonial: "Their team took the time to understand our vision and delivered results that exceeded our expectations. They're professional, creative, and genuinely invested in our success.",
       spotlightColor: "rgba(236, 72, 153, 0.2)", // Pink
     },
     {
-      name: "Robert Kim",
-      company: "Digital Ventures",
-      role: "Founder",
-      testimonial: "Forward Minded Media doesn't just deliver campaigns; they deliver results. Their data-driven approach and creative excellence helped us achieve our most successful product launch to date. Highly recommended!",
+      name: "Robert Williams",
+      company: "Downtown Restaurant Group",
+      role: "",
+      testimonial: "Forward Minded Media helped us navigate the digital landscape with confidence. Their strategic guidance and creative campaigns drove real growth for our business.",
       spotlightColor: "rgba(14, 165, 233, 0.2)", // Cyan
     }
   ];
 
+  const lightShadowStyle = {
+    textShadow: `
+      0 0.015em 0 #d16cc7,
+      0 0.03em 0.015em #6d3568,
+      0 0.045em 0.03em #4a2345
+    `,
+    fontSize: '4rem'
+  };
+
   return (
-    <section className="pb-20 bg-gradient-to-b from-[#3a1945] to-[#2a1232]">
+    <section className="py-20 bg-[#602d62]">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="ThreeDee text-white mb-6" style={{ paddingLeft: 0, paddingRight: 0 }}>
-            What Our Clients Say
+          <h2 className="ThreeDee mb-6" style={{...lightShadowStyle, color: '#e8e1d4', paddingLeft: 0, paddingRight: 0 }}>
+            Testimonials & Social Proof
           </h2>
           <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">
             Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us at <strong>Forward Minded Media</strong>.
@@ -152,9 +163,11 @@ export default function TestimonialSection() {
                       <h4 className="text-white text-xl font-bold mb-1">
                         {testimonial.name}
                       </h4>
-                      <p className="text-gray-400 text-sm mb-1">
-                        {testimonial.role}
-                      </p>
+                      {testimonial.role && (
+                        <p className="text-gray-400 text-sm mb-1">
+                          {testimonial.role}
+                        </p>
+                      )}
                       <p className="text-gray-500 text-sm font-medium">
                         {testimonial.company}
                       </p>
@@ -178,6 +191,9 @@ export default function TestimonialSection() {
             </p>
           </div>
         </div>
+        
+        {/* Logo Slider */}
+        <LogoSlider />
       </div>
       
       <style jsx>{`

@@ -61,3 +61,138 @@
     cursor: grabbing;
   }
 }
+
+/* React Slick Custom Styling */
+.profile-cards-slider-container {
+  width: 100%;
+  padding: 0 2rem;
+  overflow: visible;
+}
+
+@media (min-width: 769px) {
+  .profile-cards-slider-container {
+    padding: 0 6rem;
+  }
+}
+
+.profile-cards-slider {
+  width: 100%;
+  overflow: visible;
+}
+
+.profile-card-slide {
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+  .profile-card-slide {
+    padding: 0 2rem;
+  }
+}
+
+/* Custom arrow styling */
+.profile-cards-slider .slick-prev,
+.profile-cards-slider .slick-next {
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+}
+
+.profile-cards-slider .slick-prev {
+  left: -60px;
+}
+
+.profile-cards-slider .slick-next {
+  right: -60px;
+}
+
+.profile-cards-slider .slick-prev:before,
+.profile-cards-slider .slick-next:before {
+  font-size: 40px;
+  color: #fff;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.profile-cards-slider .slick-prev:hover:before,
+.profile-cards-slider .slick-next:hover:before {
+  opacity: 1;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .profile-cards-slider .slick-prev,
+  .profile-cards-slider .slick-next {
+    display: none !important;
+  }
+  
+  .profile-card-slide {
+    padding: 0 1rem;
+  }
+}
+
+/* Ensure cards maintain their size */
+.profile-card-slide {
+  width: 420px !important; /* Fixed width for desktop */
+}
+
+.profile-card-slide > div {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .profile-card-slide {
+    width: 300px !important; /* Fixed width for mobile */
+  }
+  
+  .profile-card-slide > div {
+    max-width: 300px;
+  }
+}
+
+/* Smooth transitions */
+.profile-cards-slider .slick-slide {
+  transition: transform 0.3s ease;
+}
+
+.profile-cards-slider .slick-slide.slick-active {
+  transform: scale(1);
+}
+
+/* Fix for overflow issues */
+.profile-cards-slider .slick-list {
+  overflow: visible; /* Keep visible for hover effects */
+  margin: 0 -1rem;
+}
+
+@media (min-width: 769px) {
+  .profile-cards-slider .slick-list {
+    margin: 0 -2rem;
+    overflow: visible; /* Keep visible for hover effects */
+  }
+}
+
+.profile-cards-slider .slick-track {
+  display: flex;
+  align-items: stretch;
+}
+
+/* Ensure slides render properly */
+.profile-cards-slider .slick-slide {
+  height: auto;
+}
+
+.profile-cards-slider .slick-slide > div {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure visible slides are properly displayed */
+.profile-cards-slider .slick-slide.slick-active,
+.profile-cards-slider .slick-slide[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}

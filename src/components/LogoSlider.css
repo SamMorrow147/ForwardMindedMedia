@@ -1,0 +1,43 @@
+.logos-static {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+}
+
+.logo-icon-static {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  color: #f7ba40;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  width: 80px;
+  height: 80px;
+}
+
+.logo-icon-static svg {
+  width: 100%;
+  height: 100%;
+}
+
+.logo-icon-static:hover {
+  transform: scale(1.2);
+}
+
+/* Responsive - smaller on mobile */
+@media (max-width: 768px) {
+  .logos-static {
+    gap: 32px;
+  }
+  
+  .logo-icon-static {
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
+  }
+}
+
