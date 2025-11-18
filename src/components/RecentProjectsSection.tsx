@@ -128,22 +128,34 @@ export default function RecentProjectsSection() {
   return (
     <section className="py-24 bg-[#85417f] overflow-visible relative">
       {/* Left side overlay image */}
-      <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-8">
+      <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 
           src="/left-side.png" 
           alt="" 
-          className="w-auto object-contain"
+          className="w-auto object-contain hidden md:block"
           style={{ opacity: 0.15, height: '50%' }}
+        />
+        <img 
+          src="/left-side.png" 
+          alt="" 
+          className="w-auto object-contain block md:hidden"
+          style={{ opacity: 0.15, height: '20%' }}
         />
       </div>
       
       {/* Right side overlay image */}
-      <div className="absolute right-0 top-0 h-full z-0 pointer-events-none flex items-start pt-8">
+      <div className="absolute right-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 
           src="/right-side.png" 
           alt="" 
-          className="w-auto object-contain"
+          className="w-auto object-contain hidden md:block"
           style={{ opacity: 0.15, height: '50%' }}
+        />
+        <img 
+          src="/right-side.png" 
+          alt="" 
+          className="w-auto object-contain block md:hidden"
+          style={{ opacity: 0.15, height: '20%' }}
         />
       </div>
       
@@ -165,9 +177,11 @@ export default function RecentProjectsSection() {
         </div>
 
         {/* Projects Carousel */}
-        <div className="relative overflow-visible w-full z-10">
+        <div className="relative overflow-hidden w-full z-10">
           <div
             ref={scrollContainerRef}
+            className={`flex gap-6 overflow-x-scroll pb-6 scrollbar-hide snap-x snap-mandatory px-6 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            style={{ width: 'max-content', minWidth: '100%' }}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
             onMouseUp={handleMouseUp}
@@ -175,20 +189,11 @@ export default function RecentProjectsSection() {
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="overflow-x-scroll overflow-y-visible scrollbar-hide flex gap-8 pb-12 pt-4 px-8 cursor-grab active:cursor-grabbing"
-            style={{
-              scrollBehavior: isDragging ? 'auto' : 'smooth',
-            }}
           >
             {sampleProjects.map((project) => (
               <div
                 key={project.id}
-                className="project-card flex-shrink-0"
-                style={{
-                  width: '450px',
-                  userSelect: 'none',
-                  WebkitUserSelect: 'none',
-                }}
+                className="project-card flex-none w-80 md:w-[450px] snap-start"
               >
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200">
@@ -240,19 +245,18 @@ export default function RecentProjectsSection() {
             ))}
           </div>
 
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="flex justify-center mt-8 px-8 relative z-10">
-          <p className="text-white/70 text-sm flex items-center gap-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-            </svg>
-            Drag to explore more projects
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </p>
+          {/* Scroll Indicator */}
+          <div className="flex justify-center mt-8">
+            <p className="text-white/70 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+              </svg>
+              Scroll to see more projects
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </p>
+          </div>
         </div>
 
       <style jsx>{`
@@ -271,10 +275,19 @@ export default function RecentProjectsSection() {
           position: relative;
           z-index: 1;
         }
-        .project-card:hover {
-          transform: translateY(-12px);
-          z-index: 10;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        
+        @media (hover: hover) and (pointer: fine) {
+          .project-card:hover {
+            transform: translateY(-12px);
+            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .project-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          }
         }
 
         /* Line clamp for description */

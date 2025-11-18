@@ -62,7 +62,7 @@ function HeaderSlider() {
   };
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto px-2 md:px-8 lg:px-20 relative">
+    <div className="w-full max-w-[1600px] mx-auto px-2 md:px-8 lg:px-20 relative flex flex-col justify-center h-full">
       {/* Left Arrow */}
       <div className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10">
         <div 

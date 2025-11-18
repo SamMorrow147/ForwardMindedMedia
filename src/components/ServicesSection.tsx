@@ -51,7 +51,7 @@ export default function ServicesSection() {
     ];
 
   return (
-    <section className="pb-20 bg-[#2a1232]">
+    <section className="py-12 md:pb-20 md:pt-0 bg-[#2a1232]">
       <div className="container mx-auto px-6">
         {/* Section Header - Centered */}
         <div className="mb-16 text-center">

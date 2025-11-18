@@ -195,9 +195,10 @@ const ProfileCardComponent = ({
     const pointerLeaveHandler = handlePointerLeave;
     const deviceOrientationHandler = handleDeviceOrientation;
 
-    const handleClick = () => {
+    const handleClick = (e) => {
       // If flip is enabled, toggle flip state
       if (enableFlip) {
+        e.stopPropagation();
         setIsFlipped(prev => !prev);
         return;
       }
@@ -218,9 +219,11 @@ const ProfileCardComponent = ({
     };
 
     card.addEventListener('pointerenter', pointerEnterHandler);
-    card.addEventListener('pointermove', pointerMoveHandler);
+    if (enableTilt) {
+      card.addEventListener('pointermove', pointerMoveHandler);
+    }
     card.addEventListener('pointerleave', pointerLeaveHandler);
-    card.addEventListener('click', handleClick);
+    card.addEventListener('click', handleClick, { passive: false });
 
     const initialX = wrap.clientWidth - ANIMATION_CONFIG.INITIAL_X_OFFSET;
     const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;

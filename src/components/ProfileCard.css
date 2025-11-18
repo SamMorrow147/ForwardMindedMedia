@@ -68,6 +68,8 @@
   display: grid;
   border-radius: var(--card-radius);
   position: relative;
+  cursor: pointer;
+  touch-action: manipulation;
   background-blend-mode: color-dodge, normal, normal, normal;
   animation: glow-bg 12s linear infinite;
   box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px)
@@ -454,6 +456,7 @@
   height: 100%;
   transition: transform 0.8s;
   transform-style: preserve-3d;
+  pointer-events: auto;
 }
 
 .pc-card-wrapper.is-flipped .pc-flip-container {
