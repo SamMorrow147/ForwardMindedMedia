@@ -61,44 +61,29 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile }: {
 
   useLayoutEffect(() => {
     if (gltf.scene && meshRef.current) {
-      // Suppress THREE.js NaN warnings during initial load
-      const originalWarn = console.warn;
-      const originalError = console.error;
-      console.warn = (...args) => {
-        if (args[0]?.includes?.('NaN') || args[0]?.includes?.('BufferGeometry')) return;
-        originalWarn.apply(console, args);
-      };
-      console.error = (...args) => {
-        if (args[0]?.includes?.('NaN') || args[0]?.includes?.('BufferGeometry')) return;
-        originalError.apply(console, args);
-      };
-      
       try {
         const box = new THREE.Box3().setFromObject(gltf.scene);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 5 / maxDim;
         
-        meshRef.current.scale.setScalar(scale);
-        meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-        
-        // Start with logo scaled down for intro animation
-        if (outerRef.current) {
-          outerRef.current.scale.setScalar(0);
-          outerRef.current.position.y = -2;
-          outerRef.current.rotation.set(0, 0, 0);
+        if (!isNaN(maxDim) && maxDim > 0) {
+          const scale = 5 / maxDim;
+          
+          meshRef.current.scale.setScalar(scale);
+          meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+          
+          // Start with logo scaled down for intro animation
+          if (outerRef.current) {
+            outerRef.current.scale.setScalar(0);
+            outerRef.current.position.y = -2;
+            outerRef.current.rotation.set(0, 0, 0);
+          }
         }
       } catch (error) {
-        console.warn('Error setting up 3D model');
+        // Silently handle errors - model will still try to render
       }
-      
-      // Restore console methods
-      setTimeout(() => {
-        console.warn = originalWarn;
-        console.error = originalError;
-      }, 1000);
     }
   }, [gltf.scene]);
 
