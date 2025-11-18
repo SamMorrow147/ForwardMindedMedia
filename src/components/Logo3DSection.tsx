@@ -258,8 +258,6 @@ export default function Logo3DSection() {
         eventSource={document.body}
         eventPrefix="client"
       >
-        <Environment preset="sunset" background={false} />
-        
         <ambientLight intensity={1.5} />
         <directionalLight position={[0, 10, 3]} intensity={2.5} castShadow />
         <directionalLight position={[0, 0, 6]} intensity={1.5} />
