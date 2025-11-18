@@ -34,7 +34,9 @@
   position: relative;
   touch-action: none;
   width: fit-content;
+  max-width: 360px;
   margin: 0 auto;
+  flex-shrink: 0;
 }
 
 .pc-card-wrapper::before {
@@ -65,6 +67,10 @@
 .pc-card {
   height: 500px;
   width: 360px;
+  max-width: 360px;
+  min-width: 360px;
+  max-height: 500px;
+  min-height: 500px;
   display: grid;
   border-radius: var(--card-radius);
   position: relative;

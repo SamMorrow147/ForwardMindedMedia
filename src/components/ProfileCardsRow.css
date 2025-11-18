@@ -145,11 +145,11 @@
 
 @media (max-width: 768px) {
   .profile-card-slide {
-    width: 300px !important; /* Fixed width for mobile */
+    width: 380px !important; /* Fixed width for mobile - matches card width */
   }
   
   .profile-card-slide > div {
-    max-width: 300px;
+    max-width: 380px;
   }
 }
 
