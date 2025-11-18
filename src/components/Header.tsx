@@ -12,7 +12,7 @@ function HeaderSlider() {
       0 0.03em 0.015em #6d3568,
       0 0.045em 0.03em #4a2345
     `,
-    fontSize: '3.5rem'
+    fontSize: 'clamp(2rem, 5vw, 3.5rem)'
   };
 
   const slides = [
@@ -62,9 +62,9 @@ function HeaderSlider() {
   };
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto px-8 md:px-20 relative">
+    <div className="w-full max-w-[1600px] mx-auto px-2 md:px-8 lg:px-20 relative">
       {/* Left Arrow */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+      <div className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10">
         <div 
           className="arrow arrow-left" 
           onClick={handlePrevSlide}
@@ -85,7 +85,7 @@ function HeaderSlider() {
       </div>
 
       {/* Right Arrow */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-10">
+      <div className="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-10">
         <div 
           className="arrow arrow-right" 
           onClick={handleNextSlide}
@@ -105,7 +105,7 @@ function HeaderSlider() {
         </div>
       </div>
 
-      <div className="relative min-h-[200px] flex items-center justify-center">
+      <div className="relative min-h-[350px] md:min-h-[200px] flex items-center justify-center">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -117,11 +117,11 @@ function HeaderSlider() {
                 : 'opacity-0 translate-x-full'
             }`}
           >
-            <div className="px-8 mt-2">
-              <h1 className="ThreeDee text-white mb-8" style={{...lightShadowStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, whiteSpace: 'nowrap', textAlign: 'center', width: '100%'}}>
+            <div className="px-4 md:px-8 mt-2">
+              <h1 className="ThreeDee text-white mb-6 md:mb-8 header-carousel-title" style={{...lightShadowStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, textAlign: 'center', width: '100%'}}>
                 {slide.title}
               </h1>
-              <p className="text-black text-2xl md:text-3xl leading-relaxed max-w-6xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
+              <p className="text-black text-lg md:text-2xl lg:text-3xl leading-relaxed max-w-6xl mx-auto px-2" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
                 {slide.content}
               </p>
             </div>
@@ -146,6 +146,17 @@ function HeaderSlider() {
       </div>
 
       <style jsx>{`
+        .header-carousel-title {
+          white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+          .header-carousel-title {
+            white-space: normal;
+            word-wrap: break-word;
+          }
+        }
+        
         .arrow {
           position: relative;
           cursor: pointer;
@@ -222,13 +233,15 @@ function HeaderSlider() {
         /* Mobile adjustments */
         @media (max-width: 768px) {
           .arrow {
-            min-height: 50px;
-            min-width: 50px;
+            min-height: 40px;
+            min-width: 40px;
           }
 
           .arrow span {
-            width: 1.2rem;
-            height: 1.2rem;
+            width: 1rem;
+            height: 1rem;
+            border-bottom: 2px solid #85417f;
+            border-right: 2px solid #85417f;
           }
         }
       `}</style>
@@ -238,7 +251,7 @@ function HeaderSlider() {
 
 export default function Header() {
   return (
-    <div className="relative h-[35vh] w-full bg-[#f7ba40]">
+    <div className="relative min-h-[50vh] md:h-[35vh] w-full bg-[#f7ba40]">
       {/* Content layer */}
       <header className="relative z-20 flex items-center justify-center h-full">
         <HeaderSlider />

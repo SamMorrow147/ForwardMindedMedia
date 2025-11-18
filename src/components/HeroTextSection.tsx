@@ -5,10 +5,10 @@ import TextType from "./TextType";
 
 export default function HeroTextSection() {
   return (
-    <section className="py-20 bg-[#85417f] text-center relative">
+    <section className="py-20 bg-[#85417f] text-center relative" style={{ backgroundColor: '#85417f' }}>
       {/* Liquid Ether effect layer */}
-      <div className="absolute inset-0 z-0">
-        <LiquidEther resolution={0.4} isBounce={true} colors={['#5227FF', '#FF9FFC', '#ffeb78']} />
+      <div className="absolute inset-0 z-0" style={{ opacity: 0.8 }}>
+        <LiquidEther resolution={0.4} isBounce={true} colors={['#5227FF', '#FF9FFC', '#B19EEF']} />
       </div>
       
       <div className="container mx-auto px-6 max-w-5xl relative z-10 pointer-events-none">
