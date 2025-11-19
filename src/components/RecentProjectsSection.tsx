@@ -193,10 +193,10 @@ export default function RecentProjectsSection() {
             {sampleProjects.map((project) => (
               <div
                 key={project.id}
-                className="project-card flex-none w-80 md:w-[450px] snap-start"
+                className="project-card flex-none w-80 md:w-[450px] h-[520px] snap-start flex flex-col"
               >
                 {/* Project Image */}
-                <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200">
+                <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200 flex-shrink-0">
                   <img
                     src={project.imageSrc}
                     alt={project.imageAlt}
@@ -206,7 +206,7 @@ export default function RecentProjectsSection() {
                 </div>
 
                 {/* Project Details */}
-                <div className="bg-[#2a1232] rounded-b-2xl p-6 pl-8 shadow-lg min-h-[240px] flex flex-col">
+                <div className="bg-[#2a1232] rounded-b-2xl p-6 pl-8 shadow-lg flex flex-col flex-grow">
                   <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}>
                     {project.title}
                   </h3>
