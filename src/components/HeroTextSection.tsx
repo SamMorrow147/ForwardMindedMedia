@@ -18,7 +18,7 @@ export default function HeroTextSection() {
           style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
           <TextType 
-            text="LEAVE THE STATUS QUO BEHIND."
+            text="Leave The Status Quo Behind."
             typingSpeed={100}
             showCursor={false}
             loop={false}
