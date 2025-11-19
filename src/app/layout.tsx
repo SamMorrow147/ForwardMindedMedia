@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Forward Minded Media",
-  description: "Leave the status quo behind with Forward Minded Media - your full-service marketing agency partner.",
+  description: "LEAVE THE STATUS QUO BEHIND with Forward Minded Media - your full-service marketing agency partner.",
   other: {
     'typekit-id': 'qhq4tmi',
   },
