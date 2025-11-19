@@ -126,7 +126,7 @@ export default function RecentProjectsSection() {
   };
 
   return (
-    <section className="py-24 bg-[#85417f] overflow-visible relative">
+    <section id="recent-projects" className="py-24 bg-[#85417f] overflow-visible relative">
       {/* Left side overlay image */}
       <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 

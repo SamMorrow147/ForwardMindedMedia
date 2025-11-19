@@ -22,8 +22,8 @@ export default function Home() {
     { label: 'Who We Are', ariaLabel: 'Learn about us', link: '#who-we-are' },
     { label: 'What We Do', ariaLabel: 'View our services', link: '#what-we-do' },
     { label: 'Our Team', ariaLabel: 'Meet our team', link: '#our-team' },
+    { label: 'Projects', ariaLabel: 'View our projects', link: '#recent-projects' },
     { label: 'Clients', ariaLabel: 'Read client testimonials', link: '#clients' },
-    { label: 'Focus', ariaLabel: 'Our focus and vision', link: '#focus' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 

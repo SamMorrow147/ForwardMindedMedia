@@ -229,14 +229,14 @@ export default function TestimonialSection() {
           width: 100px;
           pointer-events: none;
           z-index: 10;
-          background: linear-gradient(to left, rgba(42, 18, 50, 1), rgba(42, 18, 50, 0.8) 30%, rgba(42, 18, 50, 0));
+          background: linear-gradient(to left, rgba(96, 45, 98, 1), rgba(96, 45, 98, 0.8) 30%, rgba(96, 45, 98, 0));
         }
         
         /* Mobile adjustments - smaller gradient */
         @media (max-width: 768px) {
           .relative::after {
             width: 60px;
-            background: linear-gradient(to left, rgba(42, 18, 50, 1), rgba(42, 18, 50, 0.6) 40%, rgba(42, 18, 50, 0));
+            background: linear-gradient(to left, rgba(96, 45, 98, 1), rgba(96, 45, 98, 0.6) 40%, rgba(96, 45, 98, 0));
           }
         }
       `}</style>
