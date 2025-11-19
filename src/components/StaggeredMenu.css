@@ -31,6 +31,13 @@
   display: flex;
   align-items: center;
   user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.sm-logo:hover {
+  opacity: 0.8;
 }
 
 .sm-logo-img {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
@@ -398,7 +399,7 @@ export const StaggeredMenu = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
+        <Link href="/" className="sm-logo" aria-label="Go to homepage">
           <img
             src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
             alt="Logo"
@@ -407,7 +408,7 @@ export const StaggeredMenu = ({
             width={110}
             height={24}
           />
-        </div>
+        </Link>
         <button
           ref={toggleBtnRef}
           className="sm-toggle"
