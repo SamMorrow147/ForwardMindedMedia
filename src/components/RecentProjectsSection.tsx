@@ -180,7 +180,7 @@ export default function RecentProjectsSection() {
         <div className="relative overflow-visible w-full z-10">
           <div 
             ref={scrollContainerRef}
-            className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory pl-8 pr-6 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory pl-6 pr-6 md:pl-8 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{ width: 'max-content', minWidth: '100%' }}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
@@ -206,14 +206,14 @@ export default function RecentProjectsSection() {
                 </div>
 
                 {/* Project Details */}
-                <div className="bg-[#2a1232] rounded-b-2xl p-6 pl-8 shadow-lg">
+                <div className="bg-[#2a1232] rounded-b-2xl p-6 pl-8 shadow-lg min-h-[240px] flex flex-col">
                   <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}>
                     {project.title}
                   </h3>
                   <p className="text-[#e8e1d4] font-semibold mb-3" style={{ fontFamily: '"halcom", sans-serif' }}>
                     {project.client}
                   </p>
-                  <p className="text-white/90 mb-4 line-clamp-3">
+                  <p className="text-white/90 mb-4 line-clamp-3 flex-grow">
                     {project.description}
                   </p>
                   <a

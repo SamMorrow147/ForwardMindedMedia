@@ -301,7 +301,7 @@ const ProfileCardsRow = () => {
                   title={profile.title}
                   handle={profile.handle}
                   status={profile.status}
-                  contactText="Contact"
+                  contactText="More Info"
                   avatarUrl={profile.avatarUrl}
                   iconUrl={profile.iconUrl}
                   showUserInfo={profile.name !== "Maybe You?"}

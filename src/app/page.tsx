@@ -89,11 +89,13 @@ export default function Home() {
         target="page"
         position="bottom"
         height="8rem"
+        mobileHeight="2.5rem"
         strength={3}
         divCount={6}
         curve="bezier"
         exponential={true}
         opacity={1}
+        responsive={true}
       />
     </div>
   );

@@ -32,7 +32,7 @@
   perspective: 1500px;
   transform: translate3d(0, 0, 0.1px);
   position: relative;
-  touch-action: none;
+  touch-action: pan-y;
   width: fit-content;
   max-width: 360px;
   margin: 0 auto;

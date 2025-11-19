@@ -81,7 +81,7 @@
 }
 
 .profile-card-slide {
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
 }
 
@@ -128,7 +128,7 @@
   }
   
   .profile-card-slide {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -165,7 +165,7 @@
 /* Fix for overflow issues */
 .profile-cards-slider .slick-list {
   overflow: visible; /* Keep visible for hover effects */
-  margin: 0 -1rem;
+  margin: 0 -1.5rem;
 }
 
 @media (min-width: 769px) {

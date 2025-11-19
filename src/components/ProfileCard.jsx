@@ -307,10 +307,17 @@ const ProfileCardComponent = ({
                   </div>
                   <button
                     className="pc-contact-btn"
-                    onClick={handleContactClick}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (enableFlip) {
+                        setIsFlipped(prev => !prev);
+                      } else {
+                        handleContactClick();
+                      }
+                    }}
                     style={{ pointerEvents: 'auto' }}
                     type="button"
-                    aria-label={`Contact ${name || 'user'}`}
+                    aria-label={enableFlip ? `View more info about ${name || 'user'}` : `Contact ${name || 'user'}`}
                   >
                     {contactText}
                   </button>
