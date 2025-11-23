@@ -36,7 +36,12 @@ export default function HeroTextSection() {
         
         {/* Button */}
         <div className="flex justify-center pointer-events-auto">
-          <button className="glass-button">
+          <a 
+            href="https://calendly.com/jake-forwardmindedmedia" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="glass-button no-underline"
+          >
             <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontSize: 'inherit', letterSpacing: 'inherit' }}>
               Let&apos;s Go!
             </span>
@@ -45,7 +50,7 @@ export default function HeroTextSection() {
               <span></span>
               <span></span>
             </div>
-          </button>
+          </a>
         </div>
       </div>
 

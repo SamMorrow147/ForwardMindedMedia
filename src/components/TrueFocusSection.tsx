@@ -24,9 +24,14 @@ export default function TrueFocusSection() {
               Our focus is clear: delivering results that matter. Every strategy, every campaign, 
               every partnership is designed with one goal in mind - your success.
             </p>
-            <button className="glass-button pointer-events-auto mt-8">
+            <a 
+              href="https://calendly.com/jake-forwardmindedmedia" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="glass-button pointer-events-auto mt-8 inline-block text-center no-underline"
+            >
               Book a Discovery Call
-            </button>
+            </a>
             
             <style jsx>{`
                 .glass-button {
@@ -52,6 +57,10 @@ export default function TrueFocusSection() {
                   box-shadow: 
                     inset 0 1px 2px rgba(255, 255, 255, 0.1),
                     inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  text-decoration: none;
                 }
                 
                 .glass-button::before {

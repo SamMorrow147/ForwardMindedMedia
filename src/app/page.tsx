@@ -28,10 +28,10 @@ export default function Home() {
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'Instagram', link: 'https://instagram.com' }
+    { label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61562268475609' },
+    { label: 'Instagram', link: 'https://www.instagram.com/forwardmindedmedia/' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/company/forward-minded-media' },
+    { label: 'TikTok', link: 'https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7' }
   ];
 
   return (
@@ -51,7 +51,7 @@ export default function Home() {
         changeMenuColorOnOpen={true}
         colors={['#B19EEF', '#5227FF']}
         logoUrl="/Logo-Dark.png"
-        accentColor="#5227FF"
+        accentColor="#85417f"
         onMenuOpen={() => console.log('Menu opened')}
         onMenuClose={() => console.log('Menu closed')}
       />

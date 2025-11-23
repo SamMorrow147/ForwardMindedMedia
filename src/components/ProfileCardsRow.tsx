@@ -249,6 +249,24 @@ const ProfileCardsRow = () => {
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <strong>Fun Fact:</strong>
                     <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    {profile.name === "Jake" && (
+                      <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                        <a 
+                          href="https://calendly.com/jake-forwardmindedmedia" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          style={{ 
+                            color: '#f7ba40', 
+                            textDecoration: 'underline',
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold',
+                            pointerEvents: 'auto'
+                          }}
+                        >
+                          Book a meeting with me →
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               );

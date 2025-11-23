@@ -177,10 +177,10 @@ export default function RecentProjectsSection() {
         </div>
 
         {/* Projects Carousel */}
-        <div className="relative overflow-visible w-full z-10">
+        <div className="relative overflow-visible w-full z-10 pl-6 pr-6 md:pl-8">
           <div 
             ref={scrollContainerRef}
-            className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory pl-6 pr-6 md:pl-8 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{ width: 'max-content', minWidth: '100%' }}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
