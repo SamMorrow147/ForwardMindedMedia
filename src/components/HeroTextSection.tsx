@@ -14,7 +14,7 @@ export default function HeroTextSection() {
       <div className="container mx-auto px-6 max-w-5xl relative z-10 pointer-events-none">
         {/* Headline */}
         <h2 
-          className="text-5xl md:text-6xl font-bold text-white mb-8"
+          className="text-5xl md:text-6xl font-bold text-white mb-8 hero-title"
           style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
           <TextType 
@@ -55,6 +55,16 @@ export default function HeroTextSection() {
       </div>
 
       <style jsx>{`
+        .hero-title {
+          line-height: 1.3;
+        }
+        
+        @media (min-width: 768px) {
+          .hero-title {
+            line-height: 1.2;
+          }
+        }
+        
         .glass-button {
           width: 200px;
           height: 60px;

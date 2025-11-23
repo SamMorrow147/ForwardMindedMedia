@@ -12,7 +12,7 @@ function HeaderSlider() {
       0 0.03em 0.015em #6d3568,
       0 0.045em 0.03em #4a2345
     `,
-    fontSize: 'clamp(2rem, 5vw, 3.5rem)'
+    fontSize: 'clamp(2.5rem, 5vw, 4rem)'
   };
 
   const slides = [
@@ -105,11 +105,11 @@ function HeaderSlider() {
         </div>
       </div>
 
-      <div className="relative min-h-[350px] md:min-h-[200px] flex items-center justify-center">
+      <div className="relative min-h-[350px] md:min-h-[200px] flex items-center justify-center py-8 md:py-12">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 text-center transition-all duration-700 ease-in-out ${
+            className={`absolute inset-0 text-center transition-all duration-700 ease-in-out flex items-center justify-center ${
               index === currentSlide
                 ? 'opacity-100 translate-x-0'
                 : index < currentSlide
@@ -117,7 +117,7 @@ function HeaderSlider() {
                 : 'opacity-0 translate-x-full'
             }`}
           >
-            <div className="px-4 md:px-8 mt-2">
+            <div className="px-4 md:px-8 w-full">
               <h1 className="ThreeDee text-white mb-6 md:mb-8 header-carousel-title" style={{...lightShadowStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, textAlign: 'center', width: '100%'}}>
                 {slide.title}
               </h1>
@@ -251,7 +251,7 @@ function HeaderSlider() {
 
 export default function Header() {
   return (
-    <div className="relative min-h-[50vh] md:h-[35vh] w-full bg-[#f7ba40]">
+    <div className="relative min-h-[50vh] md:h-[35vh] w-full bg-[#f7ba40] py-8 md:py-12">
       {/* Content layer */}
       <header className="relative z-20 flex items-center justify-center h-full">
         <HeaderSlider />
