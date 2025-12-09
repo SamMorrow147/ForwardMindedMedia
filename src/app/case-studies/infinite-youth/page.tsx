@@ -44,7 +44,7 @@ export default function InfiniteYouthCaseStudy() {
       />
       
       <CaseStudyLayout
-        clientName="Medical Spa Client B"
+        clientName="Infinite Youth Medical Spa"
         projectTitle="A Brand Glow-Up"
         category="Brand Refresh & Digital Transformation"
         heroImage="/Infinite-Youth-Medical-Spa_49b6158f087279481f10f7ebaeb2ad1b.jpg"
@@ -87,7 +87,7 @@ export default function InfiniteYouthCaseStudy() {
         testimonial={{
           quote: "Forward Minded Media didn't just refresh our brand—they transformed our entire business. The new website is stunning, our social media engagement has skyrocketed, and we're attracting clients who truly value our premium services. Their responsiveness and attention to detail made the entire process seamless.",
           author: "Owner & Lead Aesthetician",
-          position: "Medical Spa Client B",
+          position: "Infinite Youth Medical Spa",
         }}
       />
       

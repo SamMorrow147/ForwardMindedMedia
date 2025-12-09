@@ -44,10 +44,11 @@ export default function FirstNationalBankCaseStudy() {
       />
       
       <CaseStudyLayout
-        clientName="Banking Client A"
+        clientName="First National Bank"
         projectTitle="Double the Impact"
         category="Multichannel Campaign"
         heroImage="/firstnational.jpg"
+        clientLogo="/FNB.png"
         goal="Increase brand awareness and new account signups in southern Minnesota while establishing a stronger competitive presence in the regional banking market."
         approach="We developed an integrated multichannel campaign combining digital display advertising, radio spots, and engaging social video content. Our strategy focused on highlighting the bank's community roots and personalized service while driving measurable conversions through targeted messaging and strategic media placement across multiple touchpoints."
         deliverables={[
@@ -85,7 +86,7 @@ export default function FirstNationalBankCaseStudy() {
         testimonial={{
           quote: "Forward Minded Media transformed our marketing approach. Their strategic multichannel campaign not only doubled our visibility but significantly reduced our acquisition costs. The team's data-driven approach and creative execution exceeded all our expectations.",
           author: "Marketing Director",
-          position: "Banking Client A",
+          position: "First National Bank",
         }}
       />
       

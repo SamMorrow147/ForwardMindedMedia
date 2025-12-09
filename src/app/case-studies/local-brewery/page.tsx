@@ -44,7 +44,7 @@ export default function LocalBreweryCaseStudy() {
       />
       
       <CaseStudyLayout
-        clientName="Brewery Client C"
+        clientName="Local Brewery"
         projectTitle="Hometown Hype Collaboration"
         category="Video Production & Event Marketing"
         heroImage="https://images.unsplash.com/photo-1532634922-8fe0b757fb13?q=80&w=2072&auto=format&fit=crop"
@@ -89,7 +89,7 @@ export default function LocalBreweryCaseStudy() {
         testimonial={{
           quote: "The Hometown Hype video exceeded our wildest expectations. Forward Minded Media captured the essence of our brewery and our connection to the community perfectly. The scavenger hunt was a brilliant addition that got people excited and exploring. Our seasonal release event was our biggest turnout ever, and we completely sold out of merchandise!",
           author: "Co-Founder & Head Brewer",
-          position: "Brewery Client C",
+          position: "Local Brewery",
         }}
       />
       

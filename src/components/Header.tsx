@@ -8,9 +8,9 @@ function HeaderSlider() {
   
   const lightShadowStyle = {
     textShadow: `
-      0 0.015em 0 #d16cc7,
-      0 0.03em 0.015em #6d3568,
-      0 0.045em 0.03em #4a2345
+      0 0.015em 0 rgba(133, 66, 127, 0.3),
+      0 0.03em 0.015em rgba(133, 66, 127, 0.2),
+      0 0.045em 0.03em rgba(133, 66, 127, 0.1)
     `,
     fontSize: 'clamp(2.5rem, 5vw, 4rem)'
   };
@@ -118,10 +118,10 @@ function HeaderSlider() {
             }`}
           >
             <div className="px-4 md:px-8 w-full">
-              <h1 className="ThreeDee text-white mb-6 md:mb-8 header-carousel-title" style={{...lightShadowStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, textAlign: 'center', width: '100%'}}>
+              <h1 className="ThreeDee text-black mb-6 md:mb-8 header-carousel-title" style={{...lightShadowStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, textAlign: 'center', width: '100%'}}>
                 {slide.title}
               </h1>
-              <p className="text-black text-lg md:text-2xl lg:text-3xl leading-relaxed max-w-6xl mx-auto px-2" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
+              <p className="text-gray-800 text-lg md:text-2xl lg:text-3xl leading-relaxed max-w-6xl mx-auto px-2" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
                 {slide.content}
               </p>
             </div>
@@ -251,7 +251,7 @@ function HeaderSlider() {
 
 export default function Header() {
   return (
-    <div className="relative min-h-[50vh] md:h-[35vh] w-full bg-[#f7ba40] py-8 md:py-12">
+    <div className="relative min-h-[50vh] md:h-[35vh] w-full bg-[#e8e1d4] py-8 md:py-12">
       {/* Content layer */}
       <header className="relative z-20 flex items-center justify-center h-full">
         <HeaderSlider />

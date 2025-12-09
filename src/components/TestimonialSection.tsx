@@ -138,7 +138,7 @@ export default function TestimonialSection() {
             {testimonials.map((testimonial, index) => (
               <div key={index} className="flex-none w-80 snap-start">
                 <SpotlightCard 
-                  className="h-full"
+                  className="h-full testimonial-card"
                   spotlightColor={testimonial.spotlightColor}
                 >
                   <div className="h-full flex flex-col">
@@ -158,8 +158,8 @@ export default function TestimonialSection() {
                       &ldquo;{testimonial.testimonial}&rdquo;
                     </blockquote>
                     
-                    {/* Client Info */}
-                    <div className="text-center">
+                    {/* Client Info - Always at bottom */}
+                    <div className="text-center mt-auto">
                       <h4 className="text-white text-xl font-bold mb-1">
                         {testimonial.name}
                       </h4>
@@ -238,6 +238,20 @@ export default function TestimonialSection() {
             width: 60px;
             background: linear-gradient(to left, rgba(96, 45, 98, 1), rgba(96, 45, 98, 0.6) 40%, rgba(96, 45, 98, 0));
           }
+        }
+        
+        /* Ensure testimonial cards have consistent height and flex layout */
+        .testimonial-card {
+          display: flex;
+          flex-direction: column;
+          min-height: 100%;
+        }
+        
+        .testimonial-card .card-content {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 100%;
         }
       `}</style>
     </section>

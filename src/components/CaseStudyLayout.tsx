@@ -2,6 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
+import AnimatedLineChart from './AnimatedLineChart';
+import AnimatedCircleChart from './AnimatedCircleChart';
 
 interface MetricCardProps {
   value: string;
@@ -19,6 +21,7 @@ interface CaseStudyLayoutProps {
   deliverables: string[];
   results: string[];
   metrics: MetricCardProps[];
+  clientLogo?: string;
   testimonial?: {
     quote: string;
     author: string;
@@ -27,7 +30,7 @@ interface CaseStudyLayoutProps {
 }
 
 const MetricCard: React.FC<MetricCardProps> = ({ value, label, icon }) => (
-  <div className="bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border border-[#f7ba40]/20 hover:border-[#f7ba40]/40 transition-all duration-300 hover:transform hover:scale-105">
+  <div className="bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border border-[#f7ba40]/20 hover:border-[#f7ba40]/40 transition-all duration-300 hover:transform hover:scale-105 flex flex-col items-center justify-center text-center">
     {icon && <div className="text-4xl mb-4">{icon}</div>}
     <div className="text-5xl font-bold text-[#f7ba40] mb-2" style={{ fontFamily: '"scandia-web", sans-serif' }}>
       {value}
@@ -37,6 +40,63 @@ const MetricCard: React.FC<MetricCardProps> = ({ value, label, icon }) => (
     </div>
   </div>
 );
+
+const MetricCardWithChart: React.FC<MetricCardProps> = ({ value, label, trend = 'up' }) => {
+  // Data points for upward trending chart (representing growth)
+  const upwardData = [15, 25, 40, 30, 45, 40, 35, 55, 37, 50, 60, 45, 70, 78];
+  // Data points for downward trending chart (representing decrease in cost)
+  // Starts high (top) and ends in middle, with variation up and down
+  const downwardData = [95, 88, 92, 85, 78, 82, 75, 70, 73, 68, 65, 60, 58, 55];
+  const chartData = trend === 'down' ? downwardData : upwardData;
+  
+  return (
+    <div className="bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border border-[#85417f]/20 hover:border-[#85417f]/40 transition-all duration-300 hover:transform hover:scale-105 relative overflow-hidden flex flex-col">
+      <div className="relative w-full flex-1 mb-6" style={{ minHeight: '180px' }}>
+        <AnimatedLineChart 
+          data={chartData}
+          value={value}
+          label={label}
+          className="w-full"
+          trend={trend}
+        />
+      </div>
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="text-5xl font-bold text-[#f7ba40] mb-2" style={{ fontFamily: '"scandia-web", sans-serif' }}>
+          {value}
+        </div>
+        <div className="text-white/80 text-lg" style={{ fontFamily: '"halcom", sans-serif' }}>
+          {label}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MetricCardWithCircleChart: React.FC<MetricCardProps> = ({ value, label }) => {
+  // Extract percentage from value (e.g., "32%" -> 32)
+  const percentage = parseInt(value.replace('%', '')) || 32;
+  
+  return (
+    <div className="bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border border-[#85417f]/20 hover:border-[#85417f]/40 transition-all duration-300 hover:transform hover:scale-105 relative overflow-hidden flex flex-col">
+      <div className="relative w-full flex-1 mb-6" style={{ minHeight: '180px' }}>
+        <AnimatedCircleChart 
+          percentage={percentage}
+          value={value}
+          label={label}
+          className="w-full"
+        />
+      </div>
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="text-5xl font-bold text-[#f7ba40] mb-2" style={{ fontFamily: '"scandia-web", sans-serif' }}>
+          {value}
+        </div>
+        <div className="text-white/80 text-lg" style={{ fontFamily: '"halcom", sans-serif' }}>
+          {label}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
   clientName,
@@ -48,25 +108,36 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
   deliverables,
   results,
   metrics,
+  clientLogo,
   testimonial,
 }) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
       {/* Hero Section */}
-      <section className="container mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-[#f7ba40] text-lg mb-4 uppercase tracking-wide" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 600 }}>
-              {category}
-            </p>
+      <section className="container mx-auto px-6 pt-32 pb-16">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-12 items-center">
+          <div className="order-2 md:order-1">
+            {clientLogo ? (
+              <div className="mb-6">
+                <img 
+                  src={clientLogo} 
+                  alt={clientName}
+                  className="h-24 w-auto object-contain"
+                />
+              </div>
+            ) : (
+              <p className="text-2xl text-white/90 mb-6" style={{ fontFamily: '"halcom", sans-serif', fontStyle: 'italic' }}>
+                {clientName}
+              </p>
+            )}
             <h1 className="text-6xl font-bold text-white mb-4" style={{ fontFamily: '"scandia-web", sans-serif' }}>
               {projectTitle}
             </h1>
-            <p className="text-2xl text-white/90 mb-6" style={{ fontFamily: '"halcom", sans-serif', fontStyle: 'italic' }}>
-              {clientName}
+            <p className="text-[#f7ba40] text-lg mb-4 uppercase tracking-wide" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 600 }}>
+              {category}
             </p>
           </div>
-          <div className="rounded-2xl overflow-hidden shadow-2xl">
+          <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-2xl w-full">
             <img 
               src={heroImage} 
               alt={`${clientName} project`}
@@ -78,11 +149,11 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Goal Section */}
       <section className="bg-[#85417f] py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Client Goal
           </h2>
-          <p className="text-xl text-white/90 leading-relaxed max-w-4xl" style={{ fontFamily: '"halcom", sans-serif' }}>
+          <p className="text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
             {goal}
           </p>
         </div>
@@ -90,11 +161,11 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Approach Section */}
       <section className="py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Our Approach
           </h2>
-          <p className="text-xl text-white/90 leading-relaxed max-w-4xl" style={{ fontFamily: '"halcom", sans-serif' }}>
+          <p className="text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
             {approach}
           </p>
         </div>
@@ -102,7 +173,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Deliverables Section */}
       <section className="bg-[#3a1945] py-16">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Deliverables
           </h2>
@@ -135,9 +206,34 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
           
           {/* Metrics Grid */}
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {metrics.map((metric, index) => (
-              <MetricCard key={index} {...metric} />
-            ))}
+            {metrics.map((metric, index) => {
+              const labelLower = metric.label.toLowerCase();
+              const valueLower = metric.value.toLowerCase();
+              
+              // Use downward line chart for cost reduction metrics
+              if (labelLower.includes('cost') || labelLower.includes('lower') || labelLower.includes('reduction') || labelLower.includes('decrease')) {
+                return <MetricCardWithChart key={index} {...metric} trend="down" />;
+              }
+              
+              // Use circle chart for percentage-based metrics (booking, attendance, sellout, signups)
+              if (labelLower.includes('signup') || labelLower.includes('sign-up') || 
+                  labelLower.includes('booking') || labelLower.includes('attendance') || 
+                  labelLower.includes('sellout') || labelLower.includes('sell-out') ||
+                  (valueLower.includes('%') && (labelLower.includes('higher') || labelLower.includes('rise') || labelLower.includes('increase')))) {
+                return <MetricCardWithCircleChart key={index} {...metric} />;
+              }
+              
+              // Use upward line chart for growth/increase/boost metrics (traffic, engagement, impressions)
+              if (labelLower.includes('growth') || labelLower.includes('increase') || 
+                  labelLower.includes('boost') || labelLower.includes('impressions') ||
+                  labelLower.includes('traffic') || labelLower.includes('engagement') ||
+                  labelLower.includes('rise') || labelLower.includes('higher')) {
+                return <MetricCardWithChart key={index} {...metric} trend="up" />;
+              }
+              
+              // Default to regular card if no match
+              return <MetricCard key={index} {...metric} />;
+            })}
           </div>
 
           {/* Additional Results */}

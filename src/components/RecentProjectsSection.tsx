@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import TextType from './TextType';
 
 interface Project {
@@ -70,51 +70,113 @@ const sampleProjects: Project[] = [
 export default function RecentProjectsSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const hasMovedRef = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const dragThreshold = 5; // Minimum pixels to move before considering it a drag
 
   // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent | MouseEvent) => {
     if (!scrollContainerRef.current) return;
     setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    hasMovedRef.current = false;
+    const pageX = 'pageX' in e ? e.pageX : e.clientX;
+    startX.current = pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
 
   const handleMouseLeave = () => {
-    setIsDragging(false);
+    // Don't reset here, let mouseup handle it
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (e?: MouseEvent) => {
     setIsDragging(false);
+    // Reset after a short delay to allow click handler to check
+    setTimeout(() => {
+      hasMovedRef.current = false;
+    }, 100);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent | MouseEvent) => {
     if (!isDragging || !scrollContainerRef.current) return;
     e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    const pageX = 'pageX' in e ? e.pageX : e.clientX;
+    const x = pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2; // Multiply by 2 for faster scrolling
+    
+    // Check if we've moved enough to consider it a drag
+    if (Math.abs(walk) > dragThreshold) {
+      hasMovedRef.current = true;
+    }
+    
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   // Touch handlers for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!scrollContainerRef.current) return;
     setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
+    hasMovedRef.current = false;
+    startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
     const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    const walk = (x - startX.current) * 2;
+    
+    // Check if we've moved enough to consider it a drag
+    if (Math.abs(walk) > dragThreshold) {
+      hasMovedRef.current = true;
+    }
+    
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
+    // Reset after a short delay to allow click handler to check
+    setTimeout(() => {
+      hasMovedRef.current = false;
+    }, 100);
   };
+
+  // Add document-level event listeners for dragging
+  useEffect(() => {
+    const handleDocumentMouseMove = (e: MouseEvent) => {
+      if (isDragging && scrollContainerRef.current) {
+        e.preventDefault();
+        const x = e.pageX - scrollContainerRef.current.offsetLeft;
+        const walk = (x - startX.current) * 2;
+        
+        if (Math.abs(walk) > dragThreshold) {
+          hasMovedRef.current = true;
+        }
+        
+        scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+      }
+    };
+
+    const handleDocumentMouseUp = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        setTimeout(() => {
+          hasMovedRef.current = false;
+        }, 100);
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleDocumentMouseMove);
+      document.addEventListener('mouseup', handleDocumentMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleDocumentMouseMove);
+        document.removeEventListener('mouseup', handleDocumentMouseUp);
+      };
+    }
+  }, [isDragging, dragThreshold]);
 
   const lightShadowStyle = {
     textShadow: `
@@ -183,20 +245,40 @@ export default function RecentProjectsSection() {
             className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             style={{ 
               width: 'max-content', 
-              minWidth: '100%'
+              minWidth: '100%',
+              userSelect: isDragging ? 'none' : 'auto'
             }}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
             {sampleProjects.map((project) => (
-              <div
+              <a
                 key={project.id}
-                className="project-card flex-none w-80 md:w-[450px] h-[520px] snap-start flex flex-col"
+                href={project.href}
+                draggable="false"
+                className="project-card flex-none w-80 md:w-[450px] h-[520px] snap-start flex flex-col no-underline cursor-pointer"
+                style={{ pointerEvents: isDragging && hasMovedRef.current ? 'none' : 'auto' }}
+                onDragStart={(e) => {
+                  e.preventDefault();
+                  return false;
+                }}
+                onMouseDown={(e) => {
+                  // Prevent default link drag behavior and let the container handle dragging
+                  e.preventDefault();
+                  if (scrollContainerRef.current) {
+                    handleMouseDown(e);
+                  }
+                }}
+                onClick={(e) => {
+                  if (hasMovedRef.current || isDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                  }
+                }}
               >
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200 flex-shrink-0">
@@ -219,15 +301,7 @@ export default function RecentProjectsSection() {
                   <p className="text-white/90 mb-4 line-clamp-3 flex-grow">
                     {project.description}
                   </p>
-                  <a
-                    href={project.href}
-                    className="inline-flex items-center text-[#f7ba40] font-semibold hover:text-[#ffeb78] transition-colors duration-300"
-                    onClick={(e) => {
-                      if (isDragging) {
-                        e.preventDefault();
-                      }
-                    }}
-                  >
+                  <div className="inline-flex items-center text-[#f7ba40] font-semibold transition-colors duration-300">
                     View Project
                     <svg
                       className="w-5 h-5 ml-2"
@@ -242,9 +316,9 @@ export default function RecentProjectsSection() {
                         d="M17 8l4 4m0 0l-4 4m4-4H3"
                       />
                     </svg>
-                  </a>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
             {/* Spacer to ensure last card can scroll fully into view */}
             <div className="flex-none w-6 md:w-0" aria-hidden="true"></div>
@@ -284,6 +358,12 @@ export default function RecentProjectsSection() {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           position: relative;
           z-index: 1;
+          text-decoration: none;
+          color: inherit;
+        }
+        
+        .project-card:visited {
+          color: inherit;
         }
         
         @media (hover: hover) and (pointer: fine) {
