@@ -4,7 +4,7 @@ import { Suspense, useRef, useLayoutEffect, useEffect, useState } from 'react';
 import { Canvas, useFrame, invalidate } from '@react-three/fiber';
 import { useGLTF, useProgress, Html, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
-import DotGrid from './DotGrid';
+import Galaxy from './Galaxy';
 
 const Loader = () => {
   const { progress } = useProgress();
@@ -40,8 +40,8 @@ const AnimatedLights = () => {
   
   return (
     <>
-      <directionalLight ref={light1Ref} position={[3, 3, 5]} intensity={2} />
-      <directionalLight ref={light2Ref} position={[-3, 3, 5]} intensity={2} />
+      <directionalLight ref={light1Ref} position={[3, 3, 5]} intensity={2.8} />
+      <directionalLight ref={light2Ref} position={[-3, 3, 5]} intensity={2.8} />
     </>
   );
 };
@@ -210,9 +210,9 @@ export default function Logo3DSection() {
     return (
       <section style={{
         width: '100%',
-        height: isMobile ? '60vh' : '80vh',
+        height: '100vh',
         position: 'relative',
-        backgroundColor: '#e8e1d4'
+        backgroundColor: '#000000'
       }} />
     );
   }
@@ -220,27 +220,24 @@ export default function Logo3DSection() {
   return (
     <section style={{
       width: '100%',
-      height: isMobile ? '60vh' : '80vh',
+      height: '100vh',
       position: 'relative',
-      backgroundColor: '#e8e1d4'
+      backgroundColor: '#000000'
     }}>
-      {/* Animated Dot Grid Background */}
+      {/* Galaxy Background */}
       <div style={{
         position: 'absolute',
         inset: 0,
         zIndex: 0
       }}>
-        <DotGrid
-          dotSize={4}
-          gap={25}
-          baseColor="#ffffff"
-          activeColor="#f6ba3e"
-          proximity={120}
-          speedTrigger={100}
-          shockRadius={60}
-          shockStrength={0.15}
-          resistance={300}
-          returnDuration={0.15}
+        <Galaxy
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={0.8}
+          glowIntensity={0.2}
+          saturation={0.8}
+          hueShift={240}
+          transparent={true}
         />
       </div>
       
@@ -258,16 +255,42 @@ export default function Logo3DSection() {
         eventSource={document.body}
         eventPrefix="client"
       >
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[0, 10, 3]} intensity={2.5} castShadow />
-        <directionalLight position={[0, 0, 6]} intensity={1.5} />
-        <directionalLight position={[0, -1, -3]} intensity={1.2} />
-        <directionalLight position={[4, -3, 3]} intensity={2.0} />
-        <directionalLight position={[-4, 2, 3]} intensity={1.5} />
-        <directionalLight position={[-5, 5, 3]} intensity={2.0} />
-        <directionalLight position={[-6, 0, 4]} intensity={3.0} />
-        <directionalLight position={[0, -8, 3]} intensity={2.5} />
-        <directionalLight position={[0, 8, -2]} intensity={3.5} />
+        {/* Ambient light for overall brightness */}
+        <ambientLight intensity={2.0} />
+        
+        {/* Top lights - primary illumination from above */}
+        <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow />
+        <directionalLight position={[0, 12, 0]} intensity={3.2} />
+        <directionalLight position={[0, 8, -2]} intensity={4.0} />
+        <directionalLight position={[2, 10, 2]} intensity={2.8} />
+        <directionalLight position={[-2, 10, 2]} intensity={2.8} />
+        
+        {/* Front lights - brighten the front face */}
+        <directionalLight position={[0, 0, 6]} intensity={2.4} />
+        <directionalLight position={[3, 2, 5]} intensity={2.0} />
+        <directionalLight position={[-3, 2, 5]} intensity={2.0} />
+        
+        {/* Side lights - fill lighting */}
+        <directionalLight position={[4, -3, 3]} intensity={2.4} />
+        <directionalLight position={[-4, 2, 3]} intensity={2.4} />
+        <directionalLight position={[5, 3, 2]} intensity={2.0} />
+        <directionalLight position={[-5, 3, 2]} intensity={2.0} />
+        <directionalLight position={[-6, 0, 4]} intensity={3.2} />
+        <directionalLight position={[6, 0, 4]} intensity={3.2} />
+        
+        {/* Bottom and back lights - rim lighting */}
+        <directionalLight position={[0, -8, 3]} intensity={2.4} />
+        <directionalLight position={[0, -1, -3]} intensity={1.6} />
+        <directionalLight position={[0, -5, -2]} intensity={2.0} />
+        
+        {/* Additional point lights for extra brightness */}
+        <pointLight position={[0, 5, 3]} intensity={1.6} distance={10} />
+        <pointLight position={[0, 8, 0]} intensity={1.2} distance={10} />
+        <pointLight position={[3, 5, 3]} intensity={1.2} distance={10} />
+        <pointLight position={[-3, 5, 3]} intensity={1.2} distance={10} />
+        
+        {/* Animated lights for dynamic effect */}
+        <AnimatedLights />
 
         <Suspense fallback={<Loader />}>
           <Model 

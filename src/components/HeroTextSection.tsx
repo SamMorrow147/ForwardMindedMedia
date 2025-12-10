@@ -2,6 +2,7 @@
 
 import LiquidEther from "./LiquidEther";
 import TextType from "./TextType";
+import { Layers, Handshake, MapPin } from 'lucide-react';
 
 export default function HeroTextSection() {
   return (
@@ -43,7 +44,7 @@ export default function HeroTextSection() {
             className="glass-button no-underline"
           >
             <span style={{ fontFamily: 'inherit', fontWeight: 'inherit', fontSize: 'inherit', letterSpacing: 'inherit' }}>
-              Let&apos;s Go!
+              Let&apos;s Start Your Story
             </span>
             <div className="button-arrow">
               <span></span>
@@ -51,6 +52,78 @@ export default function HeroTextSection() {
               <span></span>
             </div>
           </a>
+        </div>
+      </div>
+
+      {/* Three Items Section */}
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 mt-16 md:mt-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {[
+            {
+              id: 0,
+              icon: Layers,
+              title: "Full-Service Expertise"
+            },
+            {
+              id: 1,
+              icon: Handshake,
+              title: (
+                <>
+                  True<br />Partnerships
+                </>
+              )
+            },
+            {
+              id: 2,
+              icon: MapPin,
+              title: (
+                <>
+                  Local Roots <span style={{ fontStyle: 'italic' }}>National Reach</span>
+                </>
+              )
+            }
+          ].map((item) => {
+            const IconComponent = item.icon;
+            const lightShadowStyle = {
+              textShadow: `
+                0 0.015em 0 rgba(255, 255, 255, 0.3),
+                0 0.03em 0.015em rgba(255, 255, 255, 0.2),
+                0 0.045em 0.03em rgba(255, 255, 255, 0.1)
+              `,
+              fontSize: 'clamp(1.5rem, 3vw, 2.5rem)'
+            };
+            
+            return (
+              <div
+                key={item.id}
+                className="flex flex-col items-center text-center"
+              >
+                {/* Icon */}
+                <div className="mb-6 md:mb-8">
+                  <IconComponent 
+                    size={64} 
+                    className="text-white" 
+                    strokeWidth={1.5}
+                  />
+                </div>
+                
+                {/* Title */}
+                <h2 
+                  className="ThreeDee text-white" 
+                  style={{
+                    ...lightShadowStyle, 
+                    fontFamily: '"scandia-web", sans-serif', 
+                    fontWeight: 700, 
+                    textAlign: 'center', 
+                    width: '100%',
+                    color: '#ffffff'
+                  }}
+                >
+                  {item.title}
+                </h2>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -66,7 +139,9 @@ export default function HeroTextSection() {
         }
         
         .glass-button {
-          width: 200px;
+          width: auto;
+          min-width: 250px;
+          padding: 0 24px;
           height: 60px;
           font-family: "scandia-web", sans-serif;
           font-weight: 700;
