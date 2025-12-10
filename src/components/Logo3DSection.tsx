@@ -40,8 +40,8 @@ const AnimatedLights = () => {
   
   return (
     <>
-      <directionalLight ref={light1Ref} position={[3, 3, 5]} intensity={2.8} />
-      <directionalLight ref={light2Ref} position={[-3, 3, 5]} intensity={2.8} />
+      <directionalLight ref={light1Ref} position={[3, 3, 5]} intensity={2.8} color="#fff8d0" />
+      <directionalLight ref={light2Ref} position={[-3, 3, 5]} intensity={2.8} color="#fff8d0" />
     </>
   );
 };
@@ -69,7 +69,9 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile }: {
         const maxDim = Math.max(size.x, size.y, size.z);
         
         if (!isNaN(maxDim) && maxDim > 0) {
-          const scale = 5 / maxDim;
+          // Smaller scale for mobile to fit better
+          const baseScale = isMobile ? 3.5 : 5;
+          const scale = baseScale / maxDim;
           
           meshRef.current.scale.setScalar(scale);
           meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
@@ -85,7 +87,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile }: {
         // Silently handle errors - model will still try to render
       }
     }
-  }, [gltf.scene]);
+  }, [gltf.scene, isMobile]);
 
   useFrame((state, delta) => {
     if (outerRef.current) {
@@ -114,8 +116,8 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile }: {
       
       // Normal animations after intro
       // Auto mode - scroll tilt + mouse hover (increased tilt for visibility)
-      const baseTiltX = 0.3; // Base forward tilt for perspective
-      const scrollRotationX = scrollProgress * -2.8;
+      const baseTiltX = 0.15; // Base forward tilt for perspective
+      const scrollRotationX = scrollProgress * (isMobile ? -1.8 : -1.2);
       const hoverTiltY = mousePosition.x * 0.4;
       
       const targetRotationX = baseTiltX + scrollRotationX;
@@ -139,8 +141,8 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile }: {
         const zoomScale = 1 + (scrollProgress * 2.0);
         outerRef.current.scale.setScalar(zoomScale);
       } else {
-        // Desktop: move upward slightly as you scroll (limited range)
-        const targetY = 0 + (Math.min(scrollProgress, 0.3) * 1.2);
+        // Desktop: move downward slightly as you scroll
+        const targetY = 0 - (scrollProgress * 0.8);
         outerRef.current.position.y = targetY;
         
         // Keep scale at exactly 1 on desktop - no zooming
@@ -256,38 +258,48 @@ export default function Logo3DSection() {
         eventPrefix="client"
       >
         {/* Ambient light for overall brightness */}
-        <ambientLight intensity={2.0} />
+        <ambientLight intensity={2.0} color="#fff8d0" />
         
         {/* Top lights - primary illumination from above */}
-        <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow />
-        <directionalLight position={[0, 12, 0]} intensity={3.2} />
-        <directionalLight position={[0, 8, -2]} intensity={4.0} />
-        <directionalLight position={[2, 10, 2]} intensity={2.8} />
-        <directionalLight position={[-2, 10, 2]} intensity={2.8} />
+        <directionalLight position={[0, 10, 3]} intensity={3.5} castShadow color="#fff8d0" />
+        <directionalLight position={[0, 12, 0]} intensity={3.2} color="#fff8d0" />
+        <directionalLight position={[0, 8, -2]} intensity={4.0} color="#fff8d0" />
+        <directionalLight position={[2, 10, 2]} intensity={2.8} color="#fff8d0" />
+        <directionalLight position={[-2, 10, 2]} intensity={2.8} color="#fff8d0" />
         
         {/* Front lights - brighten the front face */}
-        <directionalLight position={[0, 0, 6]} intensity={2.4} />
-        <directionalLight position={[3, 2, 5]} intensity={2.0} />
-        <directionalLight position={[-3, 2, 5]} intensity={2.0} />
+        <directionalLight position={[0, 0, 6]} intensity={2.4} color="#fff8d0" />
+        <directionalLight position={[3, 2, 5]} intensity={2.0} color="#fff8d0" />
+        <directionalLight position={[-3, 2, 5]} intensity={2.0} color="#fff8d0" />
         
         {/* Side lights - fill lighting */}
-        <directionalLight position={[4, -3, 3]} intensity={2.4} />
-        <directionalLight position={[-4, 2, 3]} intensity={2.4} />
-        <directionalLight position={[5, 3, 2]} intensity={2.0} />
-        <directionalLight position={[-5, 3, 2]} intensity={2.0} />
-        <directionalLight position={[-6, 0, 4]} intensity={3.2} />
-        <directionalLight position={[6, 0, 4]} intensity={3.2} />
+        <directionalLight position={[4, -3, 3]} intensity={2.4} color="#fff8d0" />
+        <directionalLight position={[-4, 2, 3]} intensity={2.4} color="#fff8d0" />
+        <directionalLight position={[5, 3, 2]} intensity={2.0} color="#fff8d0" />
+        <directionalLight position={[-5, 3, 2]} intensity={2.0} color="#fff8d0" />
+        <directionalLight position={[-6, 0, 4]} intensity={3.2} color="#fff8d0" />
+        <directionalLight position={[6, 0, 4]} intensity={3.2} color="#fff8d0" />
         
         {/* Bottom and back lights - rim lighting */}
-        <directionalLight position={[0, -8, 3]} intensity={2.4} />
-        <directionalLight position={[0, -1, -3]} intensity={1.6} />
-        <directionalLight position={[0, -5, -2]} intensity={2.0} />
+        <directionalLight position={[0, -8, 3]} intensity={2.4} color="#fff8d0" />
+        <directionalLight position={[0, -1, -3]} intensity={1.6} color="#fff8d0" />
+        <directionalLight position={[0, -5, -2]} intensity={2.0} color="#fff8d0" />
+        
+        {/* Soft upward light from below left */}
+        <directionalLight position={[-4, -10, 2]} intensity={2.5} color="#fff8d0" />
+        <pointLight position={[-3, -8, 1]} intensity={1.8} distance={15} color="#fff8d0" />
+        
+        {/* Additional upward lights for mobile - illuminate front face from below left */}
+        <directionalLight position={[-3, -10, 4]} intensity={isMobile ? 3.5 : 2.0} color="#fff8d0" />
+        <pointLight position={[-3, -8, 3]} intensity={isMobile ? 2.5 : 1.5} distance={15} color="#fff8d0" />
+        <pointLight position={[-4, -7, 2]} intensity={isMobile ? 2.0 : 1.2} distance={15} color="#fff8d0" />
+        <pointLight position={[-2, -7, 2]} intensity={isMobile ? 2.0 : 1.2} distance={15} color="#fff8d0" />
         
         {/* Additional point lights for extra brightness */}
-        <pointLight position={[0, 5, 3]} intensity={1.6} distance={10} />
-        <pointLight position={[0, 8, 0]} intensity={1.2} distance={10} />
-        <pointLight position={[3, 5, 3]} intensity={1.2} distance={10} />
-        <pointLight position={[-3, 5, 3]} intensity={1.2} distance={10} />
+        <pointLight position={[0, 5, 3]} intensity={1.6} distance={10} color="#fff8d0" />
+        <pointLight position={[0, 8, 0]} intensity={1.2} distance={10} color="#fff8d0" />
+        <pointLight position={[3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
+        <pointLight position={[-3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
         
         {/* Animated lights for dynamic effect */}
         <AnimatedLights />
