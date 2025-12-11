@@ -758,8 +758,10 @@ class InfiniteGridMenu {
   private init(onInit?: InitCallback): void {
     const gl = this.canvas.getContext('webgl2', {
       antialias: true,
-      alpha: false,
-      premultipliedAlpha: false
+      alpha: true,
+      premultipliedAlpha: false,
+      preserveDrawingBuffer: false,
+      powerPreference: 'high-performance'
     });
     if (!gl) {
       throw new Error('No WebGL 2 context!');
@@ -927,8 +929,10 @@ class InfiniteGridMenu {
     gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
 
-    // Black background to prevent white flicker
-    gl.clearColor(0, 0, 0, 1);
+    // Transparent so Galaxy shows through
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.uniformMatrix4fv(this.discLocations.uWorldMatrix, false, this.worldMatrix);
@@ -1103,12 +1107,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   };
 
   return (
-    <div className="relative w-full h-full" style={{ backgroundColor: '#000000' }}>
+    <div className="relative w-full h-full" style={{ backgroundColor: 'transparent' }}>
       <canvas
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
         className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
-        style={{ backgroundColor: '#000000' }}
+        style={{ backgroundColor: 'transparent' }}
       />
 
       {activeItem && (
