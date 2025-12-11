@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import StaggeredMenu from '@/components/StaggeredMenu';
 import AdobeFonts from '@/components/AdobeFonts';
 import InfiniteMenu from '@/components/InfiniteMenu';
+import Galaxy from '@/components/Galaxy';
 
 export default function MediaVersePage() {
   // Menu items configuration
@@ -54,7 +55,7 @@ export default function MediaVersePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
+    <div style={{ width: '100%', height: '100vh', position: 'relative', backgroundColor: '#000000' }}>
       <AdobeFonts />
       
       {/* Staggered Menu */}
@@ -74,8 +75,25 @@ export default function MediaVersePage() {
         onMenuClose={() => console.log('Menu closed')}
       />
 
+      {/* Galaxy Background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        zIndex: 0
+      }}>
+        <Galaxy
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={0.8}
+          glowIntensity={0.2}
+          saturation={0.8}
+          hueShift={240}
+          transparent={true}
+        />
+      </div>
+
       {/* Full Page Infinite Menu */}
-      <div className="fixed inset-0 w-full h-full bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
+      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1 }}>
         <InfiniteMenu items={infiniteMenuItems} />
       </div>
     </div>
