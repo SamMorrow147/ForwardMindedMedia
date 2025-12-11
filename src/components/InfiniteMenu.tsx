@@ -2,6 +2,7 @@
 
 import { FC, useRef, useState, useEffect, MutableRefObject } from 'react';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
+import { ArrowUpRight } from 'lucide-react';
 
 const discVertShaderSource = `#version 300 es
 
@@ -1119,9 +1120,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           text-center
           w-full
           px-4
-          [font-size:2rem]
+          [font-size:3.5rem]
           md:[font-size:4rem]
-          top-20
+          top-32
           md:top-1/2
           md:left-[1.6em]
           md:w-auto
@@ -1197,7 +1198,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           }
         `}
           >
-            <p className="select-none relative text-[#060010] top-[2px] text-[26px]">&#x2197;</p>
+            <ArrowUpRight className="select-none text-[#060010] w-6 h-6" strokeWidth={3} />
           </div>
         </>
       )}
