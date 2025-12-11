@@ -14,6 +14,7 @@ export default function InfiniteYouthCaseStudy() {
     { label: 'Our Team', ariaLabel: 'Meet our team', link: '/#our-team' },
     { label: 'Projects', ariaLabel: 'View our projects', link: '/#recent-projects' },
     { label: 'Clients', ariaLabel: 'Read client testimonials', link: '/#clients' },
+    { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 

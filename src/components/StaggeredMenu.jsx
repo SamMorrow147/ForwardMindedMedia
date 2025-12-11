@@ -49,7 +49,6 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -318,19 +317,6 @@ export const StaggeredMenu = ({
     [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen]
   );
 
-  // Scroll detection to change button color
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Consider "scrolled" when past 100px
-      setScrolled(scrollY > 100);
-    };
-    
-    handleScroll(); // Check initial state
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   React.useEffect(() => {
     if (toggleBtnRef.current) {
       let targetColor;
@@ -339,13 +325,13 @@ export const StaggeredMenu = ({
         // Menu is open
         targetColor = openMenuButtonColor;
       } else {
-        // Menu is closed - use dark purple at top, white when scrolled
-        targetColor = scrolled ? menuButtonColor : '#2a1232';
+        // Menu is closed - always use menuButtonColor (white)
+        targetColor = menuButtonColor;
       }
       
       gsap.set(toggleBtnRef.current, { color: targetColor });
     }
-  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor, scrolled]);
+  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
 
   const animateText = useCallback(opening => {
     const inner = textInnerRef.current;
@@ -465,31 +451,54 @@ export const StaggeredMenu = ({
         <div className="sm-panel-inner">
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
-              items.map((it, idx) => (
-                <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a 
-                    className="sm-panel-item" 
-                    href={it.link} 
-                    aria-label={it.ariaLabel} 
-                    data-index={idx + 1}
-                    onClick={(e) => {
-                      // If it's an anchor link, close the menu and scroll smoothly
-                      if (it.link.startsWith('#')) {
-                        e.preventDefault();
-                        toggleMenu();
-                        setTimeout(() => {
-                          const element = document.querySelector(it.link);
-                          if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }, 300);
+              items.map((it, idx) => {
+                const isAnchorLink = it.link.startsWith('#');
+                const handleClick = (e) => {
+                  if (isAnchorLink) {
+                    e.preventDefault();
+                    toggleMenu();
+                    setTimeout(() => {
+                      const element = document.querySelector(it.link);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }
-                    }}
-                  >
-                    <span className="sm-panel-itemLabel">{it.label}</span>
-                  </a>
-                </li>
-              ))
+                    }, 300);
+                  } else {
+                    // For page links, close the menu
+                    toggleMenu();
+                  }
+                };
+
+                const linkContent = (
+                  <span className="sm-panel-itemLabel">{it.label}</span>
+                );
+
+                return (
+                  <li className="sm-panel-itemWrap" key={it.label + idx}>
+                    {isAnchorLink ? (
+                      <a 
+                        className="sm-panel-item" 
+                        href={it.link} 
+                        aria-label={it.ariaLabel} 
+                        data-index={idx + 1}
+                        onClick={handleClick}
+                      >
+                        {linkContent}
+                      </a>
+                    ) : (
+                      <Link 
+                        className="sm-panel-item" 
+                        href={it.link} 
+                        aria-label={it.ariaLabel} 
+                        data-index={idx + 1}
+                        onClick={handleClick}
+                      >
+                        {linkContent}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })
             ) : (
               <li className="sm-panel-itemWrap" aria-hidden="true">
                 <span className="sm-panel-item">

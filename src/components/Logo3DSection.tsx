@@ -1,8 +1,8 @@
 'use client';
 
 import { Suspense, useRef, useLayoutEffect, useEffect, useState } from 'react';
-import { Canvas, useFrame, invalidate } from '@react-three/fiber';
-import { useGLTF, useProgress, Html, Environment, ContactShadows } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, useProgress, Html } from '@react-three/drei';
 import * as THREE from 'three';
 import Galaxy from './Galaxy';
 
