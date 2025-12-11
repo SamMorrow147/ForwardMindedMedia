@@ -1116,12 +1116,20 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           absolute
           font-black
           text-white
-          [font-size:4rem]
-          left-[1.6em]
-          top-1/2
-          transform
-          translate-x-[20%]
-          -translate-y-1/2
+          text-center
+          w-full
+          px-4
+          [font-size:2rem]
+          md:[font-size:4rem]
+          top-20
+          md:top-1/2
+          md:left-[1.6em]
+          md:w-auto
+          md:px-0
+          md:text-left
+          md:transform
+          md:translate-x-[20%]
+          md:-translate-y-1/2
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${
@@ -1138,17 +1146,24 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
             className={`
           select-none
           absolute
-          max-w-[10ch]
           text-white
-          text-[1.5rem]
-          top-1/2
-          right-[1%]
+          text-center
+          w-full
+          px-4
+          text-base
+          md:text-[1.5rem]
+          bottom-40
+          md:bottom-auto
+          md:top-1/2
+          md:right-[1%]
+          md:max-w-[10ch]
+          md:w-auto
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
           ${
             isMoving
-              ? 'opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2'
-              : 'opacity-100 pointer-events-auto duration-[500ms] translate-x-[-90%] -translate-y-1/2'
+              ? 'opacity-0 pointer-events-none duration-[100ms] md:translate-x-[-60%] md:-translate-y-1/2'
+              : 'opacity-100 pointer-events-auto duration-[500ms] md:translate-x-[-90%] md:-translate-y-1/2'
           }
         `}
           >
@@ -1172,10 +1187,13 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           cursor-pointer
           transition-all
           ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
+          bottom-20
+          md:bottom-[3.8em]
+          -translate-x-1/2
           ${
             isMoving
-              ? 'bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2'
-              : 'bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2'
+              ? 'opacity-0 pointer-events-none duration-[100ms] scale-0'
+              : 'opacity-100 pointer-events-auto duration-[500ms] scale-100'
           }
         `}
           >

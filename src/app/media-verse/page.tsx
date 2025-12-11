@@ -74,17 +74,6 @@ export default function MediaVersePage() {
         onMenuClose={() => console.log('Menu closed')}
       />
 
-      {/* Fixed Media Verse Heading */}
-      <h1 
-        className="fixed top-0 left-0 right-0 z-20 text-white text-5xl md:text-6xl py-6 text-center pointer-events-none"
-        style={{ 
-          fontFamily: '"scandia-web", sans-serif', 
-          fontWeight: 700,
-        }}
-      >
-        Media Verse
-      </h1>
-
       {/* Full Page Infinite Menu */}
       <div className="fixed inset-0 w-full h-full bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
         <InfiniteMenu items={infiniteMenuItems} />
