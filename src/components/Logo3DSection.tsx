@@ -172,6 +172,12 @@ export default function Logo3DSection() {
   useEffect(() => {
     setMounted(true);
     
+    // Force black background to prevent white flicker
+    const originalBg = document.body.style.backgroundColor;
+    const originalHtmlBg = document.documentElement.style.backgroundColor;
+    document.body.style.backgroundColor = '#000000';
+    document.documentElement.style.backgroundColor = '#000000';
+    
     // Check if mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -205,6 +211,8 @@ export default function Logo3DSection() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', checkMobile);
+      document.body.style.backgroundColor = originalBg;
+      document.documentElement.style.backgroundColor = originalHtmlBg;
     };
   }, [isMobile]);
 
@@ -226,11 +234,24 @@ export default function Logo3DSection() {
       position: 'relative',
       backgroundColor: '#000000'
     }}>
+      {/* SOLID BLACK BACKGROUND LAYER - ALWAYS VISIBLE */}
+      <div style={{
+        position: 'fixed',
+        top: '-100vh',
+        left: '-100vw',
+        width: '300vw',
+        height: '500vh',
+        backgroundColor: '#000000',
+        zIndex: -10,
+        pointerEvents: 'none'
+      }} />
+      
       {/* Galaxy Background */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        zIndex: 0
+        zIndex: 0,
+        backgroundColor: '#000000'
       }}>
         <Galaxy
           mouseRepulsion={true}
@@ -253,7 +274,12 @@ export default function Logo3DSection() {
           position: [0, 0, isMobile ? 6 : 5], 
           fov: isMobile ? 60 : 50 
         }}
-        style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          position: 'relative', 
+          zIndex: 1
+        }}
         eventSource={document.body}
         eventPrefix="client"
       >

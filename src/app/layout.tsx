@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: '#000000', background: '#000000' }}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="color-scheme" content="dark" />
@@ -37,8 +37,17 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ 
+          backgroundColor: '#000000',
+          background: '#000000'
+        }}
       >
-        {children}
+        <div style={{
+          minHeight: '100vh',
+          backgroundColor: '#000000'
+        }}>
+          {children}
+        </div>
       </body>
     </html>
   );
