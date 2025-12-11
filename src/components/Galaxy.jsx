@@ -281,6 +281,16 @@ export default function Galaxy({
       renderer.render({ scene: mesh });
     }
     animateId = requestAnimationFrame(update);
+    
+    // Style the canvas to prevent white flicker
+    gl.canvas.style.backgroundColor = '#000000';
+    gl.canvas.style.display = 'block';
+    gl.canvas.style.position = 'absolute';
+    gl.canvas.style.top = '0';
+    gl.canvas.style.left = '0';
+    gl.canvas.style.width = '100%';
+    gl.canvas.style.height = '100%';
+    
     ctn.appendChild(gl.canvas);
 
     function handleMouseMove(e) {

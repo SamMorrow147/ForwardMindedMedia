@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from 'react';
 import Footer from '@/components/Footer';
 import StaggeredMenu from '@/components/StaggeredMenu';
 import AdobeFonts from '@/components/AdobeFonts';
@@ -54,9 +55,117 @@ export default function MediaVersePage() {
     }
   ];
 
+  useEffect(() => {
+    // Ensure body has black background and disable scroll to prevent white flicker
+    document.body.style.backgroundColor = '#000000';
+    document.documentElement.style.backgroundColor = '#000000';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100%';
+    document.body.style.top = '0';
+    document.body.style.left = '0';
+    
+    // Prevent ALL scroll events
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+    
+    const preventWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+    
+    // Add listeners to prevent scrolling
+    window.addEventListener('scroll', preventScroll, { passive: false });
+    window.addEventListener('wheel', preventWheel, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('scroll', preventScroll, { passive: false });
+    document.addEventListener('wheel', preventWheel, { passive: false });
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    
+    return () => {
+      // Cleanup on unmount
+      document.body.style.backgroundColor = '';
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      
+      window.removeEventListener('scroll', preventScroll);
+      window.removeEventListener('wheel', preventWheel);
+      window.removeEventListener('touchmove', preventScroll);
+      document.removeEventListener('scroll', preventScroll);
+      document.removeEventListener('wheel', preventWheel);
+      document.removeEventListener('touchmove', preventScroll);
+    };
+  }, []);
+
   return (
-    <div style={{ width: '100%', height: '100vh', position: 'relative', backgroundColor: '#000000' }}>
-      <AdobeFonts />
+    <>
+      <style jsx global>{`
+        body {
+          background-color: #000000 !important;
+          overflow: hidden !important;
+          position: fixed !important;
+          width: 100% !important;
+          height: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          touch-action: none !important;
+          overscroll-behavior: none !important;
+          -webkit-overscroll-behavior: none !important;
+        }
+        html {
+          background-color: #000000 !important;
+          overflow: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          touch-action: none !important;
+          overscroll-behavior: none !important;
+          -webkit-overscroll-behavior: none !important;
+          color-scheme: dark !important;
+        }
+        #__next {
+          background-color: #000000 !important;
+          overflow: hidden !important;
+          touch-action: none !important;
+          overscroll-behavior: none !important;
+        }
+        * {
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: none !important;
+        }
+        .galaxy-container,
+        .galaxy-container canvas {
+          background-color: #000000 !important;
+        }
+        
+        /* Prevent Chrome's overscroll white background */
+        ::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <div style={{ 
+        width: '100%', 
+        height: '100vh', 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        backgroundColor: '#000000', 
+        overflow: 'hidden',
+        margin: 0,
+        padding: 0
+      }}>
+        <AdobeFonts />
       
       {/* Staggered Menu */}
       <StaggeredMenu
@@ -75,11 +184,20 @@ export default function MediaVersePage() {
         onMenuClose={() => console.log('Menu closed')}
       />
 
+      {/* Black Background Layer */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 0,
+        backgroundColor: '#000000'
+      }} />
+
       {/* Galaxy Background */}
       <div style={{
-        position: 'absolute',
+        position: 'fixed',
         inset: 0,
-        zIndex: 0
+        zIndex: 1,
+        backgroundColor: '#000000'
       }}>
         <Galaxy
           mouseRepulsion={true}
@@ -88,15 +206,16 @@ export default function MediaVersePage() {
           glowIntensity={0.2}
           saturation={0.8}
           hueShift={240}
-          transparent={true}
+          transparent={false}
         />
       </div>
 
       {/* Full Page Infinite Menu */}
-      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 1 }}>
+      <div className="fixed inset-0 w-full h-full" style={{ zIndex: 2 }}>
         <InfiniteMenu items={infiniteMenuItems} />
       </div>
     </div>
+    </>
   );
 }
 

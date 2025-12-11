@@ -3,6 +3,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Prevent white flicker on Chrome desktop overscroll */
+html {
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
+  background-color: #000000;
+}
+
+body {
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none;
+  background-color: #000000;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
