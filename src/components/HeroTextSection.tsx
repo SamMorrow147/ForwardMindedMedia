@@ -56,7 +56,7 @@ export default function HeroTextSection() {
       </div>
 
       {/* Three Items Section */}
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 mt-16 md:mt-20">
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 mt-16 md:mt-20" style={{ pointerEvents: 'none' }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {[
             {
