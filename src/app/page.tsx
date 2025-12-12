@@ -36,19 +36,6 @@ export default function Home() {
   ];
 
   return (
-    <>
-      {/* ABSOLUTE BLACK BACKGROUND LAYER - COVERS EVERYTHING */}
-      <div style={{
-        position: 'fixed',
-        top: '-100vh',
-        left: '-100vw',
-        width: '300vw',
-        height: '500vh',
-        backgroundColor: '#000000',
-        zIndex: -9999,
-        pointerEvents: 'none'
-      }} />
-      
     <div>
       {/* Adobe Fonts Loader */}
       <AdobeFonts />
@@ -108,6 +95,5 @@ export default function Home() {
         responsive={true}
       />
     </div>
-    </>
   );
 }
