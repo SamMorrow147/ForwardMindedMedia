@@ -18,37 +18,6 @@ const Loader = () => {
   );
 };
 
-const AnimatedLights = () => {
-  const light1Ref = useRef<THREE.DirectionalLight>(null);
-  const light2Ref = useRef<THREE.DirectionalLight>(null);
-  
-  useFrame(({ clock, invalidate }) => {
-    const time = clock.getElapsedTime();
-    
-    if (light1Ref.current) {
-      // Rotate light around the scene (slower for less CPU usage)
-      light1Ref.current.position.x = Math.sin(time * 0.2) * 5;
-      light1Ref.current.position.z = Math.cos(time * 0.2) * 5;
-    }
-    
-    if (light2Ref.current) {
-      // Counter-rotate the second light (slower for less CPU usage)
-      light2Ref.current.position.x = Math.cos(time * 0.25) * 4;
-      light2Ref.current.position.z = Math.sin(time * 0.25) * 4;
-    }
-    
-    // Trigger re-render for smooth animation
-    invalidate();
-  });
-  
-  return (
-    <>
-      <directionalLight ref={light1Ref} position={[3, 3, 5]} intensity={2.8} color="#fff8d0" />
-      <directionalLight ref={light2Ref} position={[-3, 3, 5]} intensity={2.8} color="#fff8d0" />
-    </>
-  );
-};
-
 const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }: { 
   url: string; 
   scrollProgress: number;
@@ -317,8 +286,9 @@ export default function Logo3DSection() {
           <pointLight position={[3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
           <pointLight position={[-3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
 
-          {/* Animated lights for dynamic effect - disabled on Chrome Desktop */}
-          {!isChromeDesktop && <AnimatedLights />}
+          {/* Static side lights (replaced animated ones) */}
+          <directionalLight position={[3, 3, 5]} intensity={2.8} color="#fff8d0" />
+          <directionalLight position={[-3, 3, 5]} intensity={2.8} color="#fff8d0" />
 
           <Suspense fallback={<Loader />}>
             <Model
