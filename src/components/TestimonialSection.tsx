@@ -105,7 +105,7 @@ export default function TestimonialSection() {
       0 0.03em 0.015em #6d3568,
       0 0.045em 0.03em #4a2345
     `,
-    fontSize: '4rem'
+    fontSize: 'clamp(2rem, 6vw, 4rem)'
   };
 
   return (
