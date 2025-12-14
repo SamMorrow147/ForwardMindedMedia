@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import BlurText from './BlurText';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -26,19 +25,6 @@ export default function Footer() {
                 src="/Logo-Dark.png" 
                 alt="Forward Minded Media" 
                 className="h-12 w-auto mb-4"
-              />
-              <BlurText
-                text="Forward Minded Media"
-                delay={100}
-                animateBy="words"
-                direction="top"
-                as="h3"
-                className="text-xl font-bold text-white mb-4"
-                threshold={0.1}
-                rootMargin="0px 0px -10% 0px"
-                animationFrom={{ filter: "blur(10px)", opacity: 0, y: -20 }}
-                animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
-                onAnimationComplete={() => {}}
               />
             </div>
             <p className="text-gray-300 leading-relaxed mb-6">

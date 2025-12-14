@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 // import VideoHero from "@/components/VideoHero"; // Hidden
 import Logo3DSection from "@/components/Logo3DSection";
 import HeroTextSection from "@/components/HeroTextSection";
@@ -14,8 +15,10 @@ import Footer from "@/components/Footer";
 import GradualBlur from "@/components/GradualBlur";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import AdobeFonts from "@/components/AdobeFonts";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
@@ -37,6 +40,12 @@ export default function Home() {
 
   return (
     <div>
+      {/* Loading Screen - Always render, overlays on top */}
+      <LoadingScreen 
+        onLoadingComplete={() => setIsLoading(false)}
+        minimumLoadTime={3000}
+      />
+      
       {/* Adobe Fonts Loader */}
       <AdobeFonts />
       

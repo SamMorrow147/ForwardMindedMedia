@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import TextType from './TextType';
+import { motion } from 'framer-motion';
 
 interface Project {
   id: number;
@@ -324,18 +325,32 @@ export default function RecentProjectsSection() {
             <div className="flex-none w-6 md:w-0" aria-hidden="true"></div>
           </div>
 
-          {/* Scroll Indicator */}
-          <div className="flex justify-center mt-8">
-            <p className="text-white/70 text-sm flex items-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-              </svg>
-              Scroll to see more projects
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </p>
-          </div>
+          {/* Button */}
+          <motion.div 
+            className="flex justify-center mt-8"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.7,
+              ease: [0.25, 0.46, 0.45, 0.94],
+              delay: 0.2
+            }}
+          >
+            <a 
+              href="/media-verse" 
+              className="btn-animated-projects no-underline"
+            >
+              <strong>Explore Our Media Verse</strong>
+              <div id="container-stars-projects">
+                <div id="stars-projects"></div>
+              </div>
+              <div id="glow-projects">
+                <div className="circle"></div>
+                <div className="circle"></div>
+              </div>
+            </a>
+          </motion.div>
         </div>
 
       <style jsx>{`
@@ -396,6 +411,172 @@ export default function RecentProjectsSection() {
         .relative.overflow-visible {
           padding-top: 20px;
           margin-top: -20px;
+        }
+
+        /* Animated Button Styles */
+        .btn-animated-projects {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: auto;
+          min-width: 20rem;
+          padding: 0 2rem;
+          overflow: hidden;
+          height: 3rem;
+          background-size: 300% 300%;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+          transition: 0.5s;
+          animation: gradient_301 5s ease infinite;
+          border: double 4px transparent;
+          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #5227FF 90%, #85417F 100%);
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          position: relative;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .btn-animated-projects strong {
+          z-index: 2;
+          font-family: "scandia-web", sans-serif;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          color: #FFFFFF;
+          text-shadow: 0 0 4px white;
+          text-transform: uppercase;
+        }
+
+        #container-stars-projects {
+          position: absolute;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          transition: 0.5s;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+          background-color: #212121;
+        }
+
+        #glow-projects {
+          position: absolute;
+          display: flex;
+          width: 100%;
+        }
+
+        .btn-animated-projects .circle {
+          width: 100%;
+          height: 30px;
+          filter: blur(2rem);
+          animation: pulse_3011 4s infinite;
+          z-index: -1;
+        }
+
+        .btn-animated-projects .circle:nth-of-type(1) {
+          background: rgba(254, 83, 186, 0.636);
+        }
+
+        .btn-animated-projects .circle:nth-of-type(2) {
+          background: rgba(142, 81, 234, 0.704);
+        }
+
+        .btn-animated-projects:hover #container-stars-projects {
+          z-index: -1;
+          background-color: transparent;
+        }
+
+        .btn-animated-projects:hover {
+          transform: scale(1.1);
+        }
+
+        .btn-animated-projects:active {
+          border: double 4px #FE53BB;
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          animation: none;
+        }
+
+        .btn-animated-projects:active .circle {
+          background: #FE53BB;
+        }
+
+        #stars-projects {
+          position: relative;
+          background: transparent;
+          width: 200rem;
+          height: 200rem;
+        }
+
+        #stars-projects::after {
+          content: "";
+          position: absolute;
+          top: -10rem;
+          left: -100rem;
+          width: 100%;
+          height: 100%;
+          animation: animStarRotate 90s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+        }
+
+        #stars-projects::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -50%;
+          width: 170%;
+          height: 500%;
+          animation: animStar 60s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+          opacity: 0.5;
+        }
+
+        @keyframes animStar {
+          from {
+            transform: translateY(0);
+          }
+          to {
+            transform: translateY(-135rem);
+          }
+        }
+
+        @keyframes animStarRotate {
+          from {
+            transform: rotate(360deg);
+          }
+          to {
+            transform: rotate(0);
+          }
+        }
+
+        @keyframes gradient_301 {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes pulse_3011 {
+          0% {
+            transform: scale(0.75);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+          }
+          70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+          }
+          100% {
+            transform: scale(0.75);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+          }
         }
       `}</style>
     </section>

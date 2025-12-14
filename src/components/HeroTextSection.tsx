@@ -3,6 +3,7 @@
 import LiquidEther from "./LiquidEther";
 import TextType from "./TextType";
 import { Layers, Handshake, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function HeroTextSection() {
   return (
@@ -36,7 +37,17 @@ export default function HeroTextSection() {
         </p>
         
         {/* Button */}
-        <div className="flex justify-center pointer-events-auto">
+        <motion.div 
+          className="flex justify-center pointer-events-auto"
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: 0.7,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.2
+          }}
+        >
           <a 
             href="https://calendly.com/jake-forwardmindedmedia" 
             target="_blank" 
@@ -52,11 +63,25 @@ export default function HeroTextSection() {
               <div className="circle"></div>
             </div>
           </a>
-        </div>
+        </motion.div>
       </div>
 
       {/* Three Items Section */}
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 mt-16 md:mt-20" style={{ pointerEvents: 'none' }}>
+      <motion.div 
+        className="w-full max-w-[1600px] mx-auto px-6 md:px-8 lg:px-20 relative z-10 mt-16 md:mt-20" 
+        style={{ pointerEvents: 'none' }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.3
+            }
+          }
+        }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {[
             {
@@ -94,12 +119,41 @@ export default function HeroTextSection() {
             };
             
             return (
-              <div
+              <motion.div
                 key={item.id}
                 className="flex flex-row items-center gap-4 md:gap-6"
+                variants={{
+                  hidden: { 
+                    opacity: 0, 
+                    y: 50,
+                    scale: 0.9
+                  },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }
+                  }
+                }}
               >
                 {/* Icon */}
-                <div className="flex-shrink-0">
+                <motion.div 
+                  className="flex-shrink-0"
+                  variants={{
+                    hidden: { rotate: -180, opacity: 0 },
+                    visible: { 
+                      rotate: 0, 
+                      opacity: 1,
+                      transition: {
+                        duration: 0.8,
+                        ease: "easeOut"
+                      }
+                    }
+                  }}
+                >
                   {item.id === 2 ? (
                     <svg 
                       width="64" 
@@ -122,10 +176,10 @@ export default function HeroTextSection() {
                       strokeWidth={1.5}
                     />
                   )}
-                </div>
+                </motion.div>
                 
                 {/* Title */}
-                <h2 
+                <motion.h2 
                   className="ThreeDee text-white flex-1" 
                   style={{
                     ...lightShadowStyle, 
@@ -135,14 +189,26 @@ export default function HeroTextSection() {
                     color: '#ffffff',
                     lineHeight: '1.2'
                   }}
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { 
+                      opacity: 1, 
+                      x: 0,
+                      transition: {
+                        duration: 0.6,
+                        ease: "easeOut",
+                        delay: 0.2
+                      }
+                    }
+                  }}
                 >
                   {item.title}
-                </h2>
-              </div>
+                </motion.h2>
+              </motion.div>
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       <style jsx>{`
         .hero-title {
@@ -170,7 +236,7 @@ export default function HeroTextSection() {
           transition: 0.5s;
           animation: gradient_301 5s ease infinite;
           border: double 4px transparent;
-          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
+          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #5227FF 90%, #85417F 100%);
           background-origin: border-box;
           background-clip: content-box, border-box;
           position: relative;

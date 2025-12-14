@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from '@/components/Footer';
 import StaggeredMenu from '@/components/StaggeredMenu';
 import AdobeFonts from '@/components/AdobeFonts';
 import InfiniteMenu from '@/components/InfiniteMenu';
 import Galaxy from '@/components/Galaxy';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export default function MediaVersePage() {
+  const [isLoading, setIsLoading] = useState(true);
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
@@ -71,7 +73,13 @@ export default function MediaVersePage() {
       backgroundColor: '#000000', 
       overflow: 'hidden'
     }}>
-        <AdobeFonts />
+      {/* Loading Screen - Always render, overlays on top */}
+      <LoadingScreen 
+        onLoadingComplete={() => setIsLoading(false)}
+        minimumLoadTime={3000}
+      />
+      
+      <AdobeFonts />
       
       {/* Staggered Menu */}
       <StaggeredMenu

@@ -3,6 +3,7 @@
 import SpotlightCard from "./SpotlightCard";
 import ServiceIcon from "./ServiceIcon";
 import BlurText from "./BlurText";
+import { motion } from "framer-motion";
 
 export default function ServicesSection() {
     const services = [
@@ -54,42 +55,132 @@ export default function ServicesSection() {
     <section className="py-12 md:pb-20 md:pt-0 bg-[#2a1232]">
       <div className="container mx-auto px-6">
         {/* Section Header - Centered */}
-        <div className="mb-16 text-center">
-          <h2 className="ThreeDee text-white mb-6 mx-auto">What We Do</h2>
-          <p className="text-lg text-gray-300 max-w-4xl mx-auto">
+        <motion.div 
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: 0.8,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+        >
+          <motion.h2 
+            className="ThreeDee text-white mb-6 mx-auto"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.6,
+              ease: "easeOut",
+              delay: 0.2
+            }}
+          >
+            What We Do
+          </motion.h2>
+          <motion.p 
+            className="text-lg text-gray-300 max-w-4xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4
+            }}
+          >
             Full-service. In-house. Zero fluff. Just smart strategy, sharp creative, and a team that gives a damn.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
           {services.map((service, index) => (
-            <SpotlightCard 
+            <motion.div
               key={index}
-              className="h-full"
-              spotlightColor={service.spotlightColor}
+              variants={{
+                hidden: { 
+                  opacity: 0, 
+                  y: 60,
+                  scale: 0.9
+                },
+                visible: { 
+                  opacity: 1, 
+                  y: 0,
+                  scale: 1,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }
+                }
+              }}
             >
-              <div className="h-full flex flex-col">
-                {/* Service Icon */}
-                <div className="mb-6 flex justify-center">
-                  <ServiceIcon 
-                    type={service.icon}
-                    size={72}
-                    color={service.iconColor}
-                    className="service-icon"
-                  />
+              <SpotlightCard 
+                className="h-full"
+                spotlightColor={service.spotlightColor}
+              >
+                <div className="h-full flex flex-col">
+                  {/* Service Icon */}
+                  <motion.div 
+                    className="mb-6 flex justify-center"
+                    initial={{ rotate: -180, opacity: 0 }}
+                    whileInView={{ rotate: 0, opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: "easeOut",
+                      delay: 0.2 + (index * 0.15)
+                    }}
+                  >
+                    <ServiceIcon 
+                      type={service.icon}
+                      size={72}
+                      color={service.iconColor}
+                      className="service-icon"
+                    />
+                  </motion.div>
+                  
+                  <motion.h3 
+                    className="text-2xl font-bold text-white mb-4 text-center"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.3 + (index * 0.15)
+                    }}
+                  >
+                    {service.title}
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-300 leading-relaxed flex-grow text-center"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: 0.4 + (index * 0.15)
+                    }}
+                  >
+                    {service.description}
+                  </motion.p>
                 </div>
-                
-                <h3 className="text-2xl font-bold text-white mb-4 text-center">
-                  {service.title}
-                </h3>
-                <p className="text-gray-300 leading-relaxed flex-grow text-center">
-                  {service.description}
-                </p>
-              </div>
-            </SpotlightCard>
+              </SpotlightCard>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -49,7 +49,8 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
           if (outerRef.current) {
             outerRef.current.scale.setScalar(1);
             outerRef.current.position.y = 0;
-            outerRef.current.rotation.set(0.15, 0, 0);
+            // Set initial tilt: -0.35 for desktop, 0.15 for mobile
+            outerRef.current.rotation.set(isMobile ? 0.15 : -0.35, 0, 0);
           }
         }
       } catch (error) {
@@ -61,14 +62,15 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
   useFrame(() => {
     if (outerRef.current) {
       if (isChromeDesktop) {
-        // Chrome Desktop: Completely static
-        outerRef.current.rotation.x = 0.15;
+        // Chrome Desktop: Completely static, top tilts back, bottom forward
+        outerRef.current.rotation.x = -0.35;
         outerRef.current.rotation.y = 0;
         return;
       }
       
       // Other browsers: Animate with scroll and mouse hover
-      const baseTiltX = 0.15;
+      // Base tilt: -0.35 for desktop, 0.15 for mobile
+      const baseTiltX = isMobile ? 0.15 : -0.35;
       const scrollRotationX = scrollProgress * (isMobile ? -1.8 : -1.2);
       const hoverTiltY = mousePosition.x * 0.4;
       
@@ -191,7 +193,7 @@ export default function Logo3DSection() {
           hueShift={240}
           speed={1.0}
           mouseInteraction={true}
-          glowIntensity={0.2}
+          glowIntensity={0.4}
           saturation={0.8}
           mouseRepulsion={true}
           repulsionStrength={2}
@@ -206,7 +208,7 @@ export default function Logo3DSection() {
         <Canvas
           shadows={!isChromeDesktop}
           frameloop={isChromeDesktop ? "demand" : "always"}
-          dpr={[1, 2]}
+          dpr={isChromeDesktop ? [2, 3] : [1, 2]}
           performance={{ min: 0.5 }}
           camera={{
             position: [0, 0, isMobile ? 6 : 5],
@@ -223,72 +225,72 @@ export default function Logo3DSection() {
           }}
           gl={{
             alpha: true,
-            antialias: !isChromeDesktop,
+            antialias: true,
             powerPreference: 'high-performance'
           }}
         >
-          {/* Ambient light for overall brightness */}
-          <ambientLight intensity={2.0} color="#fff8d0" />
+          {/* Ambient light for overall brightness - Warm Purple/Gold mix */}
+          <ambientLight intensity={2.5} color="#E8DCF5" />
 
-          {/* Top lights - primary illumination from above */}
+          {/* Top lights - primary illumination from above - Warm Purple-Gold */}
           <directionalLight 
             position={[0, 10, 3]} 
-            intensity={3.5} 
+            intensity={3.2} 
             castShadow={!isChromeDesktop}
-            color="#fff8d0" 
+            color="#E8D8F0" 
           />
-          <directionalLight position={[0, 12, 0]} intensity={3.2} color="#fff8d0" />
-          <directionalLight position={[0, 8, -2]} intensity={4.0} color="#fff8d0" />
-          <directionalLight position={[2, 10, 2]} intensity={2.8} color="#fff8d0" />
-          <directionalLight position={[-2, 10, 2]} intensity={2.8} color="#fff8d0" />
+          <directionalLight position={[0, 12, 0]} intensity={3.0} color="#F0E8D8" />
+          <directionalLight position={[0, 8, -2]} intensity={3.5} color="#E8D8F0" />
+          <directionalLight position={[2, 10, 2]} intensity={2.8} color="#F5E8DC" />
+          <directionalLight position={[-2, 10, 2]} intensity={2.8} color="#F5E8DC" />
 
-          {/* Front lights - brighten the front face */}
-          <directionalLight position={[0, 0, 6]} intensity={2.4} color="#fff8d0" />
-          <directionalLight position={[3, 2, 5]} intensity={2.0} color="#fff8d0" />
-          <directionalLight position={[-3, 2, 5]} intensity={2.0} color="#fff8d0" />
+          {/* Front lights - brighten the front face - Golden Purple */}
+          <directionalLight position={[0, 0, 6]} intensity={2.5} color="#E8D8E0" />
+          <directionalLight position={[3, 2, 5]} intensity={2.2} color="#F0E8D8" />
+          <directionalLight position={[-3, 2, 5]} intensity={2.2} color="#F0E8D8" />
 
-          {/* Side lights - fill lighting */}
-          <directionalLight position={[4, -3, 3]} intensity={2.4} color="#fff8d0" />
-          <directionalLight position={[-4, 2, 3]} intensity={2.4} color="#fff8d0" />
-          <directionalLight position={[5, 3, 2]} intensity={2.0} color="#fff8d0" />
-          <directionalLight position={[-5, 3, 2]} intensity={2.0} color="#fff8d0" />
-          <directionalLight position={[-6, 0, 4]} intensity={3.2} color="#fff8d0" />
-          <directionalLight position={[6, 0, 4]} intensity={3.2} color="#fff8d0" />
+          {/* Side lights - fill lighting - Warm Purple */}
+          <directionalLight position={[4, -3, 3]} intensity={2.4} color="#D4BFEF" />
+          <directionalLight position={[-4, 2, 3]} intensity={2.4} color="#D4BFEF" />
+          <directionalLight position={[5, 3, 2]} intensity={2.0} color="#E8D8F0" />
+          <directionalLight position={[-5, 3, 2]} intensity={2.0} color="#E8D8F0" />
+          <directionalLight position={[-6, 0, 4]} intensity={2.8} color="#F0E8D8" />
+          <directionalLight position={[6, 0, 4]} intensity={2.8} color="#F0E8D8" />
 
-          {/* Bottom and back lights - rim lighting */}
-          <directionalLight position={[0, -8, 3]} intensity={2.4} color="#fff8d0" />
-          <directionalLight position={[0, -1, -3]} intensity={1.6} color="#fff8d0" />
-          <directionalLight position={[0, -5, -2]} intensity={2.0} color="#fff8d0" />
+          {/* Bottom and back lights - rim lighting - Golden glow */}
+          <directionalLight position={[0, -8, 3]} intensity={2.5} color="#E8D8E0" />
+          <directionalLight position={[0, -1, -3]} intensity={1.8} color="#D4BFEF" />
+          <directionalLight position={[0, -5, -2]} intensity={2.2} color="#E8D8E0" />
 
-          {/* Soft upward light from below left */}
-          <directionalLight position={[-4, -10, 2]} intensity={2.5} color="#fff8d0" />
-          <pointLight position={[-3, -8, 1]} intensity={1.8} distance={15} color="#fff8d0" />
+          {/* Soft upward light from below left - Warm accent */}
+          <directionalLight position={[-4, -10, 2]} intensity={2.6} color="#E8D8E0" />
+          <pointLight position={[-3, -8, 1]} intensity={2.0} distance={15} color="#F0E8D8" />
 
           {/* Additional upward lights for mobile - illuminate front face from below left */}
-          <directionalLight position={[-3, -10, 4]} intensity={isMobile ? 3.5 : (isChromeDesktop ? 4.0 : 2.0)} color="#fff8d0" />
-          <pointLight position={[-3, -8, 3]} intensity={isMobile ? 2.5 : (isChromeDesktop ? 3.5 : 1.5)} distance={15} color="#fff8d0" />
-          <pointLight position={[-4, -7, 2]} intensity={isMobile ? 2.0 : (isChromeDesktop ? 3.0 : 1.2)} distance={15} color="#fff8d0" />
-          <pointLight position={[-2, -7, 2]} intensity={isMobile ? 2.0 : (isChromeDesktop ? 3.0 : 1.2)} distance={15} color="#fff8d0" />
+          <directionalLight position={[-3, -10, 4]} intensity={isMobile ? 3.5 : (isChromeDesktop ? 4.0 : 2.5)} color="#E8D8E0" />
+          <pointLight position={[-3, -8, 3]} intensity={isMobile ? 2.8 : (isChromeDesktop ? 3.5 : 2.0)} distance={15} color="#F0E8D8" />
+          <pointLight position={[-4, -7, 2]} intensity={isMobile ? 2.2 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
+          <pointLight position={[-2, -7, 2]} intensity={isMobile ? 2.2 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
           
-          {/* Extra bottom lights for Chrome Desktop */}
+          {/* Extra bottom lights for Chrome Desktop - Golden glow */}
           {isChromeDesktop && (
             <>
-              <directionalLight position={[0, -10, 5]} intensity={3.5} color="#fff8d0" />
-              <pointLight position={[0, -8, 3]} intensity={3.0} distance={15} color="#fff8d0" />
-              <pointLight position={[3, -7, 3]} intensity={2.5} distance={15} color="#fff8d0" />
-              <pointLight position={[-3, -7, 3]} intensity={2.5} distance={15} color="#fff8d0" />
+              <directionalLight position={[0, -10, 5]} intensity={3.5} color="#E8D8E0" />
+              <pointLight position={[0, -8, 3]} intensity={3.2} distance={15} color="#F0E8D8" />
+              <pointLight position={[3, -7, 3]} intensity={2.8} distance={15} color="#E8D8E0" />
+              <pointLight position={[-3, -7, 3]} intensity={2.8} distance={15} color="#E8D8E0" />
             </>
           )}
 
-          {/* Additional point lights for extra brightness */}
-          <pointLight position={[0, 5, 3]} intensity={1.6} distance={10} color="#fff8d0" />
-          <pointLight position={[0, 8, 0]} intensity={1.2} distance={10} color="#fff8d0" />
-          <pointLight position={[3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
-          <pointLight position={[-3, 5, 3]} intensity={1.2} distance={10} color="#fff8d0" />
+          {/* Additional point lights for extra brightness - Warm glow */}
+          <pointLight position={[0, 5, 3]} intensity={1.8} distance={10} color="#F0E8D8" />
+          <pointLight position={[0, 8, 0]} intensity={1.5} distance={10} color="#E8D8E0" />
+          <pointLight position={[3, 5, 3]} intensity={1.5} distance={10} color="#F5E8DC" />
+          <pointLight position={[-3, 5, 3]} intensity={1.5} distance={10} color="#F5E8DC" />
 
-          {/* Static side lights (replaced animated ones) */}
-          <directionalLight position={[3, 3, 5]} intensity={2.8} color="#fff8d0" />
-          <directionalLight position={[-3, 3, 5]} intensity={2.8} color="#fff8d0" />
+          {/* Static side lights (replaced animated ones) - Warm Purple accent */}
+          <directionalLight position={[3, 3, 5]} intensity={2.8} color="#E8D8E0" />
+          <directionalLight position={[-3, 3, 5]} intensity={2.8} color="#E8D8E0" />
 
           <Suspense fallback={<Loader />}>
             <Model
