@@ -39,20 +39,20 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         
         const maxDim = Math.max(size.x, size.y, size.z);
         
-        if (!isNaN(maxDim) && maxDim > 0) {
-          const baseScale = isMobile ? 3.5 : 5;
-          const scale = baseScale / maxDim;
-          
-          meshRef.current.scale.setScalar(scale);
-          meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-          
-          if (outerRef.current) {
-            outerRef.current.scale.setScalar(1);
-            outerRef.current.position.y = 0;
-            // Set initial tilt: -0.35 for desktop, 0.15 for mobile
-            outerRef.current.rotation.set(isMobile ? 0.15 : -0.35, 0, 0);
+          if (!isNaN(maxDim) && maxDim > 0) {
+            const baseScale = isMobile ? 3.5 : 5;
+            const scale = baseScale / maxDim;
+            
+            meshRef.current.scale.setScalar(scale);
+            meshRef.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+            
+            if (outerRef.current) {
+              outerRef.current.scale.setScalar(1);
+              outerRef.current.position.y = isMobile ? 0 : 0.3; // Move up slightly on desktop
+              // Set initial tilt: -0.35 for desktop, 0.15 for mobile
+              outerRef.current.rotation.set(isMobile ? 0.15 : -0.35, 0, 0);
+            }
           }
-        }
       } catch (error) {
         // Silently handle errors
       }
@@ -102,7 +102,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         camera.position.z = targetZ;
         
         const moveDown = scrollProgress * -0.6; // More subtle desktop movement
-        outerRef.current.position.y = moveDown;
+        outerRef.current.position.y = 0.3 + moveDown; // Start slightly higher on desktop
       }
     }
   });
@@ -250,24 +250,24 @@ export default function Logo3DSection() {
           }}
         >
           {/* Ambient light for overall brightness - Warm Purple/Gold mix */}
-          <ambientLight intensity={2.5} color="#E8DCF5" />
+          <ambientLight intensity={isMobile ? 3.5 : 2.5} color="#E8DCF5" />
 
           {/* Top lights - primary illumination from above - Warm Purple-Gold */}
           <directionalLight 
             position={[0, 10, 3]} 
-            intensity={3.2} 
+            intensity={isMobile ? 4.5 : 3.2} 
             castShadow={!isChromeDesktop}
             color="#E8D8F0" 
           />
-          <directionalLight position={[0, 12, 0]} intensity={3.0} color="#F0E8D8" />
-          <directionalLight position={[0, 8, -2]} intensity={3.5} color="#E8D8F0" />
-          <directionalLight position={[2, 10, 2]} intensity={2.8} color="#F5E8DC" />
-          <directionalLight position={[-2, 10, 2]} intensity={2.8} color="#F5E8DC" />
+          <directionalLight position={[0, 12, 0]} intensity={isMobile ? 4.0 : 3.0} color="#F0E8D8" />
+          <directionalLight position={[0, 8, -2]} intensity={isMobile ? 4.5 : 3.5} color="#E8D8F0" />
+          <directionalLight position={[2, 10, 2]} intensity={isMobile ? 3.8 : 2.8} color="#F5E8DC" />
+          <directionalLight position={[-2, 10, 2]} intensity={isMobile ? 3.8 : 2.8} color="#F5E8DC" />
 
           {/* Front lights - brighten the front face - Golden Purple */}
-          <directionalLight position={[0, 0, 6]} intensity={2.5} color="#E8D8E0" />
-          <directionalLight position={[3, 2, 5]} intensity={2.2} color="#F0E8D8" />
-          <directionalLight position={[-3, 2, 5]} intensity={2.2} color="#F0E8D8" />
+          <directionalLight position={[0, 0, 6]} intensity={isMobile ? 4.0 : 2.5} color="#E8D8E0" />
+          <directionalLight position={[3, 2, 5]} intensity={isMobile ? 3.5 : 2.2} color="#F0E8D8" />
+          <directionalLight position={[-3, 2, 5]} intensity={isMobile ? 3.5 : 2.2} color="#F0E8D8" />
 
           {/* Side lights - fill lighting - Warm Purple */}
           <directionalLight position={[4, -3, 3]} intensity={2.4} color="#D4BFEF" />
@@ -278,19 +278,29 @@ export default function Logo3DSection() {
           <directionalLight position={[6, 0, 4]} intensity={2.8} color="#F0E8D8" />
 
           {/* Bottom and back lights - rim lighting - Golden glow */}
-          <directionalLight position={[0, -8, 3]} intensity={2.5} color="#E8D8E0" />
-          <directionalLight position={[0, -1, -3]} intensity={1.8} color="#D4BFEF" />
-          <directionalLight position={[0, -5, -2]} intensity={2.2} color="#E8D8E0" />
+          <directionalLight position={[0, -8, 3]} intensity={isMobile ? 4.0 : 2.5} color="#E8D8E0" />
+          <directionalLight position={[0, -1, -3]} intensity={isMobile ? 3.0 : 1.8} color="#D4BFEF" />
+          <directionalLight position={[0, -5, -2]} intensity={isMobile ? 3.5 : 2.2} color="#E8D8E0" />
 
           {/* Soft upward light from below left - Warm accent */}
-          <directionalLight position={[-4, -10, 2]} intensity={2.6} color="#E8D8E0" />
-          <pointLight position={[-3, -8, 1]} intensity={2.0} distance={15} color="#F0E8D8" />
+          <directionalLight position={[-4, -10, 2]} intensity={isMobile ? 4.0 : 2.6} color="#E8D8E0" />
+          <pointLight position={[-3, -8, 1]} intensity={isMobile ? 3.5 : 2.0} distance={15} color="#F0E8D8" />
 
           {/* Additional upward lights for mobile - illuminate front face from below left */}
-          <directionalLight position={[-3, -10, 4]} intensity={isMobile ? 3.5 : (isChromeDesktop ? 4.0 : 2.5)} color="#E8D8E0" />
-          <pointLight position={[-3, -8, 3]} intensity={isMobile ? 2.8 : (isChromeDesktop ? 3.5 : 2.0)} distance={15} color="#F0E8D8" />
-          <pointLight position={[-4, -7, 2]} intensity={isMobile ? 2.2 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
-          <pointLight position={[-2, -7, 2]} intensity={isMobile ? 2.2 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
+          <directionalLight position={[-3, -10, 4]} intensity={isMobile ? 5.0 : (isChromeDesktop ? 4.0 : 2.5)} color="#E8D8E0" />
+          <pointLight position={[-3, -8, 3]} intensity={isMobile ? 4.5 : (isChromeDesktop ? 3.5 : 2.0)} distance={15} color="#F0E8D8" />
+          <pointLight position={[-4, -7, 2]} intensity={isMobile ? 3.8 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
+          <pointLight position={[-2, -7, 2]} intensity={isMobile ? 3.8 : (isChromeDesktop ? 3.0 : 1.5)} distance={15} color="#E8D8E0" />
+          
+          {/* Extra bottom shine lights for mobile - strong upward glow */}
+          {isMobile && (
+            <>
+              <directionalLight position={[0, -12, 5]} intensity={5.0} color="#F0E8D8" />
+              <pointLight position={[0, -10, 4]} intensity={4.5} distance={20} color="#E8D8E0" />
+              <pointLight position={[2, -9, 4]} intensity={4.0} distance={18} color="#F5E8DC" />
+              <pointLight position={[-2, -9, 4]} intensity={4.0} distance={18} color="#F5E8DC" />
+            </>
+          )}
           
           {/* Extra bottom lights for Chrome Desktop - Golden glow */}
           {isChromeDesktop && (
@@ -303,10 +313,10 @@ export default function Logo3DSection() {
           )}
 
           {/* Additional point lights for extra brightness - Warm glow */}
-          <pointLight position={[0, 5, 3]} intensity={1.8} distance={10} color="#F0E8D8" />
-          <pointLight position={[0, 8, 0]} intensity={1.5} distance={10} color="#E8D8E0" />
-          <pointLight position={[3, 5, 3]} intensity={1.5} distance={10} color="#F5E8DC" />
-          <pointLight position={[-3, 5, 3]} intensity={1.5} distance={10} color="#F5E8DC" />
+          <pointLight position={[0, 5, 3]} intensity={isMobile ? 3.0 : 1.8} distance={10} color="#F0E8D8" />
+          <pointLight position={[0, 8, 0]} intensity={isMobile ? 2.5 : 1.5} distance={10} color="#E8D8E0" />
+          <pointLight position={[3, 5, 3]} intensity={isMobile ? 2.5 : 1.5} distance={10} color="#F5E8DC" />
+          <pointLight position={[-3, 5, 3]} intensity={isMobile ? 2.5 : 1.5} distance={10} color="#F5E8DC" />
 
           {/* Static side lights (replaced animated ones) - Warm Purple accent */}
           <directionalLight position={[3, 3, 5]} intensity={2.8} color="#E8D8E0" />

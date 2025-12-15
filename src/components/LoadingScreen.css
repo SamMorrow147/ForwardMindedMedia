@@ -63,8 +63,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
+  width: 70%;
+  height: 70%;
   background: radial-gradient(circle, rgba(177, 158, 239, 0.3) 0%, transparent 70%);
   border-radius: 50%;
   animation: pulse-glow 3s ease-in-out infinite;
@@ -239,8 +239,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .astronaut-container {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
     margin-bottom: 40px;
   }
 
@@ -273,8 +273,8 @@
 
 @media (max-width: 480px) {
   .astronaut-container {
-    width: 150px;
-    height: 150px;
+    width: 220px;
+    height: 220px;
     margin-bottom: 30px;
   }
 

@@ -72,7 +72,7 @@ export default function HeroTextSection() {
         style={{ pointerEvents: 'none' }}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.1, margin: "0px 0px -100px 0px" }}
         variants={{
           hidden: {},
           visible: {
@@ -213,11 +213,22 @@ export default function HeroTextSection() {
       <style jsx>{`
         .hero-title {
           line-height: 1.3;
+          min-height: 7.8rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         @media (min-width: 768px) {
           .hero-title {
             line-height: 1.2;
+            min-height: 7.2rem;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .hero-title {
+            min-height: 8.4rem;
           }
         }
         
