@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import SpotlightCard from "./SpotlightCard";
 import BlurText from "./BlurText";
+import ScrollFloat from './ScrollFloat';
 import LogoSlider from "./LogoSlider";
 
 export default function TestimonialSection() {
@@ -103,9 +104,15 @@ export default function TestimonialSection() {
     textShadow: `
       0 0.015em 0 #d16cc7,
       0 0.03em 0.015em #6d3568,
-      0 0.045em 0.03em #4a2345
-    `,
-    fontSize: 'clamp(2.5rem, 7vw, 4rem)'
+      0 0.045em 0.03em #5f2f5a,
+      0 0.06em 0.03em #51294d,
+      0 0.09em 0.015em #432340,
+      0 0.09em 0.045em rgba(0, 0, 0, 0.5),
+      0 0 0.075em rgba(0, 0, 0, 0.2),
+      0 0.03em 0.12em rgba(0, 0, 0, 0.3),
+      0 0.15em 0.18em rgba(0, 0, 0, 0.25),
+      0 0.3em 0.3em rgba(0, 0, 0, 0.15)
+    `
   };
 
   return (
@@ -113,9 +120,20 @@ export default function TestimonialSection() {
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="ThreeDee mb-6" style={{...lightShadowStyle, color: '#e8e1d4', paddingLeft: 0, paddingRight: 0 }}>
+          <ScrollFloat
+            as="h2"
+            scrollContainerRef={null}
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="top bottom"
+            scrollEnd="center center-=20%"
+            stagger={0.03}
+            containerClassName="mb-6 testimonials-title"
+            textClassName=""
+            style={{ fontSize: '4rem', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+          >
             Testimonials & Social Proof
-          </h2>
+          </ScrollFloat>
           <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">
             Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us at <strong>Forward Minded Media</strong>.
           </p>

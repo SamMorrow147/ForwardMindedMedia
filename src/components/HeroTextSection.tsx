@@ -6,6 +6,21 @@ import ScrollFloat from './ScrollFloat';
 import ScrollReveal from './ScrollReveal';
 
 export default function HeroTextSection() {
+  const lightShadowStyle = {
+    textShadow: `
+      0 0.015em 0 #d16cc7,
+      0 0.03em 0.015em #6d3568,
+      0 0.045em 0.03em #5f2f5a,
+      0 0.06em 0.03em #51294d,
+      0 0.09em 0.015em #432340,
+      0 0.09em 0.045em rgba(0, 0, 0, 0.5),
+      0 0 0.075em rgba(0, 0, 0, 0.2),
+      0 0.03em 0.12em rgba(0, 0, 0, 0.3),
+      0 0.15em 0.18em rgba(0, 0, 0, 0.25),
+      0 0.3em 0.3em rgba(0, 0, 0, 0.15)
+    `
+  };
+
   return (
     <section className="pt-20 pb-48 text-center relative" style={{ backgroundColor: 'transparent', pointerEvents: 'none' }}>
       
@@ -19,8 +34,9 @@ export default function HeroTextSection() {
           scrollStart="top bottom"
           scrollEnd="center center-=20%"
           stagger={0.03}
-          containerClassName="text-5xl md:text-6xl font-bold text-white my-16 hero-title"
+          containerClassName="font-bold my-16 hero-title"
           textClassName=""
+          style={{ fontSize: '4rem', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
           Leave The Status Quo Behind.
         </ScrollFloat>
@@ -205,21 +221,38 @@ export default function HeroTextSection() {
       </motion.div>
 
       <style jsx>{`
-        .hero-title {
-          line-height: 1.3;
+        h2.hero-title.ThreeDee {
+          line-height: 1.3 !important;
           font-family: "scandia-web", sans-serif !important;
           font-weight: 700 !important;
+          color: #e8e1d4 !important;
+          font-size: 4rem !important;
+          font-style: normal !important;
+          text-shadow: 
+            0 0.015em 0 #d16cc7,
+            0 0.03em 0.015em #6d3568,
+            0 0.045em 0.03em #5f2f5a,
+            0 0.06em 0.03em #51294d,
+            0 0.09em 0.015em #432340,
+            0 0.09em 0.045em rgba(0, 0, 0, 0.5),
+            0 0 0.075em rgba(0, 0, 0, 0.2),
+            0 0.03em 0.12em rgba(0, 0, 0, 0.3),
+            0 0.15em 0.18em rgba(0, 0, 0, 0.25),
+            0 0.3em 0.3em rgba(0, 0, 0, 0.15) !important;
         }
         
         @media (min-width: 768px) {
-          .hero-title {
-            line-height: 1.2;
+          h2.hero-title.ThreeDee {
+            line-height: 1.2 !important;
           }
         }
         
-        .hero-title * {
+        h2.hero-title.ThreeDee *,
+        h2.hero-title.ThreeDee .char,
+        h2.hero-title.ThreeDee .scroll-float-text {
           font-family: "scandia-web", sans-serif !important;
           font-weight: 700 !important;
+          color: #e8e1d4 !important;
         }
         
         /* Shimmer effect - applies to the entire title container */

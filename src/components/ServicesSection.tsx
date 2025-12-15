@@ -66,7 +66,7 @@ export default function ServicesSection() {
           }}
         >
           <motion.h2 
-            className="ThreeDee text-white mb-6 mx-auto"
+            className="ThreeDee text-white mb-6 mx-auto mt-8"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}

@@ -16,7 +16,8 @@ const ScrollFloat = ({
   scrollStart = 'center bottom+=50%',
   scrollEnd = 'bottom bottom-=40%',
   stagger = 0.03,
-  as: Component = 'h2'
+  as: Component = 'h2',
+  style = {}
 }) => {
   const containerRef = useRef(null);
 
@@ -71,7 +72,7 @@ const ScrollFloat = ({
   }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger]);
 
   return (
-    <Component ref={containerRef} className={`scroll-float ${containerClassName}`}>
+    <Component ref={containerRef} className={`scroll-float ${containerClassName}`} style={style}>
       <span className={`scroll-float-text ${textClassName}`}>{splitText}</span>
     </Component>
   );

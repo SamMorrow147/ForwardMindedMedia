@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import TextType from './TextType';
+import ScrollFloat from './ScrollFloat';
 import { motion } from 'framer-motion';
 
 interface Project {
@@ -189,7 +190,7 @@ export default function RecentProjectsSection() {
   };
 
   return (
-    <section id="recent-projects" className="pt-44 pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative">
+    <section id="recent-projects" className="pt-56 pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative">
       {/* Left side overlay image */}
       <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 
@@ -224,16 +225,20 @@ export default function RecentProjectsSection() {
       
       {/* Section Header */}
       <div className="text-center mb-16 px-8 relative z-10">
-          <h2 className="ThreeDee mb-6" style={{...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700}}>
-            <TextType 
-              text="Recent Projects"
-              typingSpeed={100}
-              showCursor={false}
-              loop={false}
-              startOnVisible={true}
-              className="inline-block"
-            />
-          </h2>
+          <ScrollFloat
+            as="h2"
+            scrollContainerRef={null}
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="top bottom"
+            scrollEnd="center center-=20%"
+            stagger={0.03}
+            containerClassName="mb-6 recent-projects-title"
+            textClassName=""
+            style={{ fontSize: '4rem', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+          >
+            Recent Projects
+          </ScrollFloat>
           <p className="text-[#e8e1d4] text-xl max-w-3xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
             A showcase of our latest work and the <strong>results we've delivered</strong> for our clients.
           </p>

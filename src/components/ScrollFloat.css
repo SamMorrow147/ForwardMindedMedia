@@ -26,3 +26,41 @@
   font-weight: 700 !important;
 }
 
+/* Force bold Scandia font for recent projects title */
+.recent-projects-title.scroll-float {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.recent-projects-title.scroll-float .scroll-float-text {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.recent-projects-title.scroll-float .char {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+/* Force bold Scandia font for testimonials title */
+.testimonials-title.scroll-float {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.testimonials-title.scroll-float .scroll-float-text {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.testimonials-title.scroll-float .char {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
