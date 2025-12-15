@@ -59,7 +59,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
     }
   }, [gltf.scene, isMobile]);
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
     if (outerRef.current) {
       if (isChromeDesktop) {
         // Chrome Desktop: Completely static, top tilts back, bottom forward
@@ -69,10 +69,10 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
       }
       
       // Other browsers: Animate with scroll and mouse hover
-      // Base tilt: -0.35 for desktop, 0.15 for mobile
-      const baseTiltX = isMobile ? 0.15 : -0.35;
-      const scrollRotationX = scrollProgress * (isMobile ? -1.8 : -1.2);
-      const hoverTiltY = mousePosition.x * 0.4;
+      // Base tilt: -0.2 for desktop, 0.1 for mobile (reduced)
+      const baseTiltX = isMobile ? 0.1 : -0.2;
+      const scrollRotationX = scrollProgress * (isMobile ? -0.8 : -0.6);
+      const hoverTiltY = mousePosition.x * 0.2;
       
       const targetRotationX = baseTiltX + scrollRotationX;
       const targetRotationY = hoverTiltY;
@@ -84,6 +84,26 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
       
       outerRef.current.rotation.x = currentRotation.current.x;
       outerRef.current.rotation.y = currentRotation.current.y;
+      
+      // Parallax effect: Zoom in and move down as you scroll
+      if (isMobile) {
+        // Camera zoom in effect (move closer to logo) - reduced zoom
+        const initialZ = 6;
+        const targetZ = initialZ - (scrollProgress * 3.0); // Reduced zoom intensity
+        camera.position.z = targetZ;
+        
+        // Logo moves down as you scroll - subtle movement
+        const moveDown = scrollProgress * -0.8; // More subtle downward movement
+        outerRef.current.position.y = moveDown;
+      } else {
+        // Desktop subtle parallax
+        const initialZ = 5;
+        const targetZ = initialZ - (scrollProgress * 1.8); // Reduced desktop zoom
+        camera.position.z = targetZ;
+        
+        const moveDown = scrollProgress * -0.6; // More subtle desktop movement
+        outerRef.current.position.y = moveDown;
+      }
     }
   });
 
