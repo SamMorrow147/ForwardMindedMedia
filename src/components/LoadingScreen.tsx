@@ -90,13 +90,7 @@ export default function LoadingScreen({
           />
         </div>
         
-        <div className="warning-section">
-          <p>
-            <span className="exclamation">!</span>
-            &nbsp;CAUTION, Do not turn off.
-          </p>
-          <div className="line-cascades"></div>
-        </div>
+        <div className="line-cascades"></div>
       </div>
     </div>
   );
