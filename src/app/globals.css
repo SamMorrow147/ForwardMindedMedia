@@ -249,6 +249,19 @@ body::before {
     font-weight: 700;
     font-style: normal;
   }
+  
+  /* Hero title ScrollFloat - Force Scandia Bold on all nested elements */
+  .hero-title,
+  .hero-title *,
+  .hero-title .scroll-float-text,
+  .hero-title .char,
+  h2.hero-title,
+  h2.hero-title *,
+  h2.hero-title span {
+    font-family: "scandia-web", sans-serif !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+  }
 }
 
 /* Mobile Marquee Padding Fix */

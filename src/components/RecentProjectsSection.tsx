@@ -189,7 +189,7 @@ export default function RecentProjectsSection() {
   };
 
   return (
-    <section id="recent-projects" className="py-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative">
+    <section id="recent-projects" className="pt-44 pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative">
       {/* Left side overlay image */}
       <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 

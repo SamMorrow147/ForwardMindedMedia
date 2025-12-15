@@ -222,7 +222,7 @@ const ProfileCardsRow = () => {
 
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center pt-20 pb-0">
+    <section className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center justify-center pt-8 pb-0">
       <div className="text-center mb-12 px-4">
         <h2 className="ThreeDee text-white mb-6">Our Team</h2>
         <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>

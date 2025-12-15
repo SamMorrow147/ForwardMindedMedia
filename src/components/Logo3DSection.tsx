@@ -92,8 +92,8 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         const targetZ = initialZ - (scrollProgress * 3.0); // Reduced zoom intensity
         camera.position.z = targetZ;
         
-        // Logo moves down as you scroll - subtle movement
-        const moveDown = scrollProgress * -0.8; // More subtle downward movement
+        // Logo moves down as you scroll - barely any movement
+        const moveDown = scrollProgress * -0.05; // Almost no downward movement
         outerRef.current.position.y = moveDown;
       } else {
         // Desktop subtle parallax
@@ -101,7 +101,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         const targetZ = initialZ - (scrollProgress * 1.8); // Reduced desktop zoom
         camera.position.z = targetZ;
         
-        const moveDown = scrollProgress * -0.6; // More subtle desktop movement
+        const moveDown = scrollProgress * -0.03; // Almost no desktop movement
         outerRef.current.position.y = 0.3 + moveDown; // Start slightly higher on desktop
       }
     }
@@ -191,14 +191,19 @@ export default function Logo3DSection() {
         height: '100vh',
         position: 'relative',
         backgroundColor: '#000000',
-        overflow: 'hidden'
+        overflow: 'visible',
+        zIndex: 0
       }}
     >
-      {/* Galaxy Background */}
+      {/* Galaxy Background - Extended to cover both sections */}
       <div
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          height: '200vh',
           zIndex: 0,
           backgroundColor: '#000000',
           pointerEvents: 'auto'
@@ -240,7 +245,7 @@ export default function Logo3DSection() {
             position: 'absolute',
             top: 0,
             left: 0,
-            zIndex: 1,
+            zIndex: 2,
             pointerEvents: 'none'
           }}
           gl={{
@@ -302,13 +307,13 @@ export default function Logo3DSection() {
             </>
           )}
           
-          {/* Extra bottom lights for Chrome Desktop - Golden glow */}
+          {/* Extra bottom lights for Chrome Desktop - Yellow glow */}
           {isChromeDesktop && (
             <>
-              <directionalLight position={[0, -10, 5]} intensity={3.5} color="#E8D8E0" />
-              <pointLight position={[0, -8, 3]} intensity={3.2} distance={15} color="#F0E8D8" />
-              <pointLight position={[3, -7, 3]} intensity={2.8} distance={15} color="#E8D8E0" />
-              <pointLight position={[-3, -7, 3]} intensity={2.8} distance={15} color="#E8D8E0" />
+              <directionalLight position={[0, -10, 5]} intensity={3.5} color="#FFD700" />
+              <pointLight position={[0, -8, 3]} intensity={3.2} distance={15} color="#FFE55C" />
+              <pointLight position={[3, -7, 3]} intensity={2.8} distance={15} color="#FFD700" />
+              <pointLight position={[-3, -7, 3]} intensity={2.8} distance={15} color="#FFD700" />
             </>
           )}
 

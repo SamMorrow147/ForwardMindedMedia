@@ -1,31 +1,32 @@
 "use client";
 
-import LiquidEther from "./LiquidEther";
 import { Layers, Handshake, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ScrollFloat from './ScrollFloat';
+import ScrollReveal from './ScrollReveal';
 
 export default function HeroTextSection() {
   return (
-    <section className="py-20 bg-[#85417f] text-center relative" style={{ backgroundColor: '#85417f' }}>
-      {/* Liquid Ether effect layer */}
-      <div className="absolute inset-0 z-0" style={{ opacity: 0.8 }}>
-        <LiquidEther resolution={0.4} isBounce={true} colors={['#5227FF', '#FF9FFC', '#5d266c']} />
-      </div>
+    <section className="pt-20 pb-48 text-center relative" style={{ backgroundColor: 'transparent', pointerEvents: 'none' }}>
       
-      <div className="container mx-auto px-6 max-w-5xl relative z-10 pointer-events-none">
-        {/* Headline */}
-        <h2 
-          className="text-5xl md:text-6xl font-bold text-white mb-8 hero-title"
-          style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
+      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+        {/* Headline with Scroll Float */}
+        <ScrollFloat
+          as="h2"
+          scrollContainerRef={null}
+          animationDuration={1}
+          ease="back.inOut(2)"
+          scrollStart="top bottom"
+          scrollEnd="center center-=20%"
+          stagger={0.03}
+          containerClassName="text-5xl md:text-6xl font-bold text-white my-16 hero-title"
+          textClassName=""
         >
           Leave The Status Quo Behind.
-        </h2>
+        </ScrollFloat>
         
-        {/* Subheadline */}
-        <p 
-          className="text-2xl md:text-3xl text-white/90 mb-12 leading-relaxed"
-          style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}
-        >
+        {/* Subheadline - No effect */}
+        <p className="text-2xl md:text-3xl text-white/90 mb-12 leading-relaxed hero-subtext">
           We partner with visionary businesses to craft bold ideas, unforgettable campaigns and real growth. Together, we turn heads and turn goals into achievements.
         </p>
         
@@ -206,12 +207,57 @@ export default function HeroTextSection() {
       <style jsx>{`
         .hero-title {
           line-height: 1.3;
+          font-family: "scandia-web", sans-serif !important;
+          font-weight: 700 !important;
         }
         
         @media (min-width: 768px) {
           .hero-title {
             line-height: 1.2;
           }
+        }
+        
+        .hero-title * {
+          font-family: "scandia-web", sans-serif !important;
+          font-weight: 700 !important;
+        }
+        
+        /* Shimmer effect - applies to the entire title container */
+        :global(.shimmer) {
+          background: linear-gradient(
+            90deg,
+            #c084fc 0%,
+            #ff5ac4 50%,
+            #c084fc 100%
+          );
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmer 2.2s linear infinite;
+        }
+        
+        :global(.shimmer .scroll-float-text),
+        :global(.shimmer .char) {
+          color: inherit;
+        }
+
+        @keyframes shimmer {
+          0%   { background-position: 100% 0; }
+          100% { background-position: -100% 0; }
+        }
+
+        @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+          :global(.shimmer .scroll-float-text) {
+            color: #c084fc;
+            background: none;
+            -webkit-text-fill-color: initial;
+          }
+        }
+        
+        .hero-subtext {
+          font-family: "halcom", sans-serif;
+          font-weight: 400;
         }
         
         .btn-animated {
@@ -229,7 +275,7 @@ export default function HeroTextSection() {
           transition: 0.5s;
           animation: gradient_301 5s ease infinite;
           border: double 4px transparent;
-          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #5227FF 90%, #85417F 100%);
+          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #85417F 100%);
           background-origin: border-box;
           background-clip: content-box, border-box;
           position: relative;

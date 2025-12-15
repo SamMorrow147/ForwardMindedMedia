@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, Fragment, cloneElement, isValidElement } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollReveal = ({
   children,
-  scrollContainerRef = null,
+  scrollContainerRef,
   enableBlur = true,
   baseOpacity = 0.1,
   baseRotation = 3,
@@ -16,7 +16,8 @@ const ScrollReveal = ({
   containerClassName = '',
   textClassName = '',
   rotationEnd = 'bottom bottom',
-  wordAnimationEnd = 'bottom bottom'
+  wordAnimationEnd = 'bottom bottom',
+  as: Component = 'h2'
 }) => {
   const containerRef = useRef(null);
 
@@ -48,7 +49,7 @@ const ScrollReveal = ({
           trigger: el,
           scroller,
           start: 'top bottom',
-          end: 'top top+=30%',
+          end: rotationEnd,
           scrub: true
         }
       }
@@ -67,7 +68,7 @@ const ScrollReveal = ({
           trigger: el,
           scroller,
           start: 'top bottom-=20%',
-          end: 'top top+=30%',
+          end: wordAnimationEnd,
           scrub: true
         }
       }
@@ -85,7 +86,7 @@ const ScrollReveal = ({
             trigger: el,
             scroller,
             start: 'top bottom-=20%',
-            end: 'top top+=30%',
+            end: wordAnimationEnd,
             scrub: true
           }
         }
@@ -98,11 +99,10 @@ const ScrollReveal = ({
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (
-    <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
-      <p className={`scroll-reveal-text ${textClassName}`}>{splitText}</p>
-    </h2>
+    <Component ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
+      <span className={`scroll-reveal-text ${textClassName}`}>{splitText}</span>
+    </Component>
   );
 };
 
 export default ScrollReveal;
-

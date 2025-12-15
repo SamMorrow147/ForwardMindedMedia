@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{ backgroundColor: '#000000', background: '#000000' }}>
+    <html lang="en" className="bg-black">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <meta name="color-scheme" content="dark" />
@@ -36,16 +36,9 @@ export default function RootLayout({
         <link rel="preload" href="/Asset-1-8x.png" as="image" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        style={{ 
-          backgroundColor: '#000000',
-          background: '#000000'
-        }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
-        <div style={{
-          minHeight: '100vh',
-          backgroundColor: '#000000'
-        }}>
+        <div className="min-h-screen bg-black">
           {children}
         </div>
       </body>

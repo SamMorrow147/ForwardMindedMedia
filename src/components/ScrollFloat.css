@@ -1,0 +1,28 @@
+.scroll-float {
+  overflow: hidden;
+}
+
+.scroll-float-text {
+  display: inline-block;
+}
+
+.char {
+  display: inline-block;
+}
+
+/* Force bold Scandia font for hero title */
+.hero-title.scroll-float {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.hero-title.scroll-float .scroll-float-text {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.hero-title.scroll-float .char {
+  font-family: "scandia-web", sans-serif !important;
+  font-weight: 700 !important;
+}
+
