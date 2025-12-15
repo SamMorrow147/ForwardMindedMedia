@@ -1,7 +1,6 @@
 "use client";
 
 import LiquidEther from "./LiquidEther";
-import TextType from "./TextType";
 import { Layers, Handshake, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -19,13 +18,7 @@ export default function HeroTextSection() {
           className="text-5xl md:text-6xl font-bold text-white mb-8 hero-title"
           style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
-          <TextType 
-            text="Leave The Status Quo Behind."
-            typingSpeed={100}
-            showCursor={false}
-            loop={false}
-            startOnVisible={true}
-          />
+          Leave The Status Quo Behind.
         </h2>
         
         {/* Subheadline */}
@@ -213,22 +206,11 @@ export default function HeroTextSection() {
       <style jsx>{`
         .hero-title {
           line-height: 1.3;
-          min-height: 7.8rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
         
         @media (min-width: 768px) {
           .hero-title {
             line-height: 1.2;
-            min-height: 7.2rem;
-          }
-        }
-        
-        @media (min-width: 1024px) {
-          .hero-title {
-            min-height: 8.4rem;
           }
         }
         
