@@ -33,7 +33,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <link rel="stylesheet" href="https://use.typekit.net/qhq4tmi.css" />
         <link rel="preload" href="/Person.png" as="image" />
-        <link rel="preload" href="/4x/Asset 1@8x.png" as="image" />
+        <link rel="preload" href="/Asset-1-8x.png" as="image" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}

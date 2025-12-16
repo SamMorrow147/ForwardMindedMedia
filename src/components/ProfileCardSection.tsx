@@ -15,7 +15,7 @@ export default function ProfileCardSection() {
           status="Available"
           contactText="Contact Me"
           avatarUrl="/Person.png"
-          iconUrl="/4x/Asset 1@8x.png"
+          iconUrl="/Asset-1-8x.png"
           showUserInfo={true}
           enableTilt={true}
           enableMobileTilt={false}
