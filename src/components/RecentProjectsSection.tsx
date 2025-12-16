@@ -225,20 +225,38 @@ export default function RecentProjectsSection() {
       
       {/* Section Header */}
       <div className="text-center mb-16 px-8 relative z-10">
-          <ScrollFloat
-            as="h2"
-            scrollContainerRef={null}
-            animationDuration={1}
-            ease="back.inOut(2)"
-            scrollStart="top bottom"
-            scrollEnd="center center-=20%"
-            stagger={0.03}
-            containerClassName="mb-6 recent-projects-title"
-            textClassName=""
-            style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
-          >
-            Recent Projects
-          </ScrollFloat>
+          <h2 className="mb-6 recent-projects-title-wrapper">
+            <ScrollFloat
+              as="span"
+              scrollContainerRef={null}
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="top bottom"
+              scrollEnd="center center-=20%"
+              stagger={0.03}
+              containerClassName="recent-projects-title inline"
+              textClassName=""
+              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+            >
+              Recent
+            </ScrollFloat>
+            <span className="hidden md:inline" style={{ width: '32px', display: 'inline-block' }}>&nbsp;</span>
+            <br className="md:hidden" />
+            <ScrollFloat
+              as="span"
+              scrollContainerRef={null}
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="top bottom"
+              scrollEnd="center center-=20%"
+              stagger={0.03}
+              containerClassName="recent-projects-title inline"
+              textClassName=""
+              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+            >
+              Projects
+            </ScrollFloat>
+          </h2>
           <p className="text-[#e8e1d4] text-xl max-w-3xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
             A showcase of our latest work and the <strong>results we've delivered</strong> for our clients.
           </p>
