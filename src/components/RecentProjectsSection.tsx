@@ -235,7 +235,7 @@ export default function RecentProjectsSection() {
             stagger={0.03}
             containerClassName="mb-6 recent-projects-title"
             textClassName=""
-            style={{ fontSize: '4rem', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+            style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
           >
             Recent Projects
           </ScrollFloat>

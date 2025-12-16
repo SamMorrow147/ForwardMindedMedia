@@ -85,24 +85,23 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
       outerRef.current.rotation.x = currentRotation.current.x;
       outerRef.current.rotation.y = currentRotation.current.y;
       
-      // Parallax effect: Zoom in and move down as you scroll
+      // Parallax effect: Zoom in but no vertical movement
       if (isMobile) {
         // Camera zoom in effect (move closer to logo) - reduced zoom
         const initialZ = 6;
-        const targetZ = initialZ - (scrollProgress * 3.0); // Reduced zoom intensity
+        const targetZ = initialZ - (scrollProgress * 2.0); // Reduced zoom intensity
         camera.position.z = targetZ;
         
-        // Logo moves down as you scroll - barely any movement
-        const moveDown = scrollProgress * -0.05; // Almost no downward movement
-        outerRef.current.position.y = moveDown;
+        // Logo stays in place - no downward movement
+        outerRef.current.position.y = 0;
       } else {
         // Desktop subtle parallax
         const initialZ = 5;
-        const targetZ = initialZ - (scrollProgress * 1.8); // Reduced desktop zoom
+        const targetZ = initialZ - (scrollProgress * 1.2); // Reduced desktop zoom
         camera.position.z = targetZ;
         
-        const moveDown = scrollProgress * -0.03; // Almost no desktop movement
-        outerRef.current.position.y = 0.3 + moveDown; // Start slightly higher on desktop
+        // Logo stays in place - no downward movement
+        outerRef.current.position.y = 0.3; // Start slightly higher on desktop, stays there
       }
     }
   });

@@ -36,7 +36,7 @@ export default function HeroTextSection() {
           stagger={0.03}
           containerClassName="font-bold my-16 hero-title"
           textClassName=""
-          style={{ fontSize: '4rem', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
+          style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
           Leave The Status Quo Behind.
         </ScrollFloat>
