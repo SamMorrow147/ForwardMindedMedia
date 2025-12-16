@@ -3,6 +3,7 @@
 import SpotlightCard from "./SpotlightCard";
 import ServiceIcon from "./ServiceIcon";
 import BlurText from "./BlurText";
+import ScrollFloat from "./ScrollFloat";
 import { motion } from "framer-motion";
 
 export default function ServicesSection() {
@@ -65,19 +66,26 @@ export default function ServicesSection() {
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
-          <motion.h2 
-            className="ThreeDee text-white mb-6 mx-auto mt-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.6,
-              ease: "easeOut",
-              delay: 0.2
+          <h2 
+            className="ThreeDee what-we-do-title text-white mb-6 mx-auto mt-8"
+            style={{
+              fontFamily: '"scandia-web", sans-serif',
+              fontWeight: 700,
+              fontStyle: 'italic'
             }}
           >
-            What We Do
-          </motion.h2>
+            <ScrollFloat
+              as="span"
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="top bottom"
+              scrollEnd="center center-=20%"
+              stagger={0.03}
+              containerClassName="what-we-do-title-wrapper"
+            >
+              What We Do
+            </ScrollFloat>
+          </h2>
           <motion.p 
             className="text-lg text-gray-300 max-w-4xl mx-auto"
             initial={{ opacity: 0 }}
@@ -182,6 +190,19 @@ export default function ServicesSection() {
           ))}
         </motion.div>
       </div>
+      
+      <style jsx>{`
+        :global(.what-we-do-title) {
+          font-family: "scandia-web", sans-serif !important;
+          font-weight: 700 !important;
+          font-style: italic !important;
+        }
+        :global(.what-we-do-title *) {
+          font-family: inherit !important;
+          font-weight: inherit !important;
+          font-style: inherit !important;
+        }
+      `}</style>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProfileCard from './ProfileCard';
+import ScrollFloat from './ScrollFloat';
 import './ProfileCardsRow.css';
 
 interface ProfileData {
@@ -224,7 +225,22 @@ const ProfileCardsRow = () => {
   return (
     <section className="bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center pt-16 pb-24">
       <div className="text-center mb-12 px-4">
-        <h2 className="ThreeDee text-white mb-6">Our Team</h2>
+        <h2 className="ThreeDee text-white mb-6 our-team-title">
+          <ScrollFloat
+            as="span"
+            scrollContainerRef={null}
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="top bottom"
+            scrollEnd="center center-=20%"
+            stagger={0.03}
+            containerClassName=""
+            textClassName=""
+            style={{}}
+          >
+            Our Team
+          </ScrollFloat>
+        </h2>
         <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
           Meet the talented individuals behind <strong>Forward Minded Media</strong>
         </p>
@@ -359,6 +375,17 @@ const ProfileCardsRow = () => {
       </div>
 
       <style jsx>{`
+        .our-team-title {
+          font-family: "scandia-web", sans-serif !important;
+          font-weight: 700 !important;
+          font-style: italic !important;
+        }
+        .our-team-title :global(*) {
+          font-family: inherit !important;
+          font-weight: inherit !important;
+          font-style: inherit !important;
+        }
+        
         .arrow-wrapper {
           width: 100%;
           overflow: visible;

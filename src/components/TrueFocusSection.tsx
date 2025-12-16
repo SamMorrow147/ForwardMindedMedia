@@ -7,7 +7,7 @@ export default function TrueFocusSection() {
     <section className="pt-16 pb-0 bg-[#e8e1d4] flex items-center justify-center">
       <div className="w-full max-w-7xl mx-auto px-8 flex flex-col md:flex-row">
         {/* Text Content - Full width on mobile, left column on desktop */}
-        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end md:pr-12 mb-8 md:mb-0">
+        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end md:pr-12 order-2 md:order-1">
           <div className="text-center md:text-right max-w-lg">
             <div className="text-black">
               <TrueFocus 
@@ -28,7 +28,7 @@ export default function TrueFocusSection() {
               href="https://calendly.com/jake-forwardmindedmedia" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="btn-animated pointer-events-auto mt-8 no-underline"
+              className="btn-animated pointer-events-auto mt-8 mb-8 no-underline"
             >
               <strong>Book a Discovery Call</strong>
               <div id="container-stars">
@@ -210,10 +210,10 @@ export default function TrueFocusSection() {
         </div>
         
         {/* Focus Image - Full width on mobile, right column on desktop */}
-        <div className="w-full md:w-1/2 flex flex-col justify-end md:pl-12">
+        <div className="w-full md:w-1/2 flex flex-col justify-end md:pl-12 order-1 md:order-2 mb-8 md:mb-0">
           <div className="w-full h-64 md:h-96">
             <img 
-              src="/Focus-Image.png" 
+              src="/Booster-Fly.png" 
               alt="Focus Forward - Visual representation" 
               className="w-full h-full object-contain object-bottom"
             />

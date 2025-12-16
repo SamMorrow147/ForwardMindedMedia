@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useRef, useState, useEffect, MutableRefObject } from 'react';
+import { useRouter } from 'next/navigation';
 import { mat4, quat, vec2, vec3 } from 'gl-matrix';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -1063,6 +1064,7 @@ interface InfiniteMenuProps {
 }
 
 const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null) as MutableRefObject<HTMLCanvasElement | null>;
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
@@ -1102,7 +1104,8 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
     if (activeItem.link.startsWith('http')) {
       window.open(activeItem.link, '_blank');
     } else {
-      console.log('Internal route:', activeItem.link);
+      // Navigate to internal route
+      router.push(activeItem.link);
     }
   };
 

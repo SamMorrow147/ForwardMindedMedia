@@ -53,8 +53,9 @@ export const StaggeredMenu = ({
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
   const preLayerElsRef = useRef([]);
-  const plusHRef = useRef(null);
-  const plusVRef = useRef(null);
+  const bar1Ref = useRef(null);
+  const bar2Ref = useRef(null);
+  const bar3Ref = useRef(null);
   const iconRef = useRef(null);
   const textInnerRef = useRef(null);
   const textWrapRef = useRef(null);
@@ -73,12 +74,13 @@ export const StaggeredMenu = ({
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
-      const plusH = plusHRef.current;
-      const plusV = plusVRef.current;
+      const bar1 = bar1Ref.current;
+      const bar2 = bar2Ref.current;
+      const bar3 = bar3Ref.current;
       const icon = iconRef.current;
       const textInner = textInnerRef.current;
       
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !bar1 || !bar2 || !bar3 || !icon || !textInner) return;
 
       let preLayers = [];
       if (preContainer) {
@@ -96,8 +98,10 @@ export const StaggeredMenu = ({
         xPercent: offscreen, 
         force3D: true 
       });
-      gsap.set(plusH, { transformOrigin: '50% 50%', rotate: 0 });
-      gsap.set(plusV, { transformOrigin: '50% 50%', rotate: 90 });
+      // Set initial positions for hamburger bars
+      gsap.set(bar1, { top: '0%', transformOrigin: '50% 50%' });
+      gsap.set(bar2, { top: '50%', transformOrigin: '50% 50%' });
+      gsap.set(bar3, { top: '100%', rotate: 0, transformOrigin: '50% 50%' });
       gsap.set(icon, { rotate: 0, transformOrigin: '50% 50%' });
       gsap.set(textInner, { yPercent: 0 });
       if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
@@ -288,12 +292,52 @@ export const StaggeredMenu = ({
 
   const animateIcon = useCallback(opening => {
     const icon = iconRef.current;
-    if (!icon) return;
+    const bar1 = bar1Ref.current;
+    const bar2 = bar2Ref.current;
+    const bar3 = bar3Ref.current;
+    if (!icon || !bar1 || !bar2 || !bar3) return;
+    
     spinTweenRef.current?.kill();
+    
     if (opening) {
-      spinTweenRef.current = gsap.to(icon, { rotate: 225, duration: 0.8, ease: 'power4.out', overwrite: 'auto' });
+      // Animate to X shape
+      const tl = gsap.timeline();
+      tl.to([bar1, bar3], { 
+        top: '50%', 
+        duration: 0.2, 
+        ease: 'power2.inOut' 
+      })
+      .to(bar3, { 
+        rotate: 90, 
+        duration: 0.8, 
+        ease: 'elastic.out(1, 0.3)' 
+      }, 0.2)
+      .to(icon, { 
+        rotate: 135, 
+        duration: 0.8, 
+        ease: 'elastic.out(1, 0.3)' 
+      }, 0.2);
+      spinTweenRef.current = tl;
     } else {
-      spinTweenRef.current = gsap.to(icon, { rotate: 0, duration: 0.35, ease: 'power3.inOut', overwrite: 'auto' });
+      // Animate back to hamburger
+      const tl = gsap.timeline();
+      tl.to(icon, { 
+        rotate: 0, 
+        duration: 0.8, 
+        ease: 'elastic.out(1, 0.3)' 
+      })
+      .to(bar3, { 
+        rotate: 0, 
+        duration: 0.8, 
+        ease: 'elastic.out(1, 0.3)' 
+      }, 0)
+      .to([bar1, bar3], { 
+        top: '0%', 
+        duration: 0.2, 
+        ease: 'power2.inOut' 
+      }, 0.8)
+      .set(bar3, { top: '100%' }, 1.0);
+      spinTweenRef.current = tl;
     }
   }, []);
 
@@ -441,8 +485,9 @@ export const StaggeredMenu = ({
             </span>
           </span>
           <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+            <span ref={bar1Ref} className="sm-icon-bar" />
+            <span ref={bar2Ref} className="sm-icon-bar" />
+            <span ref={bar3Ref} className="sm-icon-bar" />
           </span>
         </button>
       </header>

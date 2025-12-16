@@ -72,8 +72,8 @@ export default function ContactPage() {
         socialItems={socialItems}
         displaySocials={true}
         displayItemNumbering={false}
-        menuButtonColor="#fff"
-        openMenuButtonColor="#000"
+        menuButtonColor="#f7ba40"
+        openMenuButtonColor="#85417f"
         changeMenuColorOnOpen={true}
         colors={['#B19EEF', '#5227FF']}
         logoUrl="/Logo-Dark.png"

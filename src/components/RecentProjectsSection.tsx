@@ -1,6 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import TextType from './TextType';
 import ScrollFloat from './ScrollFloat';
 import { motion } from 'framer-motion';
@@ -70,115 +73,7 @@ const sampleProjects: Project[] = [
 ];
 
 export default function RecentProjectsSection() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const hasMovedRef = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-  const dragThreshold = 5; // Minimum pixels to move before considering it a drag
-
-  // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent | MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    hasMovedRef.current = false;
-    const pageX = 'pageX' in e ? e.pageX : e.clientX;
-    startX.current = pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
-  };
-
-  const handleMouseLeave = () => {
-    // Don't reset here, let mouseup handle it
-  };
-
-  const handleMouseUp = (e?: MouseEvent) => {
-    setIsDragging(false);
-    // Reset after a short delay to allow click handler to check
-    setTimeout(() => {
-      hasMovedRef.current = false;
-    }, 100);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent | MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const pageX = 'pageX' in e ? e.pageX : e.clientX;
-    const x = pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2; // Multiply by 2 for faster scrolling
-    
-    // Check if we've moved enough to consider it a drag
-    if (Math.abs(walk) > dragThreshold) {
-      hasMovedRef.current = true;
-    }
-    
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-
-  // Touch handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    hasMovedRef.current = false;
-    startX.current = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2;
-    
-    // Check if we've moved enough to consider it a drag
-    if (Math.abs(walk) > dragThreshold) {
-      hasMovedRef.current = true;
-    }
-    
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    // Reset after a short delay to allow click handler to check
-    setTimeout(() => {
-      hasMovedRef.current = false;
-    }, 100);
-  };
-
-  // Add document-level event listeners for dragging
-  useEffect(() => {
-    const handleDocumentMouseMove = (e: MouseEvent) => {
-      if (isDragging && scrollContainerRef.current) {
-        e.preventDefault();
-        const x = e.pageX - scrollContainerRef.current.offsetLeft;
-        const walk = (x - startX.current) * 2;
-        
-        if (Math.abs(walk) > dragThreshold) {
-          hasMovedRef.current = true;
-        }
-        
-        scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-      }
-    };
-
-    const handleDocumentMouseUp = () => {
-      if (isDragging) {
-        setIsDragging(false);
-        setTimeout(() => {
-          hasMovedRef.current = false;
-        }, 100);
-      }
-    };
-
-    if (isDragging) {
-      document.addEventListener('mousemove', handleDocumentMouseMove);
-      document.addEventListener('mouseup', handleDocumentMouseUp);
-      return () => {
-        document.removeEventListener('mousemove', handleDocumentMouseMove);
-        document.removeEventListener('mouseup', handleDocumentMouseUp);
-      };
-    }
-  }, [isDragging, dragThreshold]);
+  const sliderRef = useRef<Slider>(null);
 
   const lightShadowStyle = {
     textShadow: `
@@ -189,8 +84,39 @@ export default function RecentProjectsSection() {
     fontSize: '4rem'
   };
 
+  // React Slick settings
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
+    draggable: true,
+    arrows: false,
+    accessibility: true,
+    initialSlide: 0,
+    edgeFriction: 0.35,
+    variableWidth: true,
+    centerMode: false,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          variableWidth: true,
+          edgeFriction: 0.35,
+        }
+      }
+    ]
+  };
+
   return (
-    <section id="recent-projects" className="pt-56 pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative">
+    <section id="recent-projects" className="pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative" style={{ paddingTop: '60px' }}>
       {/* Left side overlay image */}
       <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 
@@ -225,7 +151,7 @@ export default function RecentProjectsSection() {
       
       {/* Section Header */}
       <div className="text-center mb-16 px-8 relative z-10">
-          <h2 className="mb-6 recent-projects-title-wrapper">
+          <h2 className="mb-3 recent-projects-title-wrapper">
             <ScrollFloat
               as="span"
               scrollContainerRef={null}
@@ -256,53 +182,57 @@ export default function RecentProjectsSection() {
               Projects
             </ScrollFloat>
           </h2>
-          <p className="text-[#e8e1d4] text-xl max-w-3xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
+          <p className="text-[#e8e1d4] text-3xl max-w-3xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
             A showcase of our latest work and the <strong>results we've delivered</strong> for our clients.
           </p>
         </div>
 
         {/* Projects Carousel */}
-        <div className="relative overflow-visible w-full z-10 pl-6 pr-6 md:pl-8 lg:pl-12 md:pr-8">
-          <div 
-            ref={scrollContainerRef}
-            className={`flex gap-6 overflow-x-scroll overflow-y-visible pb-6 pt-4 scrollbar-hide snap-x snap-mandatory select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-            style={{ 
-              width: 'max-content', 
-              minWidth: '100%',
-              userSelect: isDragging ? 'none' : 'auto'
-            }}
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+        <motion.div 
+          className="relative overflow-visible w-full z-10 projects-slider-container"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
+          <Slider ref={sliderRef} {...sliderSettings} className="projects-slider">
             {sampleProjects.map((project) => (
-              <a
-                key={project.id}
-                href={project.href}
-                draggable="false"
-                className="project-card flex-none w-80 md:w-[450px] h-[520px] snap-start flex flex-col no-underline cursor-pointer"
-                style={{ pointerEvents: isDragging && hasMovedRef.current ? 'none' : 'auto' }}
-                onDragStart={(e) => {
-                  e.preventDefault();
-                  return false;
-                }}
-                onMouseDown={(e) => {
-                  // Prevent default link drag behavior and let the container handle dragging
-                  e.preventDefault();
-                  if (scrollContainerRef.current) {
-                    handleMouseDown(e);
-                  }
-                }}
-                onClick={(e) => {
-                  if (hasMovedRef.current || isDragging) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
+              <motion.div 
+                key={project.id} 
+                className="project-slide"
+                variants={{
+                  hidden: { 
+                    opacity: 0, 
+                    y: 60,
+                    scale: 0.9
+                  },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }
                   }
                 }}
               >
+                <a
+                  href={project.href}
+                  draggable="false"
+                  className="project-card flex flex-col no-underline cursor-pointer"
+                  onDragStart={(e) => {
+                    e.preventDefault();
+                    return false;
+                  }}
+                >
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200 flex-shrink-0">
                   <img
@@ -342,21 +272,25 @@ export default function RecentProjectsSection() {
                   </div>
                 </div>
               </a>
+              </motion.div>
             ))}
-            {/* Spacer to ensure last card can scroll fully into view */}
-            <div className="flex-none w-6 md:w-0" aria-hidden="true"></div>
-          </div>
+          </Slider>
 
           {/* Button */}
           <motion.div 
             className="flex justify-center mt-8"
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.7,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: 0.2
+            variants={{
+              hidden: { opacity: 0, y: 30, scale: 0.95 },
+              visible: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: {
+                  duration: 0.7,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  delay: 0.75
+                }
+              }
             }}
           >
             <a 
@@ -373,21 +307,34 @@ export default function RecentProjectsSection() {
               </div>
             </a>
           </motion.div>
-        </div>
+        </motion.div>
 
-      <style jsx>{`
-        /* Hide scrollbar but keep functionality */
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+      <style jsx global>{`
+        /* Projects Slider Container */
+        .projects-slider-container {
+          padding: 0 2rem;
         }
         
-        /* Smooth scrolling */
-        .overflow-x-scroll {
-          scroll-behavior: smooth;
+        .projects-slider .slick-list {
+          overflow: visible;
+          padding: 20px 0 !important;
+        }
+        
+        .projects-slider .slick-track {
+          display: flex;
+          gap: 0;
+        }
+        
+        .project-slide {
+          width: 450px !important;
+          min-width: 450px;
+          padding: 0 12px;
+          display: flex;
+        }
+        
+        .project-slide > a {
+          width: 100%;
+          height: 520px;
         }
 
         /* Project card hover effect */
@@ -397,6 +344,12 @@ export default function RecentProjectsSection() {
           z-index: 1;
           text-decoration: none;
           color: inherit;
+          border: 2px solid #f7ba40;
+          border-radius: 1rem;
+          overflow: hidden;
+          will-change: transform;
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
         
         .project-card:visited {
@@ -410,12 +363,6 @@ export default function RecentProjectsSection() {
           }
         }
         
-        @media (max-width: 768px) {
-          .project-card {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          }
-        }
-
         /* Line clamp for description */
         .line-clamp-3 {
           display: -webkit-box;
@@ -423,16 +370,24 @@ export default function RecentProjectsSection() {
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-
-        /* Ensure overflow is visible for hover effects */
-        .overflow-y-visible {
-          overflow-y: visible !important;
-        }
         
-        /* Ensure wrapper allows cards to lift */
-        .relative.overflow-visible {
-          padding-top: 20px;
-          margin-top: -20px;
+        @media (max-width: 768px) {
+          .projects-slider-container {
+            padding: 0 1rem;
+          }
+          
+          .project-slide {
+            width: 320px !important;
+            min-width: 320px;
+          }
+          
+          .project-slide > a {
+            height: 520px;
+          }
+          
+          .project-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          }
         }
 
         /* Animated Button Styles */

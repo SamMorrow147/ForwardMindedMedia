@@ -8,6 +8,7 @@
   -webkit-backface-visibility: hidden;
   background-color: #000000 !important;
   overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 .galaxy-container canvas {
@@ -18,4 +19,5 @@
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  pointer-events: none !important;
 }

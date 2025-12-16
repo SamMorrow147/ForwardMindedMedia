@@ -1,59 +1,17 @@
 "use client";
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import SpotlightCard from "./SpotlightCard";
 import BlurText from "./BlurText";
 import ScrollFloat from './ScrollFloat';
 import LogoSlider from "./LogoSlider";
+import { motion } from "framer-motion";
 
 export default function TestimonialSection() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  // Mouse drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Touch handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
+  const sliderRef = useRef<Slider>(null);
 
   const testimonials = [
     {
@@ -115,6 +73,37 @@ export default function TestimonialSection() {
     `
   };
 
+  // React Slick settings
+  const sliderSettings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipe: true,
+    swipeToSlide: true,
+    touchMove: true,
+    draggable: true,
+    arrows: false,
+    accessibility: true,
+    initialSlide: 0,
+    edgeFriction: 0.35,
+    variableWidth: true,
+    centerMode: false,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          variableWidth: true,
+          edgeFriction: 0.35,
+        }
+      }
+    ]
+  };
+
   return (
     <section className="py-20 bg-[#602d62]">
       <div className="container mx-auto px-6">
@@ -152,99 +141,149 @@ export default function TestimonialSection() {
               Social Proof
             </ScrollFloat>
           </h2>
-          <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">
+          <p className="text-3xl text-gray-300 max-w-3xl mx-auto italic" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
             Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us at <strong>Forward Minded Media</strong>.
           </p>
         </div>
 
         {/* Horizontal Scrollable Testimonials */}
-        <div className="relative overflow-hidden">
-          <div 
-            ref={scrollContainerRef}
-            className={`flex gap-6 overflow-x-scroll pb-6 scrollbar-hide snap-x snap-mandatory px-6 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-            style={{ width: 'max-content', minWidth: '100%' }}
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+        <motion.div 
+          className="relative overflow-visible testimonial-slider-container"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
+          <Slider ref={sliderRef} {...sliderSettings} className="testimonial-slider">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="flex-none w-80 snap-start">
-                <SpotlightCard 
-                  className="h-full testimonial-card"
-                  spotlightColor={testimonial.spotlightColor}
-                >
-                  <div className="h-full flex flex-col">
-                    {/* Quote Icon */}
-                    <div className="mb-6 flex justify-center">
-                      <svg 
-                        className="w-12 h-12" 
-                        fill="#f7ba40" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
-                      </svg>
-                    </div>
-                    
-                    {/* Testimonial Text */}
-                    <blockquote className="text-gray-300 text-lg leading-relaxed mb-8 flex-grow italic">
-                      &ldquo;{testimonial.testimonial}&rdquo;
-                    </blockquote>
-                    
-                    {/* Client Info - Always at bottom */}
-                    <div className="text-center mt-auto">
-                      <h4 className="text-white text-xl font-bold mb-1">
-                        {testimonial.name}
-                      </h4>
-                      {testimonial.role && (
-                        <p className="text-gray-400 text-sm mb-1">
-                          {testimonial.role}
+              <motion.div
+                key={index}
+                className="testimonial-slide"
+                variants={{
+                  hidden: { 
+                    opacity: 0, 
+                    y: 60,
+                    scale: 0.9
+                  },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }
+                  }
+                }}
+              >
+                <div className="px-3">
+                  <SpotlightCard 
+                    className="h-full testimonial-card"
+                    spotlightColor={testimonial.spotlightColor}
+                  >
+                    <div className="h-full flex flex-col p-6">
+                      {/* Quote Icon */}
+                      <div className="mb-6 flex justify-center">
+                        <svg 
+                          className="w-16 h-16" 
+                          fill="#f7ba40" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                        </svg>
+                      </div>
+                      
+                      {/* Testimonial Text */}
+                      <blockquote className="text-gray-300 text-2xl leading-relaxed mb-8 flex-grow italic">
+                        &ldquo;{testimonial.testimonial}&rdquo;
+                      </blockquote>
+                      
+                      {/* Client Info - Always at bottom */}
+                      <div className="text-center mt-auto">
+                        <h4 className="text-white text-3xl font-bold mb-2">
+                          {testimonial.name}
+                        </h4>
+                        {testimonial.role && (
+                          <p className="text-gray-400 text-lg mb-2">
+                            {testimonial.role}
+                          </p>
+                        )}
+                        <p className="text-gray-500 text-lg font-medium">
+                          {testimonial.company}
                         </p>
-                      )}
-                      <p className="text-gray-500 text-sm font-medium">
-                        {testimonial.company}
-                      </p>
+                      </div>
                     </div>
-                  </div>
-                </SpotlightCard>
-              </div>
+                  </SpotlightCard>
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </Slider>
           
           {/* Scroll Indicator */}
-          <div className="flex justify-center mt-8">
+          <motion.div 
+            className="flex justify-center mt-8"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { 
+                opacity: 1, 
+                y: 0,
+                transition: {
+                  duration: 0.5,
+                  delay: 0.9
+                }
+              }
+            }}
+          >
             <p className="text-gray-500 text-sm flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
               </svg>
-              Scroll to see more testimonials
+              Drag to see more testimonials
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         
         {/* Logo Slider */}
         <LogoSlider />
       </div>
       
-      <style jsx>{`
-        /* Hide scrollbar but keep functionality */
-        .scrollbar-hide {
-          -ms-overflow-style: none;  /* Internet Explorer 10+ */
-          scrollbar-width: none;  /* Firefox */
-        }
-        .scrollbar-hide::-webkit-scrollbar { 
-          display: none;  /* Safari and Chrome */
+      <style jsx global>{`
+        /* Testimonial Slider Container */
+        .testimonial-slider-container {
+          width: 100%;
+          overflow: visible;
+          padding: 0 2rem;
         }
         
-        /* Smooth scrolling */
-        .overflow-x-scroll {
-          scroll-behavior: smooth;
+        .testimonial-slider .slick-list {
+          overflow: visible;
+          padding: 0 !important;
+        }
+        
+        .testimonial-slider .slick-track {
+          display: flex;
+          gap: 0;
+        }
+        
+        .testimonial-slide {
+          width: 420px !important;
+          min-width: 420px;
+          display: flex;
+        }
+        
+        .testimonial-slide > div {
+          width: 100%;
+          height: 100%;
         }
         
         /* Force correct font for BlurText title */
@@ -255,32 +294,12 @@ export default function TestimonialSection() {
           font-style: normal !important;
         }
         
-        /* Fade effect on right edge only */
-        .relative::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 24px; /* Account for padding-bottom */
-          right: 0;
-          width: 100px;
-          pointer-events: none;
-          z-index: 10;
-          background: linear-gradient(to left, rgba(96, 45, 98, 1), rgba(96, 45, 98, 0.8) 30%, rgba(96, 45, 98, 0));
-        }
-        
-        /* Mobile adjustments - smaller gradient */
-        @media (max-width: 768px) {
-          .relative::after {
-            width: 60px;
-            background: linear-gradient(to left, rgba(96, 45, 98, 1), rgba(96, 45, 98, 0.6) 40%, rgba(96, 45, 98, 0));
-          }
-        }
-        
         /* Ensure testimonial cards have consistent height and flex layout */
         .testimonial-card {
           display: flex;
           flex-direction: column;
-          min-height: 100%;
+          min-height: 500px;
+          height: 100%;
         }
         
         .testimonial-card .card-content {
@@ -288,6 +307,27 @@ export default function TestimonialSection() {
           flex-direction: column;
           flex: 1;
           min-height: 100%;
+        }
+        
+        /* Slick slider customization */
+        .testimonial-slider .slick-slide {
+          opacity: 1;
+          transition: opacity 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+          .testimonial-slider-container {
+            padding: 0 1rem;
+          }
+          
+          .testimonial-slide {
+            width: 340px !important;
+            min-width: 340px;
+          }
+          
+          .testimonial-card {
+            min-height: 450px;
+          }
         }
       `}</style>
     </section>
