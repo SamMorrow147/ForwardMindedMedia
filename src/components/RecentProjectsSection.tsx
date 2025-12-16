@@ -240,8 +240,7 @@ export default function RecentProjectsSection() {
             >
               Recent
             </ScrollFloat>
-            <span className="hidden md:inline" style={{ width: '32px', display: 'inline-block' }}>&nbsp;</span>
-            <br className="md:hidden" />
+            <span className="inline-block w-2 md:w-8">&nbsp;</span>
             <ScrollFloat
               as="span"
               scrollContainerRef={null}

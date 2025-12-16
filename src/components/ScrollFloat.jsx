@@ -23,11 +23,37 @@ const ScrollFloat = ({
 
   const splitText = useMemo(() => {
     const text = typeof children === 'string' ? children : '';
-    return text.split('').map((char, index) => (
-      <span className="char" key={index}>
-        {char === ' ' ? '\u00A0' : char}
-      </span>
-    ));
+    const words = text.split(' ');
+    let charIndex = 0;
+    
+    return words.map((word, wordIndex) => {
+      const chars = word.split('').map((char) => {
+        const elem = (
+          <span className="char" key={charIndex}>
+            {char}
+          </span>
+        );
+        charIndex++;
+        return elem;
+      });
+      
+      // Add space after each word except the last one
+      if (wordIndex < words.length - 1) {
+        chars.push(
+          <span className="char" key={charIndex}>
+            {'\u00A0'}
+          </span>
+        );
+        charIndex++;
+      }
+      
+      // Wrap each word in a non-breaking span
+      return (
+        <span key={`word-${wordIndex}`} style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+          {chars}
+        </span>
+      );
+    });
   }, [children]);
 
   useEffect(() => {

@@ -28,98 +28,182 @@ export default function TrueFocusSection() {
               href="https://calendly.com/jake-forwardmindedmedia" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="glass-button pointer-events-auto mt-8 inline-block text-center no-underline"
+              className="btn-animated pointer-events-auto mt-8 no-underline"
             >
-              Book a Discovery Call
+              <strong>Book a Discovery Call</strong>
+              <div id="container-stars">
+                <div id="stars"></div>
+              </div>
+              <div id="glow">
+                <div className="circle"></div>
+                <div className="circle"></div>
+              </div>
             </a>
             
             <style jsx>{`
-                .glass-button {
-                  width: 300px;
-                  height: 60px;
-                  font-family: "scandia-web", sans-serif;
-                  font-weight: 700;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  color: #fff;
-                  background: 
-                    linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
-                    rgba(0, 0, 0, 0.3);
-                  backdrop-filter: blur(10px) saturate(1.2);
-                  border: 2px solid rgba(0, 0, 0, 0.3);
-                  border-radius: 16px;
-                  cursor: pointer;
-                  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                  position: relative;
-                  overflow: hidden;
-                  z-index: 1;
-                  box-shadow: 
-                    inset 0 1px 2px rgba(255, 255, 255, 0.1),
-                    inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+                .btn-animated {
                   display: flex;
-                  align-items: center;
                   justify-content: center;
+                  align-items: center;
+                  width: auto;
+                  min-width: 20rem;
+                  padding: 0 2rem;
+                  overflow: hidden;
+                  height: 3rem;
+                  background-size: 300% 300%;
+                  backdrop-filter: blur(1rem);
+                  border-radius: 5rem;
+                  transition: 0.5s;
+                  animation: gradient_301 5s ease infinite;
+                  border: double 4px transparent;
+                  background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #85417F 100%);
+                  background-origin: border-box;
+                  background-clip: content-box, border-box;
+                  position: relative;
+                  cursor: pointer;
                   text-decoration: none;
                 }
-                
-                .glass-button::before {
-                  content: '';
+
+                .btn-animated strong {
+                  z-index: 2;
+                  font-family: "scandia-web", sans-serif;
+                  font-size: 18px;
+                  font-weight: 700;
+                  letter-spacing: 1px;
+                  color: #FFFFFF;
+                  text-shadow: 0 0 4px white;
+                  text-transform: uppercase;
+                }
+
+                #container-stars {
                   position: absolute;
-                  top: 0;
-                  left: -100%;
+                  z-index: 1;
                   width: 100%;
                   height: 100%;
-                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-                  transition: left 0.6s ease;
+                  overflow: hidden;
+                  transition: 0.5s;
+                  backdrop-filter: blur(1rem);
+                  border-radius: 5rem;
+                  background-color: #212121;
                 }
-                
-                .glass-button::after {
-                  content: '';
+
+                #glow {
                   position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  width: 0;
-                  height: 0;
-                  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-                  border-radius: 50%;
-                  transform: translate(-50%, -50%);
-                  transition: all 0.5s ease;
+                  display: flex;
+                  width: 100%;
+                }
+
+                .circle {
+                  width: 100%;
+                  height: 30px;
+                  filter: blur(2rem);
+                  animation: pulse_3011 4s infinite;
                   z-index: -1;
                 }
-                
-                .glass-button:hover {
-                  background: 
-                    linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%),
-                    rgba(0, 0, 0, 0.4);
-                  border-color: rgba(0, 0, 0, 0.5);
-                  transform: translateY(-3px) scale(1.05);
-                  box-shadow: 
-                    0 10px 40px rgba(0, 0, 0, 0.3),
-                    0 0 20px rgba(0, 0, 0, 0.2),
-                    0 0 15px #f7ba40,
-                    0 0 30px rgba(247, 186, 64, 0.4),
-                    inset 0 0 0 1px #f7ba40,
-                    inset 0 1px 2px rgba(255, 255, 255, 0.15),
-                    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
-                  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+                .circle:nth-of-type(1) {
+                  background: rgba(254, 83, 186, 0.636);
                 }
-                
-                .glass-button:hover::before {
-                  left: 100%;
+
+                .circle:nth-of-type(2) {
+                  background: rgba(142, 81, 234, 0.704);
                 }
-                
-                .glass-button:hover::after {
-                  width: 300px;
-                  height: 300px;
+
+                .btn-animated:hover #container-stars {
+                  z-index: -1;
+                  background-color: transparent;
                 }
-                
-                .glass-button:active {
-                  transform: translateY(-1px) scale(1.02);
-                  background: rgba(255, 255, 255, 0.3);
-                  box-shadow: 
-                    0 5px 20px rgba(255, 255, 255, 0.2),
-                    0 0 15px rgba(255, 255, 255, 0.15);
+
+                .btn-animated:hover {
+                  transform: scale(1.1);
+                }
+
+                .btn-animated:active {
+                  border: double 4px #FE53BB;
+                  background-origin: border-box;
+                  background-clip: content-box, border-box;
+                  animation: none;
+                }
+
+                .btn-animated:active .circle {
+                  background: #FE53BB;
+                }
+
+                #stars {
+                  position: relative;
+                  background: transparent;
+                  width: 200rem;
+                  height: 200rem;
+                }
+
+                #stars::after {
+                  content: "";
+                  position: absolute;
+                  top: -10rem;
+                  left: -100rem;
+                  width: 100%;
+                  height: 100%;
+                  animation: animStarRotate 90s linear infinite;
+                  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+                  background-size: 50px 50px;
+                }
+
+                #stars::before {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  left: -50%;
+                  width: 170%;
+                  height: 500%;
+                  animation: animStar 60s linear infinite;
+                  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+                  background-size: 50px 50px;
+                  opacity: 0.5;
+                }
+
+                @keyframes animStar {
+                  from {
+                    transform: translateY(0);
+                  }
+                  to {
+                    transform: translateY(-135rem);
+                  }
+                }
+
+                @keyframes animStarRotate {
+                  from {
+                    transform: rotate(360deg);
+                  }
+                  to {
+                    transform: rotate(0);
+                  }
+                }
+
+                @keyframes gradient_301 {
+                  0% {
+                    background-position: 0% 50%;
+                  }
+                  50% {
+                    background-position: 100% 50%;
+                  }
+                  100% {
+                    background-position: 0% 50%;
+                  }
+                }
+
+                @keyframes pulse_3011 {
+                  0% {
+                    transform: scale(0.75);
+                    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+                  }
+                  70% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+                  }
+                  100% {
+                    transform: scale(0.75);
+                    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+                  }
                 }
               `}</style>
           </div>

@@ -1128,10 +1128,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           px-4
           [font-size:3.5rem]
           md:[font-size:4rem]
+          [line-height:1.1]
           top-32
           md:top-1/2
           md:left-[1.6em]
           md:w-auto
+          md:max-w-[8ch]
           md:px-0
           md:text-left
           md:transform

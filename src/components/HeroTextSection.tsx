@@ -22,7 +22,7 @@ export default function HeroTextSection() {
   };
 
   return (
-    <section className="pt-20 pb-40 text-center relative" style={{ backgroundColor: 'transparent', pointerEvents: 'none' }}>
+    <section className="pt-4 md:pt-20 pb-40 text-center relative" style={{ backgroundColor: 'transparent', pointerEvents: 'none' }}>
       
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
         {/* Headline with Scroll Float */}

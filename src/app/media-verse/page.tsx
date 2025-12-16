@@ -29,31 +29,31 @@ export default function MediaVersePage() {
     { label: 'TikTok', link: 'https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7' }
   ];
 
-  // Infinite Menu items - customize these with your actual media content
+  // Infinite Menu items - Portfolio case studies
   const infiniteMenuItems = [
     {
-      image: 'https://picsum.photos/300/300?grayscale',
-      link: 'https://google.com/',
-      title: 'Project 1',
-      description: 'This is pretty cool, right?'
+      image: '/firstnational.jpg',
+      link: '/case-studies/first-national-bank',
+      title: 'Double the Impact',
+      description: 'First National Bank - Multichannel Campaign'
     },
     {
-      image: 'https://picsum.photos/400/400?grayscale',
-      link: 'https://google.com/',
-      title: 'Project 2',
-      description: 'This is pretty cool, right?'
+      image: '/Infinite-Youth-Medical-Spa_49b6158f087279481f10f7ebaeb2ad1b.jpg',
+      link: '/case-studies/infinite-youth',
+      title: 'A Brand Glow-Up',
+      description: 'Infinite Youth Medical Spa - Brand Refresh & Digital Transformation'
     },
     {
-      image: 'https://picsum.photos/500/500?grayscale',
-      link: 'https://google.com/',
-      title: 'Project 3',
-      description: 'This is pretty cool, right?'
+      image: 'https://images.unsplash.com/photo-1532634922-8fe0b757fb13?q=80&w=2072&auto=format&fit=crop',
+      link: '/case-studies/local-brewery',
+      title: 'Hometown Hype',
+      description: 'Local Brewery - Video Production & Event Marketing'
     },
     {
       image: 'https://picsum.photos/600/600?grayscale',
       link: 'https://google.com/',
-      title: 'Project 4',
-      description: 'This is pretty cool, right?'
+      title: 'Coming Soon',
+      description: 'More projects coming soon'
     }
   ];
 

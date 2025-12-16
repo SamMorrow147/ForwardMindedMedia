@@ -120,20 +120,38 @@ export default function TestimonialSection() {
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <ScrollFloat
-            as="h2"
-            scrollContainerRef={null}
-            animationDuration={1}
-            ease="back.inOut(2)"
-            scrollStart="top bottom"
-            scrollEnd="center center-=20%"
-            stagger={0.03}
-            containerClassName="mb-6 testimonials-title"
-            textClassName=""
-            style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
-          >
-            Testimonials & Social Proof
-          </ScrollFloat>
+          <h2 className="mb-6 testimonials-title-wrapper">
+            <ScrollFloat
+              as="span"
+              scrollContainerRef={null}
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="top bottom"
+              scrollEnd="center center-=20%"
+              stagger={0.03}
+              containerClassName="testimonials-title inline"
+              textClassName=""
+              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+            >
+              Testimonials &
+            </ScrollFloat>
+            <span className="hidden md:inline" style={{ width: '32px', display: 'inline-block' }}>&nbsp;</span>
+            <br className="md:hidden" />
+            <ScrollFloat
+              as="span"
+              scrollContainerRef={null}
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="top bottom"
+              scrollEnd="center center-=20%"
+              stagger={0.03}
+              containerClassName="testimonials-title inline"
+              textClassName=""
+              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
+            >
+              Social Proof
+            </ScrollFloat>
+          </h2>
           <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic">
             Don&apos;t just take our word for it. Here&apos;s what our clients have to say about their experience working with us at <strong>Forward Minded Media</strong>.
           </p>

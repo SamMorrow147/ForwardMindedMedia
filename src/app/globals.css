@@ -264,6 +264,15 @@ body::before {
     font-size: clamp(2rem, 8vw, 4rem) !important;
   }
 
+  /* Prevent word breaking in hero title */
+  .hero-title,
+  h2.hero-title {
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+  }
+
   /* Recent Projects title ScrollFloat - Force Scandia Bold on all nested elements */
   .recent-projects-title,
   .recent-projects-title *,

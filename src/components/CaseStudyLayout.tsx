@@ -177,7 +177,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
           <h2 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Deliverables
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {deliverables.map((item, index) => (
               <div 
                 key={index}
@@ -210,11 +210,6 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
               const labelLower = metric.label.toLowerCase();
               const valueLower = metric.value.toLowerCase();
               
-              // Use downward line chart for cost reduction metrics
-              if (labelLower.includes('cost') || labelLower.includes('lower') || labelLower.includes('reduction') || labelLower.includes('decrease')) {
-                return <MetricCardWithChart key={index} {...metric} trend="down" />;
-              }
-              
               // Use circle chart for percentage-based metrics (booking, attendance, sellout, signups)
               if (labelLower.includes('signup') || labelLower.includes('sign-up') || 
                   labelLower.includes('booking') || labelLower.includes('attendance') || 
@@ -223,11 +218,13 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
                 return <MetricCardWithCircleChart key={index} {...metric} />;
               }
               
-              // Use upward line chart for growth/increase/boost metrics (traffic, engagement, impressions)
+              // Use upward line chart for all positive metrics (growth, increase, boost, lower cost, etc.)
               if (labelLower.includes('growth') || labelLower.includes('increase') || 
                   labelLower.includes('boost') || labelLower.includes('impressions') ||
                   labelLower.includes('traffic') || labelLower.includes('engagement') ||
-                  labelLower.includes('rise') || labelLower.includes('higher')) {
+                  labelLower.includes('rise') || labelLower.includes('higher') ||
+                  labelLower.includes('cost') || labelLower.includes('lower') || 
+                  labelLower.includes('reduction') || labelLower.includes('decrease')) {
                 return <MetricCardWithChart key={index} {...metric} trend="up" />;
               }
               
