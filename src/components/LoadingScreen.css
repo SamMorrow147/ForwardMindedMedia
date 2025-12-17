@@ -119,7 +119,7 @@
   font-size: 24px;
   animation: rotate 1s linear infinite;
   margin: 0 15px;
-  color: #B19EEF;
+  color: #f7ba40;
 }
 
 @keyframes rotate {
@@ -155,11 +155,11 @@
 .loading-bar {
   height: 0.6rem;
   margin: 1px 0px;
-  background: linear-gradient(90deg, #B19EEF 0%, #ffffff 50%, #B19EEF 100%);
+  background: linear-gradient(90deg, #f7ba40 0%, #ff9f5c 50%, #f7ba40 100%);
   background-size: 200% 100%;
   animation: bar-shimmer 2s ease-in-out infinite;
   transition: width 0.3s ease-out;
-  box-shadow: 0 0 10px rgba(177, 158, 239, 0.8);
+  box-shadow: 0 0 10px rgba(247, 186, 64, 0.8);
 }
 
 @keyframes bar-shimmer {
