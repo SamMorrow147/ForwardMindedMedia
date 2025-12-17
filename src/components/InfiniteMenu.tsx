@@ -851,7 +851,23 @@ class InfiniteGridMenu {
       images.forEach((img, i) => {
         const x = (i % this.atlasSize) * cellSize;
         const y = Math.floor(i / this.atlasSize) * cellSize;
-        ctx.drawImage(img, x, y, cellSize, cellSize);
+        
+        // Calculate dimensions to crop to square (object-fit: cover behavior)
+        const imgAspect = img.width / img.height;
+        let srcX = 0, srcY = 0, srcWidth = img.width, srcHeight = img.height;
+        
+        if (imgAspect > 1) {
+          // Image is wider than tall - crop width
+          srcWidth = img.height;
+          srcX = (img.width - img.height) / 2;
+        } else if (imgAspect < 1) {
+          // Image is taller than wide - crop height
+          srcHeight = img.width;
+          srcY = (img.height - img.width) / 2;
+        }
+        
+        // Draw cropped square image
+        ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, x, y, cellSize, cellSize);
       });
 
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
