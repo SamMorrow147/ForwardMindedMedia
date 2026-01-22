@@ -8,6 +8,7 @@ interface AnimatedLineChartProps {
   label?: string;
   className?: string;
   trend?: 'up' | 'down'; // Add trend prop
+  chartType?: string; // Add chartType prop for different styles
 }
 
 const AnimatedLineChart: React.FC<AnimatedLineChartProps> = ({ 
@@ -15,7 +16,8 @@ const AnimatedLineChart: React.FC<AnimatedLineChartProps> = ({
   value = "200%",
   label = "Increase",
   className = "",
-  trend = 'up'
+  trend = 'up',
+  chartType = 'default'
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -148,30 +150,57 @@ const AnimatedLineChart: React.FC<AnimatedLineChartProps> = ({
               />
             </clipPath>
 
-            <linearGradient id={`gradient-purple-1-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0" stopColor="#85417f" />
-              <stop offset="50" stopColor="#6d3569" />
-              <stop offset="100" stopColor="#5a2d56" />
-            </linearGradient>
+            {chartType === 'impressions' ? (
+              <>
+                <linearGradient id={`gradient-purple-1-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0" stopColor="#f7ba40" />
+                  <stop offset="50" stopColor="#ff9f1c" />
+                  <stop offset="100" stopColor="#ff8c00" />
+                </linearGradient>
 
-            <linearGradient id={`gradient-purple-2-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0" stopColor="#85417f" />
-              <stop offset="0.3" stopColor="#6d3569" />
-              <stop offset="0.6" stopColor="#5a2d56" />
-              <stop offset="1" stopColor="#4a2546" />
-            </linearGradient>
+                <linearGradient id={`gradient-purple-2-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0" stopColor="#f7ba40" />
+                  <stop offset="0.3" stopColor="#ff9f1c" />
+                  <stop offset="0.6" stopColor="#ff8c00" />
+                  <stop offset="1" stopColor="#e67e00" />
+                </linearGradient>
 
-            <linearGradient id={`gradient-purple-3-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0" stopColor="rgba(133, 65, 127, 0.15)" stopOpacity="0.15" />
-              <stop offset="0.5" stopColor="rgba(133, 65, 127, 0.25)" stopOpacity="0.25" />
-              <stop offset="1" stopColor="rgba(133, 65, 127, 0)" stopOpacity="0" />
-            </linearGradient>
+                <linearGradient id={`gradient-purple-3-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0" stopColor="rgba(247, 186, 64, 0.2)" stopOpacity="0.2" />
+                  <stop offset="0.5" stopColor="rgba(247, 186, 64, 0.3)" stopOpacity="0.3" />
+                  <stop offset="1" stopColor="rgba(247, 186, 64, 0)" stopOpacity="0" />
+                </linearGradient>
+              </>
+            ) : (
+              <>
+                <linearGradient id={`gradient-purple-1-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0" stopColor="#85417f" />
+                  <stop offset="50" stopColor="#6d3569" />
+                  <stop offset="100" stopColor="#5a2d56" />
+                </linearGradient>
+
+                <linearGradient id={`gradient-purple-2-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0" stopColor="#85417f" />
+                  <stop offset="0.3" stopColor="#6d3569" />
+                  <stop offset="0.6" stopColor="#5a2d56" />
+                  <stop offset="1" stopColor="#4a2546" />
+                </linearGradient>
+
+                <linearGradient id={`gradient-purple-3-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0" stopColor="rgba(133, 65, 127, 0.15)" stopOpacity="0.15" />
+                  <stop offset="0.5" stopColor="rgba(133, 65, 127, 0.25)" stopOpacity="0.25" />
+                  <stop offset="1" stopColor="rgba(133, 65, 127, 0)" stopOpacity="0" />
+                </linearGradient>
+              </>
+            )}
           </defs>
 
           {/* Grid lines */}
           <g id="grid">
             {Array.from({ length: 5 }).map((_, i) => {
               const stepX = 77 / 14;
+              const gridColor = chartType === 'impressions' ? '#ff9f1c' : '#f7ba40';
+              const gridOpacity = chartType === 'impressions' ? '0.4' : '0.3';
               return (
                 <line
                   key={`h-${i}`}
@@ -180,25 +209,29 @@ const AnimatedLineChart: React.FC<AnimatedLineChartProps> = ({
                   y1={stepX * i}
                   x2="77"
                   y2={stepX * i}
-                  stroke="#f7ba40"
+                  stroke={gridColor}
                   strokeWidth="0.1"
-                  strokeOpacity="0.3"
+                  strokeOpacity={gridOpacity}
                 />
               );
             })}
-            {Array.from({ length: 15 }).map((_, i) => (
-              <line
-                key={`v-${i}`}
-                className="vertical"
-                x1={(77 / 14) * i}
-                y1="38.7"
-                x2={(77 / 14) * i}
-                y2="0"
-                stroke="#f7ba40"
-                strokeWidth="0.1"
-                strokeOpacity="0.3"
-              />
-            ))}
+            {Array.from({ length: 15 }).map((_, i) => {
+              const gridColor = chartType === 'impressions' ? '#ff9f1c' : '#f7ba40';
+              const gridOpacity = chartType === 'impressions' ? '0.4' : '0.3';
+              return (
+                <line
+                  key={`v-${i}`}
+                  className="vertical"
+                  x1={(77 / 14) * i}
+                  y1="38.7"
+                  x2={(77 / 14) * i}
+                  y2="0"
+                  stroke={gridColor}
+                  strokeWidth="0.1"
+                  strokeOpacity={gridOpacity}
+                />
+              );
+            })}
           </g>
 
           {/* Filled polygon */}

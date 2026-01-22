@@ -41,16 +41,32 @@ const MetricCard: React.FC<MetricCardProps> = ({ value, label, icon }) => (
   </div>
 );
 
-const MetricCardWithChart: React.FC<MetricCardProps> = ({ value, label, trend = 'up' }) => {
-  // Data points for upward trending chart (representing growth)
+const MetricCardWithChart: React.FC<MetricCardProps & { chartType?: string }> = ({ value, label, trend = 'up', chartType = 'default' }) => {
+  // Data points for smooth upward impressions/traffic chart (representing dramatic growth)
+  const impressionsData = [10, 18, 28, 35, 48, 58, 72, 82, 88, 92, 95, 97, 98, 100];
+  // Data points for organic social engagement growth (wave-like growth pattern)
+  const engagementData = [8, 22, 18, 32, 28, 45, 38, 52, 48, 68, 62, 78, 85, 95];
+  // Data points for upward trending chart (representing growth with variation)
   const upwardData = [15, 25, 40, 30, 45, 40, 35, 55, 37, 50, 60, 45, 70, 78];
   // Data points for downward trending chart (representing decrease in cost)
   // Starts high (top) and ends in middle, with variation up and down
   const downwardData = [95, 88, 92, 85, 78, 82, 75, 70, 73, 68, 65, 60, 58, 55];
-  const chartData = trend === 'down' ? downwardData : upwardData;
+  
+  let chartData = upwardData;
+  if (trend === 'down') {
+    chartData = downwardData;
+  } else if (chartType === 'impressions') {
+    chartData = impressionsData;
+  } else if (chartType === 'engagement') {
+    chartData = engagementData;
+  }
+  
+  const borderClass = chartType === 'impressions' 
+    ? 'border-[#f7ba40]/20 hover:border-[#f7ba40]/40' 
+    : 'border-[#85417f]/20 hover:border-[#85417f]/40';
   
   return (
-    <div className="bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border border-[#85417f]/20 hover:border-[#85417f]/40 transition-all duration-300 hover:transform hover:scale-105 relative overflow-hidden flex flex-col">
+    <div className={`bg-gradient-to-br from-[#2a1232] to-[#3a1945] rounded-2xl p-8 shadow-xl border ${borderClass} transition-all duration-300 hover:transform hover:scale-105 relative overflow-hidden flex flex-col`}>
       <div className="relative w-full flex-1 mb-6" style={{ minHeight: '180px' }}>
         <AnimatedLineChart 
           data={chartData}
@@ -58,6 +74,7 @@ const MetricCardWithChart: React.FC<MetricCardProps> = ({ value, label, trend = 
           label={label}
           className="w-full"
           trend={trend}
+          chartType={chartType}
         />
       </div>
       <div className="flex flex-col items-center justify-center text-center">
@@ -210,6 +227,18 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
               const labelLower = metric.label.toLowerCase();
               const valueLower = metric.value.toLowerCase();
               
+              // Use smooth line chart for impressions, traffic, views (golden style)
+              if (labelLower.includes('impressions') || labelLower.includes('traffic') || 
+                  labelLower.includes('views') || labelLower.includes('reach') || 
+                  labelLower.includes('visibility')) {
+                return <MetricCardWithChart key={index} {...metric} trend="up" chartType="impressions" />;
+              }
+              
+              // Use wave-like line chart for social engagement metrics (cyan style)
+              if (labelLower.includes('engagement') || labelLower.includes('social')) {
+                return <MetricCardWithChart key={index} {...metric} trend="up" chartType="engagement" />;
+              }
+              
               // Use circle chart for percentage-based metrics (booking, attendance, sellout, signups)
               if (labelLower.includes('signup') || labelLower.includes('sign-up') || 
                   labelLower.includes('booking') || labelLower.includes('attendance') || 
@@ -218,11 +247,9 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
                 return <MetricCardWithCircleChart key={index} {...metric} />;
               }
               
-              // Use upward line chart for all positive metrics (growth, increase, boost, lower cost, etc.)
+              // Use upward line chart for all other positive metrics (growth, increase, boost, lower cost, etc.)
               if (labelLower.includes('growth') || labelLower.includes('increase') || 
-                  labelLower.includes('boost') || labelLower.includes('impressions') ||
-                  labelLower.includes('traffic') || labelLower.includes('engagement') ||
-                  labelLower.includes('rise') || labelLower.includes('higher') ||
+                  labelLower.includes('boost') || labelLower.includes('higher') ||
                   labelLower.includes('cost') || labelLower.includes('lower') || 
                   labelLower.includes('reduction') || labelLower.includes('decrease')) {
                 return <MetricCardWithChart key={index} {...metric} trend="up" />;
