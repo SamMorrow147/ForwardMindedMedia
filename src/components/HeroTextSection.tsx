@@ -38,12 +38,12 @@ export default function HeroTextSection() {
           textClassName=""
           style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
         >
-          Leave The Status Quo Behind.
+          Leave the Status Quo Behind
         </ScrollFloat>
         
         {/* Subheadline - No effect */}
         <p className="text-2xl md:text-3xl text-white/90 mb-12 leading-relaxed hero-subtext">
-          We partner with visionary businesses to craft bold ideas, unforgettable campaigns and real growth. Together, we turn heads and turn goals into achievements.
+          Marketing shouldn&apos;t be a line item — it should be a partnership. We collaborate with visionary businesses to craft bold ideas, unforgettable campaigns and real growth. Together we turn heads and turn goals into achievements.
         </p>
         
         {/* Button */}
@@ -96,26 +96,25 @@ export default function HeroTextSection() {
           {[
             {
               id: 0,
-              icon: Layers,
-              title: "Full-Service Expertise"
+              icon: Handshake,
+              title: "True Partnerships",
+              description: "We become part of your team. Marketing is not just an expense; it's a collaboration built on trust and transparency."
             },
             {
               id: 1,
-              icon: Handshake,
-              title: (
-                <>
-                  True Partnerships
-                </>
-              )
+              icon: Layers,
+              title: "Full-Service Expertise",
+              description: "From AI-powered digital advertising and graphic design to video production, communications management and consulting, everything happens in-house. We move quickly and cohesively — no middlemen."
             },
             {
               id: 2,
               icon: MapPin,
               title: (
                 <>
-                  Local Roots <span style={{ fontStyle: 'italic' }}>National Reach</span>
+                  Local Roots, <span style={{ fontStyle: 'italic' }}>National Reach</span>
                 </>
-              )
+              ),
+              description: "Proudly headquartered in Mankato, MN, we elevate our community through our Hometown Hype series while partnering with brands across the country. You get a family-owned team with big-agency capabilities."
             }
           ].map((item) => {
             const IconComponent = item.icon;
@@ -131,7 +130,7 @@ export default function HeroTextSection() {
             return (
               <motion.div
                 key={item.id}
-                className="flex flex-row items-center gap-4 md:gap-6"
+                className="flex flex-row items-start gap-4 md:gap-6"
                 variants={{
                   hidden: { 
                     opacity: 0, 
@@ -151,7 +150,7 @@ export default function HeroTextSection() {
               >
                 {/* Icon */}
                 <motion.div 
-                  className="flex-shrink-0"
+                  className="flex-shrink-0 pt-1"
                   variants={{
                     hidden: { rotate: -180, opacity: 0 },
                     visible: { 
@@ -188,32 +187,56 @@ export default function HeroTextSection() {
                   )}
                 </motion.div>
                 
-                {/* Title */}
-                <motion.h2 
-                  className="ThreeDee text-white flex-1" 
-                  style={{
-                    ...lightShadowStyle, 
-                    fontFamily: '"scandia-web", sans-serif', 
-                    fontWeight: 700, 
-                    textAlign: 'left', 
-                    color: '#ffffff',
-                    lineHeight: '1.2'
-                  }}
-                  variants={{
-                    hidden: { opacity: 0, x: -30 },
-                    visible: { 
-                      opacity: 1, 
-                      x: 0,
-                      transition: {
-                        duration: 0.6,
-                        ease: "easeOut",
-                        delay: 0.2
+                {/* Title and Description */}
+                <div className="flex-1">
+                  <motion.h2 
+                    className="ThreeDee text-white mb-4" 
+                    style={{
+                      ...lightShadowStyle, 
+                      fontFamily: '"scandia-web", sans-serif', 
+                      fontWeight: 700, 
+                      textAlign: 'left', 
+                      color: '#ffffff',
+                      lineHeight: '1.2'
+                    }}
+                    variants={{
+                      hidden: { opacity: 0, x: -30 },
+                      visible: { 
+                        opacity: 1, 
+                        x: 0,
+                        transition: {
+                          duration: 0.6,
+                          ease: "easeOut",
+                          delay: 0.2
+                        }
                       }
-                    }
-                  }}
-                >
-                  {item.title}
-                </motion.h2>
+                    }}
+                  >
+                    {item.title}
+                  </motion.h2>
+                  <motion.p
+                    className="text-gray-300 text-base leading-relaxed"
+                    style={{
+                      fontFamily: '"halcom", sans-serif',
+                      fontWeight: 400,
+                      textAlign: 'left'
+                    }}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: {
+                          duration: 0.6,
+                          ease: "easeOut",
+                          delay: 0.3
+                        }
+                      }
+                    }}
+                  >
+                    {item.description}
+                  </motion.p>
+                </div>
               </motion.div>
             );
           })}

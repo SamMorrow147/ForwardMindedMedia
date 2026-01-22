@@ -1,15 +1,11 @@
 "use client";
 
-import LanyardSection from "@/components/LanyardSection";
-import MissionVisionSection from "@/components/MissionVisionSection";
-import OurStorySection from "@/components/OurStorySection";
-import CommunityCommitmentSection from "@/components/CommunityCommitmentSection";
-import CoreValuesSection from "@/components/CoreValuesSection";
-import Footer from "@/components/Footer";
-import StaggeredMenu from "@/components/StaggeredMenu";
-import AdobeFonts from "@/components/AdobeFonts";
+import TeamGrid from '@/components/TeamGrid';
+import Footer from '@/components/Footer';
+import StaggeredMenu from '@/components/StaggeredMenu';
+import AdobeFonts from '@/components/AdobeFonts';
 
-export default function WhoWeArePage() {
+export default function OurTeamPage() {
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
@@ -17,8 +13,7 @@ export default function WhoWeArePage() {
     { label: 'Services', ariaLabel: 'View our services', link: '/services' },
     { label: 'Our Team', ariaLabel: 'Meet our team', link: '/our-team' },
     { label: 'Projects', ariaLabel: 'View our projects', link: '/#recent-projects' },
-    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
-    { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
+    { label: 'Clients', ariaLabel: 'Read client testimonials', link: '/#clients' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
@@ -31,8 +26,7 @@ export default function WhoWeArePage() {
   ];
 
   return (
-    <div>
-      {/* Adobe Fonts Loader */}
+    <div className="min-h-screen bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
       <AdobeFonts />
       
       {/* Staggered Menu */}
@@ -51,18 +45,38 @@ export default function WhoWeArePage() {
         onMenuOpen={() => console.log('Menu opened')}
         onMenuClose={() => console.log('Menu closed')}
       />
-      
-      {/* Keep existing Lanyard - don't touch it! */}
-      <LanyardSection />
-      
-      {/* New sections below */}
-      <MissionVisionSection />
-      <OurStorySection />
-      <CommunityCommitmentSection />
-      <CoreValuesSection />
-      
+
+      {/* Page Header */}
+      <section className="pt-32 pb-8 px-6">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h1 
+            className="ThreeDee text-white text-5xl md:text-6xl mb-6"
+            style={{ 
+              fontFamily: '"scandia-web", sans-serif', 
+              fontWeight: 700,
+              fontStyle: 'italic',
+              textShadow: `
+                0 0.015em 0 #d16cc7,
+                0 0.03em 0.015em #6d3568,
+                0 0.045em 0.03em #4a2345
+              `
+            }}
+          >
+            Our Team
+          </h1>
+          <p 
+            className="text-xl text-gray-300 max-w-3xl mx-auto"
+            style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}
+          >
+            Meet the talented individuals behind <strong>Forward Minded Media</strong>
+          </p>
+        </div>
+      </section>
+
+      {/* Team Cards Grid */}
+      <TeamGrid />
+
       <Footer />
     </div>
   );
 }
-

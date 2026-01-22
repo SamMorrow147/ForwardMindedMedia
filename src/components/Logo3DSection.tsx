@@ -29,9 +29,10 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
   const meshRef = useRef<THREE.Group>(null);
   const outerRef = useRef<THREE.Group>(null);
   const currentRotation = useRef({ x: 0, y: 0 });
+  const isInitialized = useRef(false);
 
   useLayoutEffect(() => {
-    if (gltf.scene && meshRef.current && outerRef.current) {
+    if (gltf.scene && meshRef.current && outerRef.current && !isInitialized.current) {
       try {
         const box = new THREE.Box3().setFromObject(gltf.scene);
         const center = box.getCenter(new THREE.Vector3());
@@ -48,7 +49,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
             
             // Set position with safeguards
             outerRef.current.scale.setScalar(1);
-            const initialY = isMobile ? 0 : 0.3;
+            const initialY = isMobile ? 0 : (isChromeDesktop ? -0.1 : 0.3);
             outerRef.current.position.set(0, initialY, 0);
             
             // Set initial tilt: -0.35 for Chrome Desktop, -0.2 for other desktop, 0.1 for mobile
@@ -57,6 +58,14 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
             
             // Initialize current rotation ref
             currentRotation.current = { x: initialRotationX, y: 0 };
+            
+            // For Chrome Desktop, lock the matrix to prevent any changes
+            if (isChromeDesktop) {
+              outerRef.current.matrixAutoUpdate = false;
+              outerRef.current.updateMatrix();
+            }
+            
+            isInitialized.current = true;
           }
       } catch (error) {
         // Silently handle errors
@@ -66,26 +75,12 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
   }, [gltf.scene, isMobile, isChromeDesktop]);
 
   useFrame(({ camera }) => {
+    // Chrome Desktop: Skip animation loop entirely
+    if (isChromeDesktop) {
+      return; // Do absolutely nothing - logo is frozen in initial position
+    }
+    
     if (outerRef.current && meshRef.current) {
-      // Check for Chrome directly in frame to prevent race conditions
-      const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-      const isDesktop = window.innerWidth > 768;
-      const chromeDesktop = isChrome && isDesktop;
-      
-      if (chromeDesktop || isChromeDesktop) {
-        // Chrome Desktop: Completely static, force all values
-        outerRef.current.rotation.x = -0.35;
-        outerRef.current.rotation.y = 0;
-        outerRef.current.rotation.z = 0;
-        outerRef.current.position.x = 0;
-        outerRef.current.position.y = 0.3;
-        outerRef.current.position.z = 0;
-        camera.position.x = 0;
-        camera.position.y = 0;
-        camera.position.z = 5;
-        return;
-      }
-      
       // Other browsers: Animate with scroll and mouse hover
       // Base tilt: -0.2 for desktop, 0.1 for mobile (reduced)
       const baseTiltX = isMobile ? 0.1 : -0.2;
@@ -120,11 +115,9 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         }
         
         // Logo stays in place - FORCED to stay at 0
-        outerRef.current.position.x = 0;
-        outerRef.current.position.y = 0;
-        outerRef.current.position.z = 0;
+        outerRef.current.position.set(0, 0, 0);
       } else {
-        // Desktop subtle parallax
+        // Desktop (non-Chrome) subtle parallax
         const initialZ = 5;
         const targetZ = Math.max(3.8, Math.min(initialZ, initialZ - (scrollProgress * 1.2))); // Clamped zoom
         if (!isNaN(targetZ) && isFinite(targetZ)) {
@@ -132,26 +125,7 @@ const Model = ({ url, scrollProgress, mousePosition, isMobile, isChromeDesktop }
         }
         
         // Logo stays in place - FORCED to stay at 0.3
-        outerRef.current.position.x = 0;
-        outerRef.current.position.y = 0.3;
-        outerRef.current.position.z = 0;
-      }
-      
-      // Additional safeguards: ensure all positions are always valid
-      if (isNaN(camera.position.z) || camera.position.z < 2 || camera.position.z > 10) {
-        camera.position.z = isMobile ? 6 : 5;
-      }
-      if (isNaN(camera.position.x) || Math.abs(camera.position.x) > 10) {
-        camera.position.x = 0;
-      }
-      if (isNaN(camera.position.y) || Math.abs(camera.position.y) > 10) {
-        camera.position.y = 0;
-      }
-      
-      // Emergency position lock - if logo moves too far up or down
-      if (outerRef.current.position.y > 2 || outerRef.current.position.y < -2) {
-        console.warn('Logo position out of bounds, resetting to:', isMobile ? 0 : 0.3);
-        outerRef.current.position.y = isMobile ? 0 : 0.3;
+        outerRef.current.position.set(0, 0.3, 0);
       }
     }
   });

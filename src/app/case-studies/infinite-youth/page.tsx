@@ -9,11 +9,12 @@ import AdobeFonts from '@/components/AdobeFonts';
 export default function InfiniteYouthCaseStudy() {
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/#who-we-are' },
-    { label: 'What We Do', ariaLabel: 'View our services', link: '/#what-we-do' },
-    { label: 'Our Team', ariaLabel: 'Meet our team', link: '/#our-team' },
+    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/who-we-are' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+    { label: 'Our Team', ariaLabel: 'Meet our team', link: '/our-team' },
     { label: 'Projects', ariaLabel: 'View our projects', link: '/#recent-projects' },
-    { label: 'Clients', ariaLabel: 'Read client testimonials', link: '/#clients' },
+    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
+    { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];

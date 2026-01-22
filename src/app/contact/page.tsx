@@ -11,7 +11,8 @@ export default function ContactPage() {
     email: '',
     company: '',
     phone: '',
-    message: ''
+    message: '',
+    interests: [] as string[]
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -21,6 +22,15 @@ export default function ContactPage() {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleCheckboxChange = (interest: string) => {
+    setFormData(prev => ({
+      ...prev,
+      interests: prev.interests.includes(interest)
+        ? prev.interests.filter(i => i !== interest)
+        : [...prev.interests, interest]
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,7 +47,8 @@ export default function ContactPage() {
         email: '',
         company: '',
         phone: '',
-        message: ''
+        message: '',
+        interests: []
       });
     }, 1000);
   };
@@ -252,6 +263,46 @@ export default function ContactPage() {
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#f7ba40] focus:border-transparent transition-all resize-none"
                     placeholder="Tell us about your project or how we can help..."
                   />
+                </div>
+
+                {/* Areas of Interest */}
+                <div>
+                  <label 
+                    className="block text-white mb-3 font-semibold"
+                    style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 600 }}
+                  >
+                    What are you interested in? (Select all that apply)
+                  </label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {[
+                      'Digital Advertising',
+                      'Creative & Design',
+                      'Video Production',
+                      'Communications Management',
+                      'Consulting/Public Relations Training',
+                      'Hometown Hype Feature',
+                      'Other'
+                    ].map((interest) => (
+                      <label 
+                        key={interest}
+                        className="flex items-center space-x-3 cursor-pointer group"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.interests.includes(interest)}
+                          onChange={() => handleCheckboxChange(interest)}
+                          className="w-5 h-5 rounded border-2 border-white/20 bg-white/10 text-[#f7ba40] focus:ring-2 focus:ring-[#f7ba40] focus:ring-offset-0 cursor-pointer transition-all"
+                          style={{ accentColor: '#f7ba40' }}
+                        />
+                        <span 
+                          className="text-gray-300 group-hover:text-white transition-colors"
+                          style={{ fontFamily: '"halcom", sans-serif' }}
+                        >
+                          {interest}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Submit Button */}

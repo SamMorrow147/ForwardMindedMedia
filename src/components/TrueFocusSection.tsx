@@ -21,8 +21,7 @@ export default function TrueFocusSection() {
               />
             </div>
             <p className="text-gray-800 text-lg mt-8 leading-relaxed">
-              Our focus is clear: delivering results that matter. Every strategy, every campaign, 
-              every partnership is designed with one goal in mind - your success.
+              Our focus is clear: delivering results that matter. Every strategy, campaign and partnership is designed with one goal — your success. Whether you&apos;re ready to launch a new brand, refresh your story or expand your impact, we&apos;re here to help you leave the status quo behind.
             </p>
             <a 
               href="https://calendly.com/jake-forwardmindedmedia" 

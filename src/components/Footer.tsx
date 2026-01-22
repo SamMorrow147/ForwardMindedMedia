@@ -28,8 +28,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-gray-300 leading-relaxed mb-6">
-              Crafting digital excellence through innovative marketing solutions. 
-              We're your partners in digital transformation.
+              Crafting digital excellence through innovative marketing solutions. We&apos;re your partners in digital transformation.
             </p>
             
             {/* Social Links */}
@@ -121,7 +120,7 @@ export default function Footer() {
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 Forward Minded Media. All rights reserved.
+              © 2026 ForwardMinded Media. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>

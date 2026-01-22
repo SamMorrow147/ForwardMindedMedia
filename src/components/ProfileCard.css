@@ -406,22 +406,26 @@
 .pc-details h3 {
   font-weight: 600;
   margin: 0;
-  font-size: 2.5em;
+  margin-bottom: 8px;
+  font-size: clamp(1.6em, 4vw, 2.2em);
   background-image: linear-gradient(to bottom, #fff, #6f6fbe);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+  white-space: nowrap;
 }
 
 .pc-details p {
   font-weight: 600;
   position: relative;
-  top: -12px;
-  white-space: nowrap;
+  top: -4px;
   font-size: 16px;
+  line-height: 20px;
   margin: 0 auto;
-  width: min-content;
+  width: fit-content;
+  max-width: 90%;
+  text-align: center;
   background-image: linear-gradient(to bottom, #fff, #4a4ac0);
   background-size: 1em 1.5em;
   -webkit-text-fill-color: transparent;

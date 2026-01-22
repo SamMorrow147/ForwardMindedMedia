@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import ProfileCard from './ProfileCard';
 import ScrollFloat from './ScrollFloat';
 import './ProfileCardsRow.css';
+import { teamMembers } from '@/data/teamMembers';
 
 interface ProfileData {
   name: string;
@@ -15,6 +16,10 @@ interface ProfileData {
   status: string;
   avatarUrl: string;
   iconUrl: string;
+  backstory?: string;
+  funFact?: string;
+  calendlyLink?: string;
+  showUserInfo?: boolean;
 }
 
 const ProfileCardsRow = () => {
@@ -26,56 +31,7 @@ const ProfileCardsRow = () => {
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
 
-  const profiles: ProfileData[] = [
-    {
-      name: "Jake",
-      title: "Title Here",
-      handle: "jake",
-      status: "Available",
-      avatarUrl: "/Person.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "Kelsey",
-      title: "Title Here",
-      handle: "kelsey",
-      status: "Online",
-      avatarUrl: "/Person.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "Addison",
-      title: "Title Here",
-      handle: "addison",
-      status: "Available",
-      avatarUrl: "/Person.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "Sam",
-      title: "Title Here",
-      handle: "sam",
-      status: "Online",
-      avatarUrl: "/Person.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "And More...",
-      title: "Extended Team",
-      handle: "team",
-      status: "Ready",
-      avatarUrl: "/Group.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    },
-    {
-      name: "Maybe You?",
-      title: "Join Our Team",
-      handle: "careers",
-      status: "Hiring",
-      avatarUrl: "/MaybeYou.png",
-      iconUrl: "/4x/Asset%203@8x.png"
-    }
-  ];
+  const profiles: ProfileData[] = teamMembers;
 
   // Handle window resize and initial setup
   useEffect(() => {
@@ -223,7 +179,7 @@ const ProfileCardsRow = () => {
 
 
   return (
-    <section className="bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center pt-16 pb-24">
+    <section className="bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center pt-16 pb-8">
       <div className="text-center mb-12 px-4">
         <h2 className="ThreeDee text-white mb-6 our-team-title">
           <ScrollFloat
@@ -253,7 +209,48 @@ const ProfileCardsRow = () => {
             // Create back content for each card
             let backContent: React.ReactNode = null;
             
-            if (profile.name === "Jake" || profile.name === "Kelsey" || profile.name === "Addison" || profile.name === "Sam") {
+            if (profile.name === "And More...") {
+              backContent = (
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                  </div>
+                  <div style={{ flex: 1, overflowY: 'auto' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>
+                      {profile.backstory}
+                    </p>
+                  </div>
+                </div>
+              );
+            } else if (profile.name === "Maybe You?") {
+              backContent = (
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                  </div>
+                  <div style={{ flex: 1, overflowY: 'auto' }}>
+                    <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+                      {profile.backstory}
+                    </p>
+                    <a 
+                      href="/careers" 
+                      style={{ 
+                        color: '#f7ba40', 
+                        textDecoration: 'underline',
+                        fontSize: '1.1rem',
+                        fontWeight: 'bold',
+                        pointerEvents: 'auto'
+                      }}
+                    >
+                      View Open Positions →
+                    </a>
+                  </div>
+                </div>
+              );
+            } else if (profile.backstory) {
+              // For all team members with backstory
               backContent = (
                 <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <div style={{ marginBottom: '1.5rem' }}>
@@ -262,13 +259,17 @@ const ProfileCardsRow = () => {
                   </div>
                   <div style={{ textAlign: 'left', flex: 1, overflowY: 'auto' }}>
                     <strong>Backstory:</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <strong>Fun Fact:</strong>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    {profile.name === "Jake" && (
+                    <p style={{ marginBottom: '1rem' }}>{profile.backstory}</p>
+                    {profile.funFact && (
+                      <>
+                        <strong>Fun Fact:</strong>
+                        <p style={{ marginBottom: '1rem' }}>{profile.funFact}</p>
+                      </>
+                    )}
+                    {profile.calendlyLink && (
                       <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
                         <a 
-                          href="https://calendly.com/jake-forwardmindedmedia" 
+                          href={profile.calendlyLink} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           style={{ 
@@ -286,46 +287,6 @@ const ProfileCardsRow = () => {
                   </div>
                 </div>
               );
-            } else if (profile.name === "And More...") {
-              backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>And More...</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>Extended Team</p>
-                  </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>
-                      Behind every great campaign is an extensive network of talented professionals. Our team includes skilled account managers, creative content creators, expert videographers, innovative designers, and strategic media buyers—all working together to bring your vision to life and drive real results.
-                    </p>
-                  </div>
-                </div>
-              );
-            } else if (profile.name === "Maybe You?") {
-              backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Maybe You?</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>Join Our Team</p>
-                  </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
-                      We're always looking for talented, passionate people to join our team. If you're ready to challenge the status quo and create work that matters, we want to hear from you.
-                    </p>
-                    <a 
-                      href="/careers" 
-                      style={{ 
-                        color: '#f7ba40', 
-                        textDecoration: 'underline',
-                        fontSize: '1.1rem',
-                        fontWeight: 'bold',
-                        pointerEvents: 'auto'
-                      }}
-                    >
-                      View Open Positions →
-                    </a>
-                  </div>
-                </div>
-              );
             }
             
             return (
@@ -338,7 +299,7 @@ const ProfileCardsRow = () => {
                   contactText="More Info"
                   avatarUrl={profile.avatarUrl}
                   iconUrl={profile.iconUrl}
-                  showUserInfo={profile.name !== "Maybe You?"}
+                  showUserInfo={profile.showUserInfo !== false}
                   enableTilt={!isMobile}
                   enableMobileTilt={false}
                   enableFlip={true}
@@ -374,6 +335,23 @@ const ProfileCardsRow = () => {
         </div>
       </div>
 
+      {/* Who We Are Button */}
+      <div className="flex justify-center mt-2 mb-0">
+        <a 
+          href="/who-we-are" 
+          className="btn-animated-team no-underline"
+        >
+          <strong>Who We Are</strong>
+          <div id="container-stars-team">
+            <div id="stars-team"></div>
+          </div>
+          <div id="glow-team">
+            <div className="circle"></div>
+            <div className="circle"></div>
+          </div>
+        </a>
+      </div>
+
       <style jsx>{`
         .our-team-title {
           font-family: "scandia-web", sans-serif !important;
@@ -390,7 +368,7 @@ const ProfileCardsRow = () => {
           width: 100%;
           overflow: visible;
           position: relative;
-          min-height: 150px;
+          min-height: 80px;
           display: flex;
           align-items: center;
           justify-content: flex-end;
@@ -460,6 +438,172 @@ const ProfileCardsRow = () => {
           100% {
             opacity: 0;
             transform: rotate(45deg) translate(20px, 20px);
+          }
+        }
+
+        /* Who We Are Button Styles */
+        :global(.btn-animated-team) {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: auto;
+          min-width: 20rem;
+          padding: 0 2rem;
+          overflow: hidden;
+          height: 3rem;
+          background-size: 300% 300%;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+          transition: 0.5s;
+          animation: gradient_301 5s ease infinite;
+          border: double 4px transparent;
+          background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #85417F 100%);
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          position: relative;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        :global(.btn-animated-team strong) {
+          z-index: 2;
+          font-family: "scandia-web", sans-serif;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          color: #FFFFFF;
+          text-shadow: 0 0 4px white;
+          text-transform: uppercase;
+        }
+
+        :global(#container-stars-team) {
+          position: absolute;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          transition: 0.5s;
+          backdrop-filter: blur(1rem);
+          border-radius: 5rem;
+          background-color: #212121;
+        }
+
+        :global(#glow-team) {
+          position: absolute;
+          display: flex;
+          width: 100%;
+        }
+
+        :global(.btn-animated-team .circle) {
+          width: 100%;
+          height: 30px;
+          filter: blur(2rem);
+          animation: pulse_3011 4s infinite;
+          z-index: -1;
+        }
+
+        :global(.btn-animated-team .circle:nth-of-type(1)) {
+          background: rgba(254, 83, 186, 0.636);
+        }
+
+        :global(.btn-animated-team .circle:nth-of-type(2)) {
+          background: rgba(142, 81, 234, 0.704);
+        }
+
+        :global(.btn-animated-team:hover #container-stars-team) {
+          z-index: -1;
+          background-color: transparent;
+        }
+
+        :global(.btn-animated-team:hover) {
+          transform: scale(1.1);
+        }
+
+        :global(.btn-animated-team:active) {
+          border: double 4px #FE53BB;
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          animation: none;
+        }
+
+        :global(.btn-animated-team:active .circle) {
+          background: #FE53BB;
+        }
+
+        :global(#stars-team) {
+          position: relative;
+          background: transparent;
+          width: 200rem;
+          height: 200rem;
+        }
+
+        :global(#stars-team::after) {
+          content: "";
+          position: absolute;
+          top: -10rem;
+          left: -100rem;
+          width: 100%;
+          height: 100%;
+          animation: animStarRotate 90s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+        }
+
+        :global(#stars-team::before) {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -50%;
+          width: 170%;
+          height: 500%;
+          animation: animStar 60s linear infinite;
+          background-image: radial-gradient(#ffffff 1px, transparent 1%);
+          background-size: 50px 50px;
+          opacity: 0.5;
+        }
+
+        @keyframes animStar {
+          from {
+            transform: translateY(0);
+          }
+          to {
+            transform: translateY(-135rem);
+          }
+        }
+
+        @keyframes animStarRotate {
+          from {
+            transform: rotate(360deg);
+          }
+          to {
+            transform: rotate(0);
+          }
+        }
+
+        @keyframes gradient_301 {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes pulse_3011 {
+          0% {
+            transform: scale(0.75);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+          }
+          70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+          }
+          100% {
+            transform: scale(0.75);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
           }
         }
       `}</style>

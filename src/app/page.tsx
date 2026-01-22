@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import VideoHero from "@/components/VideoHero"; // Hidden
 import Logo3DSection from "@/components/Logo3DSection";
 import HeroTextSection from "@/components/HeroTextSection";
@@ -19,14 +19,35 @@ import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
+  // Detect when user is at bottom of page
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const clientHeight = document.documentElement.clientHeight;
+      
+      // Check if user is within 50px of bottom
+      const atBottom = scrollHeight - scrollTop - clientHeight < 50;
+      setIsAtBottom(atBottom);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/who-we-are' },
-    { label: 'What We Do', ariaLabel: 'View our services', link: '#what-we-do' },
-    { label: 'Our Team', ariaLabel: 'Meet our team', link: '#our-team' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+    { label: 'Our Team', ariaLabel: 'Meet our team', link: '/our-team' },
     { label: 'Projects', ariaLabel: 'View our projects', link: '#recent-projects' },
-    { label: 'Clients', ariaLabel: 'Read client testimonials', link: '#clients' },
+    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
+    { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
@@ -91,18 +112,24 @@ export default function Home() {
       <Footer />
       
       {/* Global page-level blur effect at the bottom of the screen */}
-      <GradualBlur
-        target="page"
-        position="bottom"
-        height="8rem"
-        mobileHeight="2.5rem"
-        strength={3}
-        divCount={6}
-        curve="bezier"
-        exponential={true}
-        opacity={1}
-        responsive={true}
-      />
+      <div style={{ 
+        opacity: isAtBottom ? 0 : 1, 
+        transition: 'opacity 0.3s ease-in-out',
+        pointerEvents: 'none'
+      }}>
+        <GradualBlur
+          target="page"
+          position="bottom"
+          height="8rem"
+          mobileHeight="2.5rem"
+          strength={3}
+          divCount={6}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+          responsive={true}
+        />
+      </div>
     </div>
   );
 }

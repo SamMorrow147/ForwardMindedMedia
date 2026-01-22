@@ -1,10 +1,5 @@
 "use client";
 
-import { useRef } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import TextType from './TextType';
 import ScrollFloat from './ScrollFloat';
 import { motion } from 'framer-motion';
 
@@ -25,7 +20,7 @@ const sampleProjects: Project[] = [
     title: "Double the Impact",
     client: "First National Bank",
     category: "Multichannel Campaign",
-    description: "Increased brand awareness and new account signups through digital display, radio, and social video. Results: 200% increase in impressions, 32% rise in signups, 40% lower cost-per-lead.",
+    description: "A multichannel campaign combining digital display, radio and targeted social video doubled brand awareness and delivered a 32% rise in new account signups. Cost-per-lead dropped by 40%.",
     imageSrc: "/firstnational.jpg",
     imageAlt: "First National Bank campaign",
     href: "/case-studies/first-national-bank",
@@ -35,7 +30,7 @@ const sampleProjects: Project[] = [
     title: "A Brand Glow-Up",
     client: "Infinite Youth Medical Spa",
     category: "Brand Refresh & Digital",
-    description: "Complete brand refresh with logo redesign, lifestyle photography/video, SEO-friendly website, and retargeted ads. Results: Doubled web traffic, 25% higher average booking value, strong social engagement.",
+    description: "A complete brand refresh, including a logo redesign, lifestyle photography/video, an SEO-friendly website and retargeted ads, doubled web traffic and lifted average booking values by 25%.",
     imageSrc: "/Infinite-Youth-Medical-Spa_49b6158f087279481f10f7ebaeb2ad1b.jpg",
     imageAlt: "Infinite Youth Medical Spa campaign",
     href: "/case-studies/infinite-youth",
@@ -45,36 +40,14 @@ const sampleProjects: Project[] = [
     title: "Hometown Hype Collaboration",
     client: "Local Brewery",
     category: "Video Production & Events",
-    description: "Boosted attendance for seasonal beer release with Hometown Hype video episode, printed posters, social teasers, and QR scavenger hunt. Results: 60% higher attendance, 75% increase in social engagement, merchandise sellout.",
+    description: "A special Hometown Hype video episode paired with posters, social teasers and an interactive QR scavenger hunt boosted event attendance by 60% and increased social engagement by 75%.",
     imageSrc: "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?q=80&w=2072&auto=format&fit=crop",
     imageAlt: "Local brewery event and marketing",
     href: "/case-studies/local-brewery",
-  },
-  {
-    id: 4,
-    title: "Website Transformation",
-    client: "Healthcare Provider",
-    category: "Web Development",
-    description: "Modern, accessible website with patient portal integration and appointment booking.",
-    imageSrc: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2069&auto=format&fit=crop",
-    imageAlt: "Modern website design on laptop",
-    href: "#",
-  },
-  {
-    id: 5,
-    title: "Public Relations Initiative",
-    client: "Non-Profit Organization",
-    category: "Public Relations",
-    description: "Strategic PR campaign that secured major media coverage and doubled donor base.",
-    imageSrc: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2070&auto=format&fit=crop",
-    imageAlt: "Press conference and media coverage",
-    href: "#",
-  },
+  }
 ];
 
 export default function RecentProjectsSection() {
-  const sliderRef = useRef<Slider>(null);
-
   const lightShadowStyle = {
     textShadow: `
       0 0.015em 0 #d16cc7,
@@ -82,37 +55,6 @@ export default function RecentProjectsSection() {
       0 0.045em 0.03em #4a2345
     `,
     fontSize: '4rem'
-  };
-
-  // React Slick settings
-  const sliderSettings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    swipe: true,
-    swipeToSlide: true,
-    touchMove: true,
-    draggable: true,
-    arrows: false,
-    accessibility: true,
-    initialSlide: 0,
-    edgeFriction: 0.35,
-    variableWidth: true,
-    centerMode: false,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: false,
-          variableWidth: true,
-          edgeFriction: 0.35,
-        }
-      }
-    ]
   };
 
   return (
@@ -187,9 +129,9 @@ export default function RecentProjectsSection() {
           </p>
         </div>
 
-        {/* Projects Carousel */}
+        {/* Projects Grid */}
         <motion.div 
-          className="relative overflow-visible w-full z-10 projects-slider-container"
+          className="relative w-full z-10 projects-grid-container max-w-7xl mx-auto px-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
@@ -202,11 +144,11 @@ export default function RecentProjectsSection() {
             }
           }}
         >
-          <Slider ref={sliderRef} {...sliderSettings} className="projects-slider">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sampleProjects.map((project) => (
               <motion.div 
                 key={project.id} 
-                className="project-slide"
+                className="project-card-wrapper"
                 variants={{
                   hidden: { 
                     opacity: 0, 
@@ -226,12 +168,7 @@ export default function RecentProjectsSection() {
               >
                 <a
                   href={project.href}
-                  draggable="false"
-                  className="project-card flex flex-col no-underline cursor-pointer"
-                  onDragStart={(e) => {
-                    e.preventDefault();
-                    return false;
-                  }}
+                  className="project-card flex flex-col no-underline cursor-pointer h-full"
                 >
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-2xl h-64 bg-gray-200 flex-shrink-0">
@@ -239,7 +176,6 @@ export default function RecentProjectsSection() {
                     src={project.imageSrc}
                     alt={project.imageAlt}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    draggable="false"
                   />
                 </div>
 
@@ -274,7 +210,7 @@ export default function RecentProjectsSection() {
               </a>
               </motion.div>
             ))}
-          </Slider>
+          </div>
 
           {/* Button */}
           <motion.div 
@@ -310,31 +246,13 @@ export default function RecentProjectsSection() {
         </motion.div>
 
       <style jsx global>{`
-        /* Projects Slider Container */
-        .projects-slider-container {
+        /* Projects Grid Container */
+        .projects-grid-container {
           padding: 0 2rem;
         }
         
-        .projects-slider .slick-list {
-          overflow: visible;
-          padding: 20px 0 !important;
-        }
-        
-        .projects-slider .slick-track {
+        .project-card-wrapper {
           display: flex;
-          gap: 0;
-        }
-        
-        .project-slide {
-          width: 450px !important;
-          min-width: 450px;
-          padding: 0 12px;
-          display: flex;
-        }
-        
-        .project-slide > a {
-          width: 100%;
-          height: 520px;
         }
 
         /* Project card hover effect */
@@ -372,21 +290,8 @@ export default function RecentProjectsSection() {
         }
         
         @media (max-width: 768px) {
-          .projects-slider-container {
+          .projects-grid-container {
             padding: 0 1rem;
-          }
-          
-          .project-slide {
-            width: 320px !important;
-            min-width: 320px;
-          }
-          
-          .project-slide > a {
-            height: 520px;
-          }
-          
-          .project-card {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
           }
         }
 
