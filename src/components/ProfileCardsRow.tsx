@@ -453,6 +453,7 @@ const ProfileCardsRow = () => {
           height: 3rem;
           background-size: 300% 300%;
           backdrop-filter: blur(1rem);
+          -webkit-backdrop-filter: blur(1rem);
           border-radius: 5rem;
           transition: 0.5s;
           animation: gradient_301 5s ease infinite;
@@ -460,9 +461,13 @@ const ProfileCardsRow = () => {
           background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #F7BA40 0%, #FFDB3B 18%, #FE53BB 38%, #FF9FFC 55%, #8F51EA 72%, #85417F 100%);
           background-origin: border-box;
           background-clip: content-box, border-box;
+          -webkit-background-clip: content-box, border-box;
           position: relative;
           cursor: pointer;
           text-decoration: none;
+          will-change: transform, background-position;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
 
         :global(.btn-animated-team strong) {
@@ -484,8 +489,12 @@ const ProfileCardsRow = () => {
           overflow: hidden;
           transition: 0.5s;
           backdrop-filter: blur(1rem);
+          -webkit-backdrop-filter: blur(1rem);
           border-radius: 5rem;
           background-color: #212121;
+          will-change: background-color, z-index;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
 
         :global(#glow-team) {
@@ -498,8 +507,12 @@ const ProfileCardsRow = () => {
           width: 100%;
           height: 30px;
           filter: blur(2rem);
+          -webkit-filter: blur(2rem);
           animation: pulse_3011 4s infinite;
           z-index: -1;
+          will-change: opacity;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
 
         :global(.btn-animated-team .circle:nth-of-type(1)) {
@@ -535,6 +548,8 @@ const ProfileCardsRow = () => {
           background: transparent;
           width: 200rem;
           height: 200rem;
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         :global(#stars-team::after) {
@@ -547,6 +562,9 @@ const ProfileCardsRow = () => {
           animation: animStarRotate 90s linear infinite;
           background-image: radial-gradient(#ffffff 1px, transparent 1%);
           background-size: 50px 50px;
+          will-change: transform;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
 
         :global(#stars-team::before) {
@@ -560,23 +578,30 @@ const ProfileCardsRow = () => {
           background-image: radial-gradient(#ffffff 1px, transparent 1%);
           background-size: 50px 50px;
           opacity: 0.5;
+          will-change: transform;
+          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
         }
 
         @keyframes animStar {
           from {
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
+            -webkit-transform: translate3d(0, 0, 0);
           }
           to {
-            transform: translateY(-135rem);
+            transform: translate3d(0, -135rem, 0);
+            -webkit-transform: translate3d(0, -135rem, 0);
           }
         }
 
         @keyframes animStarRotate {
           from {
-            transform: rotate(360deg);
+            transform: rotate(360deg) translateZ(0);
+            -webkit-transform: rotate(360deg) translateZ(0);
           }
           to {
-            transform: rotate(0);
+            transform: rotate(0deg) translateZ(0);
+            -webkit-transform: rotate(0deg) translateZ(0);
           }
         }
 
