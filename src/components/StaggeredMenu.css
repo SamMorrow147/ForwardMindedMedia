@@ -3,10 +3,15 @@
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: auto !important; /* Don't cover entire viewport when closed */
   z-index: 2000 !important;
   pointer-events: none;
   background: transparent;
+}
+
+/* Only expand to full height when menu is open */
+.staggered-menu-wrapper[data-open] {
+  height: 100vh !important;
 }
 
 .staggered-menu-header {
@@ -393,16 +398,16 @@
 
 @media (max-width: 1024px) {
   .staggered-menu-panel {
-    width: 100vw !important;
-    left: 0 !important;
+    width: 50vw !important;
     right: 0 !important;
+    left: auto !important;
     padding: 4rem 2rem 2rem 2rem;
   }
 
   .sm-prelayers {
-    width: 100vw !important;
-    left: 0 !important;
+    width: 50vw !important;
     right: 0 !important;
+    left: auto !important;
   }
   
   .sm-panel-item {
@@ -462,7 +467,16 @@
   }
   
   .staggered-menu-panel {
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
     padding: 3.5rem 1rem 2rem 1rem;
+  }
+
+  .sm-prelayers {
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
   }
   
   .sm-panel-item {

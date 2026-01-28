@@ -70,9 +70,6 @@ export default function MissionVisionSection() {
               }
             }}
           >
-            <h3 className="text-2xl font-bold text-[#f7ba40] mb-4" style={{ fontFamily: '"scandia-web", sans-serif' }}>
-              Our Mission
-            </h3>
             <p className="text-gray-300 text-lg leading-relaxed" style={{ fontFamily: '"halcom", sans-serif' }}>
               At ForwardMinded Media, we believe marketing should be a partnership — not just another expense. Our mission is to empower businesses to leave the status quo behind, connect with their audiences and achieve real, measurable growth. We envision a world where brands and communities thrive together, leveraging technology and creativity to build meaningful connections.
             </p>

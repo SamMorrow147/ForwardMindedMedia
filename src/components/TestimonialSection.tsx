@@ -2,7 +2,6 @@
 
 import SpotlightCard from "./SpotlightCard";
 import ScrollFloat from './ScrollFloat';
-import LogoSlider from "./LogoSlider";
 import { motion } from "framer-motion";
 
 export default function TestimonialSection() {
@@ -165,9 +164,6 @@ export default function TestimonialSection() {
             ))}
           </div>
         </motion.div>
-        
-        {/* Logo Slider */}
-        <LogoSlider />
       </div>
       
       <style jsx global>{`

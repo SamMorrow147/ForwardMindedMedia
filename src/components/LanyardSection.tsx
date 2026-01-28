@@ -1,16 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import BlurText from "./BlurText";
-import SpotlightCard from "./SpotlightCard";
-import GlassSurface from "./GlassSurface";
-import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiFigma } from 'react-icons/si';
+import { useState } from 'react';
 
 import Lanyard from "./Lanyard";
-
-// Client-only marquee to avoid hydration issues
-const Marquee = dynamic(() => import('react-fast-marquee'), { ssr: false });
 
 export default function LanyardSection() {
   // Set lanyard position once on mount to avoid physics simulation issues
@@ -21,24 +13,6 @@ export default function LanyardSection() {
     return [-2, 4, 0]; // Original position for larger screens
   });
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Stable logo array - memoized to prevent re-renders
-  const techLogos = useMemo(() => [
-    { icon: <SiReact />, name: "React" },
-    { icon: <SiNextdotjs />, name: "Next.js" },
-    { icon: <SiTypescript />, name: "TypeScript" },
-    { icon: <SiTailwindcss />, name: "Tailwind CSS" },
-    { icon: <SiNodedotjs />, name: "Node.js" },
-    { icon: <SiFigma />, name: "Figma" }
-  ], []);
   return (
     <section className="min-h-[60vh] bg-[#2a1232] relative overflow-visible pt-0 md:pt-16 mobile-height-constrain">
       {/* Full-width Lanyard container - spans entire section but hangs on left */}
@@ -57,39 +31,9 @@ export default function LanyardSection() {
         
         {/* Right side - Content */}
         <div style={{ width: '58%' }} className="flex flex-col justify-center pl-16 mobile-center-content">
-          {/* Top section - Text and Button */}
+          {/* Top section - Title only */}
           <div className="text-left max-w-lg mb-12 mt-12">
             <h2 className="ThreeDee text-white mb-6 mobile-center-title" style={{ textAlign: 'left', marginLeft: '-20px' }}>Who We Are</h2>
-            {isMobile ? (
-              <div style={{ maxWidth: '80%', width: '80%', marginLeft: 'auto', marginRight: '0', marginBottom: '2rem' }}>
-                <GlassSurface 
-                  width="100%"
-                  height="auto"
-                  borderRadius={16}
-                  brightness={20}
-                  opacity={0.5}
-                  blur={20}
-                  displace={10}
-                  distortionScale={-120}
-                  backgroundOpacity={0.3}
-                  className="lanyard-glass-surface"
-                  style={{ backgroundColor: 'rgba(58, 25, 69, 0.4)' }}
-                >
-                  <p className="text-white text-lg leading-relaxed" style={{ margin: 0, padding: '1rem', textAlign: 'left', textShadow: '2px 2px 8px rgba(58, 25, 69, 0.8)' }}>
-                    We're a full-service agency turning partnerships into progress. By challenging the status quo, we craft bold, creative marketing that drives real results.
-                  </p>
-                </GlassSurface>
-              </div>
-            ) : (
-              <p className="text-white text-lg mb-8 leading-relaxed">
-                We're a full-service agency turning partnerships into progress. By challenging the status quo, we craft bold, creative marketing that drives real results.
-              </p>
-            )}
-            
-            {/* Button under text */}
-            <button className="glass-button-lanyard pointer-events-auto">
-              Learn More
-            </button>
           </div>
         </div>
       </div>

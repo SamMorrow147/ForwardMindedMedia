@@ -259,17 +259,8 @@ export default function Logo3DSection() {
 
       {/* 3D Logo Canvas */}
       {SHOW_LOGO && (
-        <Canvas
-          shadows={!isChromeDesktop}
-          frameloop="always"
-          dpr={isChromeDesktop ? [2, 3] : [1, 2]}
-          performance={{ min: 0.5 }}
-          camera={{
-            position: [0, 0, isMobile ? 6 : 5],
-            fov: isMobile ? 60 : 50,
-            near: 0.1,
-            far: 1000
-          }}
+        <div
+          className="logo-3d-canvas-wrapper"
           style={{
             width: '100%',
             height: '100%',
@@ -277,15 +268,38 @@ export default function Logo3DSection() {
             top: 0,
             left: 0,
             zIndex: 2,
-            pointerEvents: 'none',
-            overflow: 'hidden'
-          }}
-          gl={{
-            alpha: true,
-            antialias: true,
-            powerPreference: 'high-performance'
+            pointerEvents: 'none'
           }}
         >
+          <Canvas
+            shadows={!isChromeDesktop}
+            frameloop="always"
+            dpr={isChromeDesktop ? [2, 3] : [1, 2]}
+            performance={{ min: 0.5 }}
+            camera={{
+              position: [0, 0, isMobile ? 6 : 5],
+              fov: isMobile ? 60 : 50,
+              near: 0.1,
+              far: 1000
+            }}
+            style={{
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none'
+            }}
+            gl={{
+              alpha: true,
+              antialias: true,
+              powerPreference: 'high-performance'
+            }}
+            events={(store) => ({
+              // Disable R3F's event system completely - let events pass through to document
+              enabled: false,
+              priority: 0,
+              compute: () => {},
+              connected: undefined
+            })}
+          >
           {/* Ambient light for overall brightness - Warm Purple/Gold mix */}
           <ambientLight intensity={isMobile ? 3.5 : 2.5} color="#E8DCF5" />
 
@@ -369,6 +383,7 @@ export default function Logo3DSection() {
             />
           </Suspense>
         </Canvas>
+        </div>
       )}
     </section>
   );

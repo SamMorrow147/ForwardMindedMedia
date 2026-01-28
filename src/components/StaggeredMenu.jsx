@@ -49,6 +49,7 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -69,6 +70,21 @@ export const StaggeredMenu = ({
   const toggleBtnRef = useRef(null);
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef(null);
+
+  // Track if we're on mobile (640px or less)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    
+    // Check on mount
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -458,7 +474,7 @@ export const StaggeredMenu = ({
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <Link href="/" className="sm-logo" aria-label="Go to homepage">
           <img
-            src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+            src={(open && isMobile) ? '/Logo-Light copy.png' : (logoUrl || '/src/assets/logos/reactbits-gh-white.svg')}
             alt="Logo"
             className="sm-logo-img"
             draggable={false}

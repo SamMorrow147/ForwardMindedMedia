@@ -28,12 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-black">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="color-scheme" content="dark" />
         <meta name="theme-color" content="#000000" />
         <link rel="stylesheet" href="https://use.typekit.net/qhq4tmi.css" />
         <link rel="preload" href="/Person.png" as="image" />
-        <link rel="preload" href="/Asset-1-8x.png" as="image" />
+        <link rel="preload" href="/Asset-2-8x.png" as="image" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
