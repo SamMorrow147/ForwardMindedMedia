@@ -45,13 +45,47 @@ const TeamGrid = () => {
             
             if (profile.name === "And More...") {
               backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                <div className="team-card-back-wrapper" style={{ 
+                  textAlign: 'center', 
+                  width: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  height: '100%',
+                  gap: 0,
+                  margin: 0,
+                  padding: 0
+                }}>
+                  <div className="team-card-back-header" style={{ 
+                    display: 'block',
+                    margin: 0, 
+                    marginBottom: '0.5rem', 
+                    padding: 0,
+                    gap: 0
+                  }}>
+                    <h3 className="team-card-back-name" style={{ 
+                      display: 'block',
+                      fontSize: '1.3rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2 
+                    }}>{profile.name}</h3>
+                    <p className="team-card-back-title" style={{ 
+                      display: 'block',
+                      color: '#f7ba40', 
+                      fontSize: '0.85rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2 
+                    }}>{profile.title}</p>
                   </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>
+                  <div className="team-card-back-body" style={{ 
+                    display: 'block',
+                    flex: 1, 
+                    overflowY: 'auto',
+                    margin: 0,
+                    padding: 0
+                  }}>
+                    <p style={{ display: 'block', fontSize: '0.85rem', lineHeight: '1.4', margin: 0, marginTop: 0 }}>
                       {profile.backstory}
                     </p>
                   </div>
@@ -59,21 +93,56 @@ const TeamGrid = () => {
               );
             } else if (profile.name === "Maybe You?") {
               backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                <div className="team-card-back-wrapper" style={{ 
+                  textAlign: 'center', 
+                  width: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  height: '100%',
+                  gap: 0,
+                  margin: 0,
+                  padding: 0
+                }}>
+                  <div className="team-card-back-header" style={{ 
+                    display: 'block',
+                    margin: 0, 
+                    marginBottom: '0.5rem', 
+                    padding: 0,
+                    gap: 0
+                  }}>
+                    <h3 className="team-card-back-name" style={{ 
+                      display: 'block',
+                      fontSize: '1.3rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2 
+                    }}>{profile.name}</h3>
+                    <p className="team-card-back-title" style={{ 
+                      display: 'block',
+                      color: '#f7ba40', 
+                      fontSize: '0.85rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2 
+                    }}>{profile.title}</p>
                   </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+                  <div className="team-card-back-body" style={{ 
+                    display: 'block',
+                    flex: 1, 
+                    overflowY: 'auto',
+                    margin: 0,
+                    padding: 0
+                  }}>
+                    <p style={{ display: 'block', fontSize: '0.85rem', lineHeight: '1.4', margin: 0, marginTop: 0, marginBottom: '1rem' }}>
                       {profile.backstory}
                     </p>
                     <a 
                       href="/careers" 
                       style={{ 
+                        display: 'inline',
                         color: '#f7ba40', 
                         textDecoration: 'underline',
-                        fontSize: '1.1rem',
+                        fontSize: '0.9rem',
                         fontWeight: 'bold',
                         pointerEvents: 'auto'
                       }}
@@ -86,18 +155,53 @@ const TeamGrid = () => {
             } else if (profile.backstory) {
               // For all team members with backstory
               backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+                <div className="team-card-back-wrapper" style={{ 
+                  textAlign: 'center', 
+                  width: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  height: '100%',
+                  gap: 0,
+                  margin: 0,
+                  padding: 0
+                }}>
+                  <div className="team-card-back-header" style={{ 
+                    display: 'block',
+                    margin: 0, 
+                    marginBottom: '0.5rem', 
+                    padding: 0,
+                    gap: 0
+                  }}>
+                    <h3 className="team-card-back-name" style={{ 
+                      display: 'block',
+                      fontSize: '1.3rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2
+                    }}>{profile.name}</h3>
+                    <p className="team-card-back-title" style={{ 
+                      display: 'block',
+                      color: '#f7ba40', 
+                      fontSize: '0.85rem', 
+                      margin: 0, 
+                      padding: 0, 
+                      lineHeight: 1.2
+                    }}>{profile.title}</p>
                   </div>
-                  <div style={{ textAlign: 'left', flex: 1, overflowY: 'auto' }}>
-                    <strong>Backstory:</strong>
-                    <p style={{ marginBottom: '1rem' }}>{profile.backstory}</p>
+                  <div className="team-card-back-body" style={{ 
+                    display: 'block',
+                    textAlign: 'left', 
+                    flex: 1, 
+                    overflowY: 'auto',
+                    margin: 0,
+                    padding: 0
+                  }}>
+                    <strong style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.25rem' }}>Backstory:</strong>
+                    <p style={{ display: 'block', fontSize: '0.85rem', lineHeight: '1.4', margin: 0, marginTop: 0, marginBottom: '0.5rem' }}>{profile.backstory}</p>
                     {profile.funFact && (
                       <>
-                        <strong>Fun Fact:</strong>
-                        <p style={{ marginBottom: '1rem' }}>{profile.funFact}</p>
+                        <strong style={{ display: 'block', fontSize: '0.85rem', marginTop: '0.5rem', marginBottom: '0.25rem' }}>Fun Fact:</strong>
+                        <p style={{ display: 'block', fontSize: '0.85rem', lineHeight: '1.4', margin: 0, marginTop: 0, marginBottom: '0.5rem' }}>{profile.funFact}</p>
                       </>
                     )}
                     {profile.calendlyLink && (
