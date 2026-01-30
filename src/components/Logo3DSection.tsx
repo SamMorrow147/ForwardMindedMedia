@@ -246,10 +246,10 @@ export default function Logo3DSection() {
           density={0.8}
           hueShift={240}
           speed={1.0}
-          mouseInteraction={true}
+          mouseInteraction={false}
           glowIntensity={0.4}
           saturation={0.8}
-          mouseRepulsion={true}
+          mouseRepulsion={false}
           repulsionStrength={2}
           twinkleIntensity={0.3}
           rotationSpeed={0.1}

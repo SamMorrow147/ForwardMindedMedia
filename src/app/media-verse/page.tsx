@@ -115,8 +115,8 @@ export default function MediaVersePage() {
         backgroundColor: '#000000'
       }}>
         <Galaxy
-          mouseRepulsion={true}
-          mouseInteraction={true}
+          mouseRepulsion={false}
+          mouseInteraction={false}
           density={0.8}
           glowIntensity={0.2}
           saturation={0.8}
