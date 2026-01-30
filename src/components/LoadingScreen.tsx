@@ -79,7 +79,11 @@ export default function LoadingScreen({
       <div className="terminal-loader">
         <div className="loader-title">
           <p className="loading-text-main">LOADING</p>
-          <div className="therefore">∴</div>
+          <div className="therefore">
+            <span className="dot"></span>
+            <span className="dot"></span>
+            <span className="dot"></span>
+          </div>
           <p className="loading-number">{Math.round(progress)}%</p>
         </div>
         
