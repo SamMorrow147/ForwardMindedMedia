@@ -66,7 +66,7 @@ export default function LoadingScreen({
       <div className="astronaut-container">
         <div className="astronaut-glow" />
         <Image
-          src="/Booster.png"
+          src="/Booster.webp"
           alt="Loading Astronaut"
           width={300}
           height={300}

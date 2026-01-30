@@ -237,7 +237,7 @@ export default function TrueFocusSection() {
         <div className="w-full md:w-1/2 flex flex-col justify-end md:pl-12 order-1 md:order-2 mb-8 md:mb-0">
           <div className="w-full h-64 md:h-96">
             <img 
-              src="/Booster-Fly.png" 
+              src="/Booster-Fly1.webp" 
               alt="Focus Forward - Visual representation" 
               className="w-full h-full object-contain object-bottom"
             />
