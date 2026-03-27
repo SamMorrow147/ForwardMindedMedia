@@ -25,9 +25,6 @@ interface ProfileData {
 const ProfileCardsRow = () => {
   const router = useRouter();
   const sliderRef = useRef<Slider>(null);
-  const mobileScrollRef = useRef<HTMLDivElement>(null);
-  const touchStartXRef = useRef(0);
-  const touchStartYRef = useRef(0);
 
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
@@ -79,21 +76,6 @@ const ProfileCardsRow = () => {
     }
     if (sliderRef.current) {
       sliderRef.current.slickNext();
-    }
-  };
-
-  // Mobile swipe gesture: navigate to /our-team on a clear leftward swipe
-  const handleMobileTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
-    touchStartYRef.current = e.touches[0].clientY;
-  };
-
-  const handleMobileTouchEnd = (e: React.TouchEvent) => {
-    const dx = touchStartXRef.current - e.changedTouches[0].clientX;
-    const dy = Math.abs(touchStartYRef.current - e.changedTouches[0].clientY);
-    // Only navigate on a clearly intentional horizontal left swipe (>80px, mostly horizontal)
-    if (dx > 80 && dy < dx * 0.5) {
-      router.push('/our-team');
     }
   };
 
@@ -218,12 +200,7 @@ const ProfileCardsRow = () => {
 
       {/* Mobile: native CSS scroll — no JS touch handling, no react-slick conflicts */}
       {isMobile ? (
-        <div
-          ref={mobileScrollRef}
-          className="mobile-cards-scroll"
-          onTouchStart={handleMobileTouchStart}
-          onTouchEnd={handleMobileTouchEnd}
-        >
+        <div className="mobile-cards-scroll">
           {profiles.map((profile, index) => (
             <div key={index} className="mobile-card-slide">
               <ProfileCard
