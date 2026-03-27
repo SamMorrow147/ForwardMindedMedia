@@ -75,7 +75,7 @@
   border-radius: var(--card-radius);
   position: relative;
   cursor: pointer;
-  touch-action: manipulation;
+  touch-action: pan-y;
   background-blend-mode: color-dodge, normal, normal, normal;
   animation: glow-bg 12s linear infinite;
   box-shadow: rgba(0, 0, 0, 0.8) calc((var(--pointer-from-left) * 10px) - 3px)

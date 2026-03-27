@@ -130,6 +130,11 @@
   .profile-card-slide {
     padding: 0 1.5rem;
   }
+
+  .profile-cards-slider .slick-list {
+    overflow: hidden;
+    margin: 0 -1.5rem;
+  }
 }
 
 /* Ensure cards maintain their size */

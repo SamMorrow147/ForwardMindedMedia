@@ -101,8 +101,9 @@ const ProfileCardsRow = () => {
     }
   };
 
-  // Handle arrow click to navigate to next card
-  const handleArrowClick = () => {
+  const handleArrowClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (sliderRef.current) {
       sliderRef.current.slickNext();
     }
@@ -306,14 +307,13 @@ const ProfileCardsRow = () => {
         <div className="arrow-container">
           <div 
             className="arrow" 
-            onClick={handleArrowClick}
+            onClick={(e) => handleArrowClick(e)}
             role="button"
             aria-label="View next team member"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleArrowClick();
+                handleArrowClick(e);
               }
             }}
           >
@@ -346,6 +346,7 @@ const ProfileCardsRow = () => {
           width: 100%;
           overflow: visible;
           position: relative;
+          z-index: 10;
           min-height: 80px;
           display: flex;
           align-items: center;

@@ -182,6 +182,7 @@ const ProfileCardComponent = ({
     [animationHandlers, mobileTiltSensitivity]
   );
 
+  // Desktop: tilt effects + flip/click handling
   useEffect(() => {
     if (!enableTilt || !animationHandlers) return;
 
@@ -196,14 +197,12 @@ const ProfileCardComponent = ({
     const deviceOrientationHandler = handleDeviceOrientation;
 
     const handleClick = (e) => {
-      // If flip is enabled, toggle flip state
       if (enableFlip) {
         e.stopPropagation();
         setIsFlipped(prev => !prev);
         return;
       }
       
-      // Otherwise, handle mobile tilt permission
       if (!enableMobileTilt || location.protocol !== 'https:') return;
       if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
         window.DeviceMotionEvent.requestPermission()
@@ -219,9 +218,7 @@ const ProfileCardComponent = ({
     };
 
     card.addEventListener('pointerenter', pointerEnterHandler);
-    if (enableTilt) {
-      card.addEventListener('pointermove', pointerMoveHandler);
-    }
+    card.addEventListener('pointermove', pointerMoveHandler);
     card.addEventListener('pointerleave', pointerLeaveHandler);
     card.addEventListener('click', handleClick, { passive: false });
 
@@ -249,6 +246,40 @@ const ProfileCardComponent = ({
     handlePointerLeave,
     handleDeviceOrientation
   ]);
+
+  // Mobile: flip handling when tilt is disabled
+  useEffect(() => {
+    if (enableTilt || !enableFlip) return;
+
+    const card = cardRef.current;
+    if (!card) return;
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    };
+
+    const handleClick = (e) => {
+      const dx = Math.abs(e.clientX - touchStartX);
+      const dy = Math.abs(e.clientY - touchStartY);
+      if (dx > 10 || dy > 10) return;
+
+      e.stopPropagation();
+      setIsFlipped(prev => !prev);
+    };
+
+    card.addEventListener('touchstart', handleTouchStart, { passive: true });
+    card.addEventListener('click', handleClick);
+
+    return () => {
+      card.removeEventListener('touchstart', handleTouchStart);
+      card.removeEventListener('click', handleClick);
+    };
+  }, [enableTilt, enableFlip]);
 
   const cardStyle = useMemo(
     () => ({
