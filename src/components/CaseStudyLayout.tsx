@@ -147,7 +147,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
                 {clientName}
               </p>
             )}
-            <h1 className="text-6xl font-bold text-white mb-4" style={{ fontFamily: '"scandia-web", sans-serif' }}>
+            <h1 className="text-3xl md:text-6xl font-bold text-white mb-4" style={{ fontFamily: '"scandia-web", sans-serif' }}>
               {projectTitle}
             </h1>
             <p className="text-[#f7ba40] text-lg mb-4 uppercase tracking-wide" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 600 }}>
@@ -166,7 +166,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Goal Section */}
       <section className="bg-[#85417f] py-16">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-6 text-left md:text-center">
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Client Goal
           </h2>
@@ -178,7 +178,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Approach Section */}
       <section className="py-16">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-6 text-left md:text-center">
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Our Approach
           </h2>
@@ -190,7 +190,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
 
       {/* Deliverables Section */}
       <section className="bg-[#3a1945] py-16">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-6 text-left md:text-center">
           <h2 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Deliverables
           </h2>

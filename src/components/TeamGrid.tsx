@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfileCard from './ProfileCard';
 import { teamMembers } from '@/data/teamMembers';
 import { motion } from 'framer-motion';
@@ -20,6 +20,14 @@ interface ProfileData {
 
 const TeamGrid = () => {
   const profiles: ProfileData[] = teamMembers;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className="pb-16 px-6">
@@ -232,7 +240,7 @@ const TeamGrid = () => {
                   avatarUrl={profile.avatarUrl}
                   iconUrl={profile.iconUrl}
                   showUserInfo={profile.showUserInfo !== false}
-                  enableTilt={true}
+                  enableTilt={!isMobile}
                   enableMobileTilt={false}
                   enableFlip={true}
                   backContent={backContent as any}

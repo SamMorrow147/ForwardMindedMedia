@@ -71,6 +71,15 @@ export const StaggeredMenu = ({
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef(null);
 
+  // Ensure prelayers are invisible on every mount (guards against stale GSAP inline styles from previous page)
+  useEffect(() => {
+    if (preLayersRef.current) {
+      gsap.set(preLayersRef.current, { opacity: 0 });
+      const layers = preLayersRef.current.querySelectorAll('.sm-prelayer');
+      gsap.set(layers, { x: '100%', opacity: 0 });
+    }
+  }, []);
+
   // Track if we're on mobile (640px or less)
   useEffect(() => {
     const checkMobile = () => {
@@ -139,9 +148,8 @@ export const StaggeredMenu = ({
 
     const itemEls = Array.from(panel.querySelectorAll('.sm-panel-itemLabel'));
     const numberEls = Array.from(panel.querySelectorAll('.sm-panel-list[data-numbering] .sm-panel-item'));
-    const socialTitle = panel.querySelector('.sm-socials-title');
     const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link'));
-    const highlightBorderRect = panel.querySelector('.sm-highlight-border rect');
+    const highlightLine = panel.querySelector('.sm-highlight-underline line');
 
     const layerStates = layers && Array.isArray(layers) ? layers.map(el => ({ el, start: Number(gsap.getProperty(el, 'xPercent')) })) : [];
     const panelStart = Number(gsap.getProperty(panel, 'xPercent'));
@@ -152,18 +160,12 @@ export const StaggeredMenu = ({
     if (numberEls.length) {
       gsap.set(numberEls, { '--sm-num-opacity': 0 });
     }
-    if (socialTitle) {
-      gsap.set(socialTitle, { opacity: 0 });
-    }
     if (socialLinks.length) {
-      gsap.set(socialLinks, { y: 25, opacity: 0 });
+      gsap.set(socialLinks, { scale: 0, opacity: 0, transformOrigin: '50% 50%' });
     }
-    // Hide the highlight border stroke initially
-    if (highlightBorderRect) {
-      const rect = highlightBorderRect;
-      // We'll measure and set dasharray once the panel is visible,
-      // for now just ensure it's invisible
-      gsap.set(rect, { opacity: 0 });
+    // Hide the highlight underline initially
+    if (highlightLine) {
+      gsap.set(highlightLine, { opacity: 0 });
     }
 
     const tl = gsap.timeline({ paused: true });
@@ -225,25 +227,17 @@ export const StaggeredMenu = ({
       }
     }
 
-    // Animate the yellow highlight border drawing in after items settle
-    if (highlightBorderRect) {
+    // Animate the yellow underline drawing in from left to right after items settle
+    if (highlightLine) {
       const itemsEndApprox = (panelInsertTime + panelDuration * 0.15) + 1 + (itemEls.length - 1) * 0.1;
       tl.add(() => {
-        const rect = highlightBorderRect;
-        const svg = rect.closest('svg');
-        if (!svg) return;
-        // Size the rect to match the SVG container
-        const svgW = svg.clientWidth;
-        const svgH = svg.clientHeight;
-        rect.setAttribute('width', svgW - 2.5);
-        rect.setAttribute('height', svgH - 2.5);
-        // Measure perimeter and set up dash animation
-        const totalLength = rect.getTotalLength();
-        gsap.set(rect, {
+        const line = highlightLine;
+        const totalLength = line.getTotalLength();
+        gsap.set(line, {
           attr: { 'stroke-dasharray': totalLength, 'stroke-dashoffset': totalLength },
           opacity: 1
         });
-        gsap.to(rect, {
+        gsap.to(line, {
           attr: { 'stroke-dashoffset': 0 },
           duration: 0.6,
           ease: 'power2.inOut'
@@ -251,35 +245,24 @@ export const StaggeredMenu = ({
       }, itemsEndApprox - 0.15);
     }
 
-    if (socialTitle || socialLinks.length) {
-      const socialsStart = panelInsertTime + panelDuration * 0.4;
-      if (socialTitle) {
-        tl.to(
-          socialTitle,
-          {
-            opacity: 1,
-            duration: 0.5,
-            ease: 'power2.out'
-          },
-          socialsStart
-        );
-      }
-      if (socialLinks.length) {
-        tl.to(
-          socialLinks,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: 'power3.out',
-            stagger: { each: 0.08, from: 'start' },
-            onComplete: () => {
-              gsap.set(socialLinks, { clearProps: 'opacity' });
-            }
-          },
-          socialsStart + 0.04
-        );
-      }
+    if (socialLinks.length) {
+      // Social icons pop in one by one after the Contact highlight border finishes drawing
+      const itemsEndApproxForSocials = (panelInsertTime + panelDuration * 0.15) + 1 + (itemEls.length - 1) * 0.1;
+      const socialsStart = itemsEndApproxForSocials + 0.5; // after border draw animation (0.6s)
+      tl.to(
+        socialLinks,
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+          ease: 'back.out(1.7)',
+          stagger: { each: 0.12, from: 'start' },
+          onComplete: () => {
+            gsap.set(socialLinks, { clearProps: 'opacity' });
+          }
+        },
+        socialsStart
+      );
     }
 
     openTlRef.current = tl;
@@ -331,13 +314,11 @@ export const StaggeredMenu = ({
         if (numberEls.length) {
           gsap.set(numberEls, { '--sm-num-opacity': 0 });
         }
-        const socialTitle = panel.querySelector('.sm-socials-title');
         const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link'));
-        if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
-        if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
-        // Reset highlight border stroke
-        const hRect = panel.querySelector('.sm-highlight-border rect');
-        if (hRect) gsap.set(hRect, { opacity: 0, strokeDashoffset: hRect.getTotalLength ? hRect.getTotalLength() : 1000 });
+        if (socialLinks.length) gsap.set(socialLinks, { scale: 0, opacity: 0 });
+        // Reset highlight underline stroke
+        const hLine = panel.querySelector('.sm-highlight-underline line');
+        if (hLine) gsap.set(hLine, { opacity: 0, strokeDashoffset: hLine.getTotalLength ? hLine.getTotalLength() : 1000 });
         busyRef.current = false;
       }
     });
@@ -490,7 +471,7 @@ export const StaggeredMenu = ({
         {(() => {
           // Create multiple layers for staggered effect
           const layerColors = [
-            '#f7ba40', // First shape - orange/yellow
+            '#2a1232', // First shape - brand dark purple
             '#7c3f7b', // Second shape - purple (matching your brand)
             '#ffffff'  // Final shape - white background
           ];
@@ -570,12 +551,14 @@ export const StaggeredMenu = ({
                 const itemClass = `sm-panel-item${it.highlight ? ' sm-panel-item--highlight' : ''}`;
                 const linkContent = (
                   <>
-                    <span className="sm-panel-itemLabel">{it.label}</span>
-                    {it.highlight && (
-                      <svg className="sm-highlight-border">
-                        <rect x="1.25" y="1.25" rx="8" ry="8" />
-                      </svg>
-                    )}
+                    <span className={`sm-panel-itemLabel${it.highlight ? ' sm-panel-itemLabel--highlight' : ''}`}>
+                      {it.label}
+                      {it.highlight && (
+                        <svg className="sm-highlight-underline" preserveAspectRatio="none">
+                          <line x1="0" y1="1" x2="100%" y2="1" />
+                        </svg>
+                      )}
+                    </span>
                   </>
                 );
 
@@ -615,7 +598,6 @@ export const StaggeredMenu = ({
           </ul>
           {displaySocials && socialItems && socialItems.length > 0 && (
             <div className="sm-socials" aria-label="Social links">
-              <h3 className="sm-socials-title">Socials</h3>
               <ul className="sm-socials-list" role="list">
                 {socialItems.map((s, i) => (
                   <li key={s.label + i} className="sm-socials-item">

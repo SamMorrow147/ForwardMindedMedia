@@ -380,35 +380,34 @@
 .sm-panel-item--highlight {
   color: #85417f;
   text-shadow: none;
-  border: 2.5px solid transparent;
-  border-radius: 0.5rem;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
   margin-top: 0.25rem;
   display: inline-block;
-  position: relative;
 }
 
-.sm-panel-item--highlight .sm-highlight-border {
+.sm-panel-itemLabel--highlight {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.2em;
+}
+
+.sm-panel-itemLabel--highlight .sm-highlight-underline {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 4px;
   pointer-events: none;
   overflow: visible;
 }
 
-.sm-panel-item--highlight .sm-highlight-border rect {
-  fill: none;
+.sm-panel-itemLabel--highlight .sm-highlight-underline line {
   stroke: #f7ba40;
-  stroke-width: 2.5;
+  stroke-width: 3.5;
+  stroke-linecap: round;
 }
 
 .sm-panel-item--highlight:hover {
-  color: #2a1232;
-  background: #f7ba40;
-  text-shadow: none;
+  color: #f7ba40;
 }
 
 .sm-panel-list[data-numbering] {
@@ -472,11 +471,16 @@
     font-size: 2.2rem;
     letter-spacing: 0.07em;
     padding-right: 1em;
+    padding-left: 1.5rem;
   }
   
+  .sm-socials {
+    padding-left: 1.5rem;
+  }
+
   .sm-logo-img {
-    height: 32px;
-    max-width: 150px;
+    height: 64px;
+    max-width: 300px;
   }
   
   .sm-toggle {
@@ -516,10 +520,11 @@
   .sm-panel-item {
     font-size: 1.9rem;
     letter-spacing: 0.07em;
+    padding-left: 1.5rem;
   }
   
   .sm-logo-img {
-    height: 28px;
-    max-width: 120px;
+    height: 56px;
+    max-width: 240px;
   }
 }
