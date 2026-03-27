@@ -141,6 +141,7 @@ export const StaggeredMenu = ({
     const numberEls = Array.from(panel.querySelectorAll('.sm-panel-list[data-numbering] .sm-panel-item'));
     const socialTitle = panel.querySelector('.sm-socials-title');
     const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link'));
+    const highlightBorderRect = panel.querySelector('.sm-highlight-border rect');
 
     const layerStates = layers && Array.isArray(layers) ? layers.map(el => ({ el, start: Number(gsap.getProperty(el, 'xPercent')) })) : [];
     const panelStart = Number(gsap.getProperty(panel, 'xPercent'));
@@ -156,6 +157,13 @@ export const StaggeredMenu = ({
     }
     if (socialLinks.length) {
       gsap.set(socialLinks, { y: 25, opacity: 0 });
+    }
+    // Hide the highlight border stroke initially
+    if (highlightBorderRect) {
+      const rect = highlightBorderRect;
+      // We'll measure and set dasharray once the panel is visible,
+      // for now just ensure it's invisible
+      gsap.set(rect, { opacity: 0 });
     }
 
     const tl = gsap.timeline({ paused: true });
@@ -215,6 +223,32 @@ export const StaggeredMenu = ({
           itemsStart + 0.1
         );
       }
+    }
+
+    // Animate the yellow highlight border drawing in after items settle
+    if (highlightBorderRect) {
+      const itemsEndApprox = (panelInsertTime + panelDuration * 0.15) + 1 + (itemEls.length - 1) * 0.1;
+      tl.add(() => {
+        const rect = highlightBorderRect;
+        const svg = rect.closest('svg');
+        if (!svg) return;
+        // Size the rect to match the SVG container
+        const svgW = svg.clientWidth;
+        const svgH = svg.clientHeight;
+        rect.setAttribute('width', svgW - 2.5);
+        rect.setAttribute('height', svgH - 2.5);
+        // Measure perimeter and set up dash animation
+        const totalLength = rect.getTotalLength();
+        gsap.set(rect, {
+          attr: { 'stroke-dasharray': totalLength, 'stroke-dashoffset': totalLength },
+          opacity: 1
+        });
+        gsap.to(rect, {
+          attr: { 'stroke-dashoffset': 0 },
+          duration: 0.6,
+          ease: 'power2.inOut'
+        });
+      }, itemsEndApprox - 0.15);
     }
 
     if (socialTitle || socialLinks.length) {
@@ -301,6 +335,9 @@ export const StaggeredMenu = ({
         const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link'));
         if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
         if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
+        // Reset highlight border stroke
+        const hRect = panel.querySelector('.sm-highlight-border rect');
+        if (hRect) gsap.set(hRect, { opacity: 0, strokeDashoffset: hRect.getTotalLength ? hRect.getTotalLength() : 1000 });
         busyRef.current = false;
       }
     });
@@ -532,7 +569,14 @@ export const StaggeredMenu = ({
 
                 const itemClass = `sm-panel-item${it.highlight ? ' sm-panel-item--highlight' : ''}`;
                 const linkContent = (
-                  <span className="sm-panel-itemLabel">{it.label}</span>
+                  <>
+                    <span className="sm-panel-itemLabel">{it.label}</span>
+                    {it.highlight && (
+                      <svg className="sm-highlight-border">
+                        <rect x="1.25" y="1.25" rx="8" ry="8" />
+                      </svg>
+                    )}
+                  </>
                 );
 
                 return (

@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ProfileCard from './ProfileCard';
+import ScrollFloat from './ScrollFloat';
 import './ProfileCardsRow.css';
 import { teamMembers } from '@/data/teamMembers';
 
@@ -178,15 +179,25 @@ const ProfileCardsRow = () => {
 
 
   return (
-    <section className="bg-fmm-team-gradient flex flex-col items-center pt-16 pb-8">
+    <section className="bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center pt-16 pb-8">
       <div className="text-center mb-12 px-4">
-        <h2
-          className="text-white mb-6 our-team-title"
-          style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'italic' }}
-        >
-          Our Team
+        <h2 className="ThreeDee text-white mb-6 our-team-title">
+          <ScrollFloat
+            as="span"
+            scrollContainerRef={null}
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="top bottom"
+            scrollEnd="center center-=20%"
+            stagger={0.03}
+            containerClassName=""
+            textClassName=""
+            style={{}}
+          >
+            Our Team
+          </ScrollFloat>
         </h2>
-        <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto italic leading-relaxed" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
+        <p className="text-2xl text-gray-300 max-w-3xl mx-auto italic" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
           Meet the talented individuals behind <strong>Forward Minded Media</strong>
         </p>
       </div>
@@ -327,10 +338,10 @@ const ProfileCardsRow = () => {
       {/* Who We Are Button */}
       <div className="flex justify-center mt-2 mb-0">
         <a 
-          href="/our-team" 
+          href="/who-we-are" 
           className="btn-animated-team no-underline"
         >
-          <strong>Our Full Line-up</strong>
+          <strong>Who We Are</strong>
           <div id="container-stars-team">
             <div id="stars-team"></div>
           </div>
