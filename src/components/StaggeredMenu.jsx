@@ -530,6 +530,7 @@ export const StaggeredMenu = ({
                   }
                 };
 
+                const itemClass = `sm-panel-item${it.highlight ? ' sm-panel-item--highlight' : ''}`;
                 const linkContent = (
                   <span className="sm-panel-itemLabel">{it.label}</span>
                 );
@@ -538,7 +539,7 @@ export const StaggeredMenu = ({
                   <li className="sm-panel-itemWrap" key={it.label + idx}>
                     {isAnchorLink ? (
                       <a 
-                        className="sm-panel-item" 
+                        className={itemClass} 
                         href={it.link} 
                         aria-label={it.ariaLabel} 
                         data-index={idx + 1}
@@ -548,7 +549,7 @@ export const StaggeredMenu = ({
                       </a>
                     ) : (
                       <Link 
-                        className="sm-panel-item" 
+                        className={itemClass} 
                         href={it.link} 
                         aria-label={it.ariaLabel} 
                         data-index={idx + 1}

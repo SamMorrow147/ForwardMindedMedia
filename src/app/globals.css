@@ -285,36 +285,6 @@ body {
   font: italic 700 96px 'Arvo', 'Helvetica Neue';
   font-weight: bold;
   color: #85417f;
-  text-shadow:
-    /* Highlight 100% */
-    0 0.015em 0 #d16cc7,
-    
-    /* Vertical Stack: 40% Shadow */
-    0 0.03em 0.015em #6d3568,
-    
-    /* Vertical Stack: 36% Shadow */
-    0 0.045em 0.03em #5f2f5a,
-    
-    /* Vertical Stack: 34% Shadow */
-    0 0.06em 0.03em #51294d,
-    
-    /* Vertical Stack: 31% Shadow */
-    0 0.09em 0.015em #432340,
-    
-    /* Immediate Sharp Shadow */
-    0 0.09em 0.045em rgba(0, 0, 0, 0.5),
-    
-    /* Sharp Top Shadow */
-    0 0 0.075em rgba(0, 0, 0, 0.2),
-    
-    /* Small Side Shadows */
-    0 0.03em 0.12em rgba(0, 0, 0, 0.3),
-    
-    /* Main Bottom Shadow, Blurred */
-    0 0.15em 0.18em rgba(0, 0, 0, 0.25),
-    
-    /* Large Diffused Bottom Shadow */
-    0 0.3em 0.3em rgba(0, 0, 0, 0.15);
 }
 
 .ThreeDee:hover {
@@ -324,35 +294,6 @@ body {
 /* White text with purple highlight variant */
 .ThreeDee-white-purple {
   color: #ffffff !important;
-  text-shadow:
-    /* Highlight 100% - Brighter Purple */
-    0 0.015em 0 #a855f7,
-    
-    /* Extended Vertical Stack - more layers for depth */
-    0 0.02em 0 #9333ea,
-    0 0.03em 0 #7e22ce,
-    0 0.04em 0 #6b21a8,
-    0 0.05em 0 #581c87,
-    0 0.06em 0 #4c1d95,
-    0 0.07em 0 #3b0764,
-    0 0.08em 0 #2e0a52,
-    0 0.09em 0 #1e0638,
-    0 0.1em 0 #0f0320,
-    
-    /* Immediate Sharp Shadow */
-    0 0.1em 0.02em rgba(0, 0, 0, 0.5),
-    
-    /* Sharp Top Shadow */
-    0 0 0.075em rgba(0, 0, 0, 0.2),
-    
-    /* Small Side Shadows */
-    0 0.03em 0.12em rgba(0, 0, 0, 0.3),
-    
-    /* Main Bottom Shadow, Blurred */
-    0 0.15em 0.18em rgba(0, 0, 0, 0.25),
-    
-    /* Large Diffused Bottom Shadow */
-    0 0.3em 0.3em rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive 3D Text */
@@ -380,6 +321,16 @@ body {
     left: 0 !important;
     right: 0 !important;
   }
+}
+
+/* Shared vertical gradient — Our Team, /our-team page */
+.bg-fmm-team-gradient {
+  background-image: linear-gradient(to bottom, #2a1232, #3a1945);
+}
+
+/* Recent Projects — same direction, slightly darker than Our Team */
+.bg-fmm-recent-projects-gradient {
+  background-image: linear-gradient(to bottom, #1f0e26, #2f1438);
 }
 
 /* Transparent Spotlight Card */

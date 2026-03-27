@@ -33,7 +33,7 @@ export default function LanyardSection() {
         <div style={{ width: '58%' }} className="flex flex-col justify-center pl-16 mobile-center-content">
           {/* Top section - Title only */}
           <div className="text-left max-w-lg mb-12 mt-12">
-            <h2 className="ThreeDee text-white mb-6 mobile-center-title" style={{ textAlign: 'left', marginLeft: '-20px' }}>Who We Are</h2>
+            <h2 className="text-white mb-6 mobile-center-title" style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', textAlign: 'left', marginLeft: '-20px', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'italic' }}>Who We Are</h2>
           </div>
         </div>
       </div>

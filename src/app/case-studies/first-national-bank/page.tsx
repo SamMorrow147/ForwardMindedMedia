@@ -16,14 +16,14 @@ export default function FirstNationalBankCaseStudy() {
     { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
     { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'Instagram', link: 'https://instagram.com' }
+    { label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61562268475609' },
+    { label: 'Instagram', link: 'https://www.instagram.com/forwardmindedmedia/' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/company/forward-minded-media' },
+    { label: 'TikTok', link: 'https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7' }
   ];
 
   return (
@@ -50,7 +50,6 @@ export default function FirstNationalBankCaseStudy() {
         projectTitle="Double the Impact"
         category="Multichannel Campaign"
         heroImage="/firstnational.jpg"
-        clientLogo="/FNB.png"
         goal="Increase brand awareness and new account signups in southern Minnesota while establishing a stronger competitive presence in the regional banking market."
         approach="We developed an integrated multichannel campaign combining digital display advertising, radio spots, and engaging social video content. Our strategy focused on highlighting the bank's community roots and personalized service while driving measurable conversions through targeted messaging and strategic media placement across multiple touchpoints."
         deliverables={[

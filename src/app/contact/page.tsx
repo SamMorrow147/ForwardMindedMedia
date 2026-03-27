@@ -56,13 +56,14 @@ export default function ContactPage() {
   // Menu items configuration
   const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '#who-we-are' },
-    { label: 'What We Do', ariaLabel: 'View our services', link: '#what-we-do' },
-    { label: 'Our Team', ariaLabel: 'Meet our team', link: '#our-team' },
-    { label: 'Projects', ariaLabel: 'View our projects', link: '#recent-projects' },
-    { label: 'Clients', ariaLabel: 'Read client testimonials', link: '#clients' },
+    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/who-we-are' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
+    { label: 'Our Team', ariaLabel: 'Meet our team', link: '/our-team' },
+    { label: 'Projects', ariaLabel: 'View our projects', link: '/#recent-projects' },
+    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
+    { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [
@@ -93,32 +94,37 @@ export default function ContactPage() {
         onMenuClose={() => console.log('Menu closed')}
       />
 
-      {/* Contact Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-4xl">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 
-              className="ThreeDee text-white text-5xl md:text-6xl mb-6"
-              style={{ 
-                fontFamily: '"scandia-web", sans-serif', 
-                fontWeight: 700,
-                textShadow: `
-                  0 0.015em 0 #d16cc7,
-                  0 0.03em 0.015em #6d3568,
-                  0 0.045em 0.03em #4a2345
-                `
-              }}
-            >
+      {/* Page Hero */}
+      <section className="w-full px-6 pt-32 pb-16">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-12 items-center">
+          <div className="order-2 md:order-1">
+            <p className="text-2xl text-white/90 mb-6" style={{ fontFamily: '"halcom", sans-serif', fontStyle: 'italic' }}>
+              Forward Minded Media
+            </p>
+            <h1 className="font-bold text-white mb-4" style={{ fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)' }}>
               Get In Touch
             </h1>
-            <p 
-              className="text-xl text-gray-300 max-w-2xl mx-auto"
-              style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}
-            >
-              Ready to leave the status quo behind? Let's start a conversation about how we can help your business grow.
+            <p className="text-[#f7ba40] text-lg mb-6 uppercase tracking-wide" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 600 }}>
+              Let&apos;s Start a Conversation
+            </p>
+            <p className="text-white/80 text-lg leading-relaxed" style={{ fontFamily: '"halcom", sans-serif' }}>
+              Ready to leave the status quo behind? Let&apos;s talk about how we can help your business grow.
             </p>
           </div>
+          <div className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-2xl w-full" style={{ minHeight: '320px' }}>
+            <img
+              src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=2070&auto=format&fit=crop"
+              alt="Get in touch with Forward Minded Media"
+              className="w-full h-full object-cover"
+              style={{ minHeight: '320px' }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="pb-20 px-6">
+        <div className="container mx-auto max-w-4xl">
 
           {/* Contact Form */}
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl">

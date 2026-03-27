@@ -3,7 +3,6 @@
 import SpotlightCard from "./SpotlightCard";
 import ServiceIcon from "./ServiceIcon";
 import BlurText from "./BlurText";
-import ScrollFloat from "./ScrollFloat";
 import { motion } from "framer-motion";
 
 export default function ServicesSection() {
@@ -11,49 +10,49 @@ export default function ServicesSection() {
       {
         title: "In-House Digital Advertising",
         description: "AI-powered targeting delivers real-time results. We plan, launch and optimize campaigns quickly with smarter strategy and no middlemen. Whether you need programmatic display, social media ads, streaming TV spots or geofencing, our media buying team secures the best placements at competitive rates. The global shift toward digital advertising — surpassing US$1 trillion, accounting for 73% of all ad spend — makes it more important than ever to partner with specialists who can maximize your investment.",
-        spotlightColor: "rgba(59, 130, 246, 0.2)", // Blue
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "advertising" as const,
         iconColor: "#f7ba40"
       },
       {
         title: "Graphic & Motion Design",
         description: "Scroll-stopping design across digital, print and video. Our designers craft cohesive visual identities that tell your story on every platform. From logo design and brand palettes to motion graphics and social content, we always stay clean, consistent and on-brand.",
-        spotlightColor: "rgba(168, 85, 247, 0.2)", // Purple
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "design" as const,
         iconColor: "#f7ba40"
       },
       {
         title: "Branded Goods & Gear",
         description: "From merch drops to event kits, we create things people actually want to wear, use and keep. We source and design promotional items and apparel that showcase your brand personality while delighting your audience.",
-        spotlightColor: "rgba(34, 197, 94, 0.2)", // Green
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "apparel" as const,
         iconColor: "#f7ba40"
       },
       {
         title: "Website Development",
         description: "Fast, scalable websites built for growth. We integrate automation and AI for better performance, less upkeep and a seamless user experience. Omnichannel marketing success depends on a unified digital presence, so our web builds are designed to work across search, social, email and AI-powered platforms.",
-        spotlightColor: "rgba(249, 115, 22, 0.2)", // Orange
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "website" as const,
         iconColor: "#f7ba40"
       },
       {
         title: "Media Placement & Strategy",
         description: "We handle the where, when and why. By blending audience insights, first-party data and privacy-forward targeting, we plan smarter media buys across digital, print, influencer channels and emerging retail media networks. At approximately US$62 billion, retail media now represents nearly 18% of all digital media spend and continues to expand — we ensure you take advantage of these full-funnel opportunities.",
-        spotlightColor: "rgba(236, 72, 153, 0.2)", // Pink
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "media" as const,
         iconColor: "#f7ba40"
       },
       {
         title: "Podcast & Content Production",
         description: "Storytelling comes alive on screen and mic. Our in-house production team manages concept development, scriptwriting, filming, editing and distribution. From polished commercials and docu-style videos to weekly podcasts and snackable social clips, we produce cinematic content that connects with your audience. And with 86% of advertisers using or planning to use generative AI for video production, we leverage the latest tools to deliver more for your budget.",
-        spotlightColor: "rgba(14, 165, 233, 0.2)", // Cyan
+        spotlightColor: "rgba(96, 45, 98, 0.5)",
         icon: "podcast" as const,
         iconColor: "#f7ba40"
       }
     ];
 
   return (
-    <section className="py-12 md:pb-20 md:pt-0 bg-[#2a1232]">
+    <section className="py-12 md:pb-20 bg-[#2a1232]">
       <div className="container mx-auto px-6">
         {/* Section Header - Centered */}
         <motion.div 
@@ -67,27 +66,19 @@ export default function ServicesSection() {
           }}
         >
           <h2 
-            className="ThreeDee what-we-do-title text-white mb-6 mx-auto mt-8"
+            className="text-white mb-6 mx-auto mt-8"
             style={{
+              fontSize: 'clamp(2rem, 8vw, 4rem)',
               fontFamily: '"scandia-web", sans-serif',
               fontWeight: 700,
-              fontStyle: 'italic'
+              fontStyle: 'italic',
+              color: '#e8e1d4'
             }}
           >
-            <ScrollFloat
-              as="span"
-              animationDuration={1}
-              ease="back.inOut(2)"
-              scrollStart="top bottom"
-              scrollEnd="center center-=20%"
-              stagger={0.03}
-              containerClassName="what-we-do-title-wrapper"
-            >
-              What We Do
-            </ScrollFloat>
+            What We Do
           </h2>
           <motion.p 
-            className="text-lg text-gray-300 max-w-4xl mx-auto"
+            className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}

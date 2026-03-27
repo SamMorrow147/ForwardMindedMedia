@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import ScrollFloat from './ScrollFloat';
 
 export default function HometownHypeGetFeatured() {
   const [formData, setFormData] = useState({
@@ -15,21 +14,6 @@ export default function HometownHypeGetFeatured() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const lightShadowStyle = {
-    textShadow: `
-      0 0.015em 0 #d16cc7,
-      0 0.03em 0.015em #6d3568,
-      0 0.045em 0.03em #5f2f5a,
-      0 0.06em 0.03em #51294d,
-      0 0.09em 0.015em #432340,
-      0 0.09em 0.045em rgba(0, 0, 0, 0.5),
-      0 0 0.075em rgba(0, 0, 0, 0.2),
-      0 0.03em 0.12em rgba(0, 0, 0, 0.3),
-      0 0.15em 0.18em rgba(0, 0, 0, 0.25),
-      0 0.3em 0.3em rgba(0, 0, 0, 0.15)
-    `
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -62,19 +46,9 @@ export default function HometownHypeGetFeatured() {
     <section className="py-20 bg-gradient-to-b from-[#2a1232] to-[#3a1945]">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-12">
-          <ScrollFloat
-            as="h2"
-            scrollContainerRef={null}
-            animationDuration={1}
-            ease="back.inOut(2)"
-            scrollStart="top bottom"
-            scrollEnd="center center-=20%"
-            stagger={0.03}
-            containerClassName=""
-            textClassName=""
+          <h2
             style={{ 
               fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
-              ...lightShadowStyle, 
               color: '#e8e1d4', 
               fontFamily: '"scandia-web", sans-serif', 
               fontWeight: 700,
@@ -82,9 +56,9 @@ export default function HometownHypeGetFeatured() {
             }}
           >
             Get Featured
-          </ScrollFloat>
+          </h2>
           <p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed"
             style={{ fontFamily: '"halcom", sans-serif', fontStyle: 'italic' }}
           >
             Know a business, event, or individual with a story worth sharing? Nominate them for an upcoming Hometown Hype episode!

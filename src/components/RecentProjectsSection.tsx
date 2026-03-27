@@ -1,6 +1,5 @@
 "use client";
 
-import ScrollFloat from './ScrollFloat';
 import { motion } from 'framer-motion';
 
 interface Project {
@@ -48,17 +47,9 @@ const sampleProjects: Project[] = [
 ];
 
 export default function RecentProjectsSection() {
-  const lightShadowStyle = {
-    textShadow: `
-      0 0.015em 0 #d16cc7,
-      0 0.03em 0.015em #6d3568,
-      0 0.045em 0.03em #4a2345
-    `,
-    fontSize: '4rem'
-  };
 
   return (
-    <section id="recent-projects" className="pb-24 bg-gradient-to-b from-[#2a1232] to-[#3a1945] overflow-visible relative" style={{ paddingTop: '60px' }}>
+    <section id="recent-projects" className="bg-fmm-recent-projects-gradient pb-24 overflow-visible relative" style={{ paddingTop: '60px' }}>
       {/* Left side overlay image */}
       <div className="absolute left-0 top-0 h-full z-0 pointer-events-none flex items-start pt-4">
         <img 
@@ -93,39 +84,14 @@ export default function RecentProjectsSection() {
       
       {/* Section Header */}
       <div className="text-center mb-16 px-8 relative z-10">
-          <h2 className="mb-3 recent-projects-title-wrapper">
-            <ScrollFloat
-              as="span"
-              scrollContainerRef={null}
-              animationDuration={1}
-              ease="back.inOut(2)"
-              scrollStart="top bottom"
-              scrollEnd="center center-=20%"
-              stagger={0.03}
-              containerClassName="recent-projects-title inline"
-              textClassName=""
-              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
-            >
-              Recent
-            </ScrollFloat>
-            <span className="inline-block w-2 md:w-8">&nbsp;</span>
-            <ScrollFloat
-              as="span"
-              scrollContainerRef={null}
-              animationDuration={1}
-              ease="back.inOut(2)"
-              scrollStart="top bottom"
-              scrollEnd="center center-=20%"
-              stagger={0.03}
-              containerClassName="recent-projects-title inline"
-              textClassName=""
-              style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', ...lightShadowStyle, color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700, fontStyle: 'normal' }}
-            >
-              Projects
-            </ScrollFloat>
+          <h2
+            className="mb-3"
+            style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', color: '#e8e1d4', fontFamily: '"scandia-web", sans-serif', fontWeight: 700 }}
+          >
+            Recent Projects
           </h2>
-          <p className="text-[#e8e1d4] text-3xl max-w-3xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
-            A showcase of our latest work and the <strong>results we've delivered</strong> for our clients.
+          <p className="text-[#e8e1d4] text-lg md:text-xl max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400, fontStyle: 'italic' }}>
+            A showcase of our latest work and the <strong>results we&apos;ve delivered</strong> for our clients.
           </p>
         </div>
 

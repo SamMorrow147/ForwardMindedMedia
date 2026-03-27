@@ -20,7 +20,7 @@ export default function MediaVersePage() {
     { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
     { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [

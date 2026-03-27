@@ -20,7 +20,7 @@ export default function LogoSection() {
             animationFrom={{ filter: "blur(10px)", opacity: 0, y: -20 }}
             animationTo={[{ filter: "blur(0px)", opacity: 1, y: 0 }]}
           />
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             We're proud to partner with innovative companies that share our vision for excellence.
           </p>
         </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// import VideoHero from "@/components/VideoHero"; // Hidden
 import Logo3DSection from "@/components/Logo3DSection";
 import HeroTextSection from "@/components/HeroTextSection";
 import Header from "@/components/Header";
@@ -49,7 +48,7 @@ export default function Home() {
     { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
     { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [
@@ -87,14 +86,11 @@ export default function Home() {
         onMenuClose={() => console.log('Menu closed')}
       />
       
-      {/* 3D Logo Section - Replaces Video Hero */}
+      {/* 3D Logo over video background */}
       <Logo3DSection />
-      
-      {/* Hero Text Section */}
+
+      {/* Hero Text + Three Items */}
       <HeroTextSection />
-      
-      {/* Video Hero Section - Hidden */}
-      {/* <VideoHero /> */}
       
       <RecentProjectsSection />
       <div id="clients">

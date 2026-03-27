@@ -15,40 +15,43 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-br from-slate-900 to-slate-800 text-white">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+      <div className="w-full px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           
           {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="mb-6">
-              <img 
-                src="/Logo-Dark.png" 
-                alt="Forward Minded Media" 
-                className="h-20 w-auto mb-4"
-              />
+          <div className="flex flex-col justify-between">
+            <div>
+              <div className="mb-6">
+                <img 
+                  src="/Logo-Dark.png" 
+                  alt="Forward Minded Media" 
+                  className="mb-4"
+                  style={{ height: '60px', width: 'auto', objectFit: 'contain', display: 'block' }}
+                />
+              </div>
+              <p className="text-gray-300 leading-relaxed">
+                Crafting digital excellence through innovative marketing solutions. We&apos;re your partners in digital transformation.
+              </p>
             </div>
-            <p className="text-gray-300 leading-relaxed mb-6">
-              Crafting digital excellence through innovative marketing solutions. We&apos;re your partners in digital transformation.
-            </p>
             
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/profile.php?id=61562268475609" target="_blank" rel="noopener noreferrer" className="text-[#f7ba40] hover:text-[#85417f] transition-colors duration-300" aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61562268475609" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300" aria-label="Facebook">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              <a href="https://www.instagram.com/forwardmindedmedia/" target="_blank" rel="noopener noreferrer" className="text-[#f7ba40] hover:text-[#85417f] transition-colors duration-300" aria-label="Instagram">
+              <a href="https://www.instagram.com/forwardmindedmedia/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300" aria-label="Instagram">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/company/forward-minded-media" target="_blank" rel="noopener noreferrer" className="text-[#f7ba40] hover:text-[#85417f] transition-colors duration-300" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/forward-minded-media" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300" aria-label="LinkedIn">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </a>
-              <a href="https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7" target="_blank" rel="noopener noreferrer" className="text-[#f7ba40] hover:text-[#85417f] transition-colors duration-300" aria-label="TikTok">
+              <a href="https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300" aria-label="TikTok">
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                 </svg>
@@ -60,13 +63,13 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              <li><a href="/" className="text-gray-300 hover:text-white transition-colors duration-300">Home</a></li>
-              <li><a href="#who-we-are" className="text-gray-300 hover:text-white transition-colors duration-300">Who We Are</a></li>
-              <li><a href="#what-we-do" className="text-gray-300 hover:text-white transition-colors duration-300">What We Do</a></li>
-              <li><a href="#our-team" className="text-gray-300 hover:text-white transition-colors duration-300">Our Team</a></li>
-              <li><a href="#clients" className="text-gray-300 hover:text-white transition-colors duration-300">Clients</a></li>
-              <li><a href="#focus" className="text-gray-300 hover:text-white transition-colors duration-300">Focus</a></li>
-              <li><a href="/contact" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>
+              <li><a href="/" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Home</a></li>
+              <li><a href="/who-we-are" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Who We Are</a></li>
+              <li><a href="/services" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Services</a></li>
+              <li><a href="/our-team" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Our Team</a></li>
+              <li><a href="/#recent-projects" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Projects</a></li>
+              <li><a href="/blog" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Blog</a></li>
+              <li><a href="/contact" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Contact</a></li>
             </ul>
           </div>
 
@@ -78,18 +81,18 @@ export default function Footer() {
             </p>
             
             <form onSubmit={handleNewsletterSubmit} className="mb-6">
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex gap-2">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="Your email"
+                  className="flex-1 min-w-0 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+                  className="shrink-0 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 text-sm"
                 >
                   Subscribe
                 </button>
@@ -112,15 +115,16 @@ export default function Footer() {
               </p>
             </div>
           </div>
+
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-slate-700">
-        <div className="container mx-auto px-6 py-6">
+        <div className="w-full px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2026 ForwardMinded Media. All rights reserved.
+              © 2026 Forward Minded Media. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a>

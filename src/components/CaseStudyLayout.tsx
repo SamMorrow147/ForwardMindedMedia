@@ -170,7 +170,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Client Goal
           </h2>
-          <p className="text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
+          <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
             {goal}
           </p>
         </div>
@@ -182,7 +182,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Our Approach
           </h2>
-          <p className="text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
+          <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
             {approach}
           </p>
         </div>
@@ -311,7 +311,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
           <h2 className="text-4xl font-bold text-white mb-6" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Ready to Create Your Success Story?
           </h2>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto" style={{ fontFamily: '"halcom", sans-serif' }}>
+          <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: '"halcom", sans-serif' }}>
             Let's work together to achieve measurable results for your brand.
           </p>
           <Link 

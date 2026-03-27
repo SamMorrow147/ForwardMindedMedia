@@ -5,12 +5,7 @@ import { useState, useEffect } from 'react';
 export default function ScrollRevealSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const lightShadowStyle = {
-    textShadow: `
-      0 0.015em 0 #d16cc7,
-      0 0.03em 0.015em #6d3568,
-      0 0.045em 0.03em #4a2345
-    `,
+  const headingStyle = {
     fontSize: '5rem'
   };
 
@@ -112,10 +107,10 @@ export default function ScrollRevealSection() {
               }`}
             >
               <div className="mt-16 px-8">
-                <h3 className="ThreeDee mb-8" style={lightShadowStyle}>
+                <h3 className="mb-8" style={{ ...headingStyle, fontFamily: '"scandia-web", sans-serif', fontWeight: 700, color: '#2a1232' }}>
                   {slide.title}
                 </h3>
-                <p className="text-[#2a1232] text-2xl md:text-3xl leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
+                <p className="text-[#2a1232] text-lg md:text-xl leading-relaxed max-w-4xl mx-auto" style={{ fontFamily: '"halcom", sans-serif', fontWeight: 400 }}>
                   {slide.content}
                 </p>
               </div>

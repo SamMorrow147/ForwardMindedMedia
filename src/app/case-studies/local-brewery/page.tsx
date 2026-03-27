@@ -20,14 +20,14 @@ export default function LocalBreweryCaseStudy() {
     { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
     { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
     { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
   ];
 
   const socialItems: Array<{ label: string; link: string }> = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'Instagram', link: 'https://instagram.com' }
+    { label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61562268475609' },
+    { label: 'Instagram', link: 'https://www.instagram.com/forwardmindedmedia/' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/company/forward-minded-media' },
+    { label: 'TikTok', link: 'https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7' }
   ];
 
   return (
