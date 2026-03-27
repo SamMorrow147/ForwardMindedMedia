@@ -25,35 +25,29 @@ interface ProfileData {
 const ProfileCardsRow = () => {
   const router = useRouter();
   const sliderRef = useRef<Slider>(null);
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1920
-  );
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+
   const [isMobile, setIsMobile] = useState(
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
 
   const profiles: ProfileData[] = teamMembers;
 
-  // Handle window resize and initial setup
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setWindowWidth(width);
       setIsMobile(width < 768);
-      // Force slider to recalculate on resize
       if (sliderRef.current) {
         setTimeout(() => {
-          // Force a refresh by going to current slide
           const currentSlide = (sliderRef.current as any)?.innerSlider?.state?.currentSlide || 0;
           sliderRef.current?.slickGoTo(currentSlide);
         }, 100);
       }
     };
 
-    // Set initial width immediately
     if (typeof window !== 'undefined') {
-      // Set initial values immediately to avoid delay
-      setWindowWidth(window.innerWidth);
       setIsMobile(window.innerWidth < 768);
       window.addEventListener('resize', handleResize);
     }
@@ -65,7 +59,6 @@ const ProfileCardsRow = () => {
     };
   }, []);
 
-  // Force slider refresh after mount to ensure all slides render
   useEffect(() => {
     if (sliderRef.current) {
       const timer = setTimeout(() => {
@@ -76,32 +69,6 @@ const ProfileCardsRow = () => {
       return () => clearTimeout(timer);
     }
   }, []);
-
-  // Helper function to get max slide for current viewport
-  const getMaxSlide = (slidesVisible: number) => {
-    const totalSlides = profiles.length;
-    // For partial slides (like 2.5), we need to ensure the last slide can be fully scrolled into view
-    // Max slide should be: totalSlides - slidesVisible (rounded up)
-    // This ensures we can't scroll past the point where the last slide is fully visible
-    return Math.max(0, Math.floor(totalSlides - slidesVisible));
-  };
-
-  // Helper function to prevent over-scrolling
-  const handleAfterChange = (currentSlide: number, slidesVisible: number) => {
-    if (!isMobile && sliderRef.current) {
-      const maxSlide = getMaxSlide(slidesVisible);
-      
-      // If we've scrolled past the max, snap back immediately
-      if (currentSlide > maxSlide) {
-        // Use requestAnimationFrame for immediate update
-        requestAnimationFrame(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickGoTo(maxSlide);
-          }
-        });
-      }
-    }
-  };
 
   const handleArrowClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
@@ -115,8 +82,22 @@ const ProfileCardsRow = () => {
     }
   };
 
+  // Mobile swipe gesture: navigate to /our-team on a clear leftward swipe
+  const handleMobileTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+  };
 
-  // React Slick settings
+  const handleMobileTouchEnd = (e: React.TouchEvent) => {
+    const dx = touchStartXRef.current - e.changedTouches[0].clientX;
+    const dy = Math.abs(touchStartYRef.current - e.changedTouches[0].clientY);
+    // Only navigate on a clearly intentional horizontal left swipe (>80px, mostly horizontal)
+    if (dx > 80 && dy < dx * 0.5) {
+      router.push('/our-team');
+    }
+  };
+
+  // Desktop-only slick settings
   const sliderSettings = {
     dots: false,
     infinite: false,
@@ -127,69 +108,99 @@ const ProfileCardsRow = () => {
     swipeToSlide: true,
     touchMove: true,
     draggable: true,
-    arrows: false, // Removed navigation arrows
+    arrows: false,
     accessibility: true,
     initialSlide: 0,
-    edgeFriction: 0.35, // Add friction to prevent over-scrolling
-    variableWidth: true, // Allow cards to have their natural width
+    edgeFriction: 0.35,
+    variableWidth: true,
     onInit: () => {
-      // Force slider to recalculate on init
       if (sliderRef.current) {
         sliderRef.current.slickGoTo(0);
       }
     },
     afterChange: (currentSlide: number) => {
-      // On desktop, prevent scrolling past the last card
-      if (!isMobile && sliderRef.current) {
-        const totalSlides = profiles.length;
-        const maxSlide = totalSlides - 1;
-        
+      if (sliderRef.current) {
+        const maxSlide = profiles.length - 1;
         if (currentSlide > maxSlide) {
           requestAnimationFrame(() => {
-            if (sliderRef.current) {
-              sliderRef.current.slickGoTo(maxSlide);
-            }
+            sliderRef.current?.slickGoTo(maxSlide);
           });
         }
       }
     },
     onSwipe: (direction: string) => {
-      // On mobile, any left swipe navigates to the Our Team page
-      if (isMobile) {
-        if (direction === 'left') {
-          router.push('/our-team');
-        }
-        return;
-      }
-      // On desktop, prevent swiping past the last card
       if (sliderRef.current) {
-        const totalSlides = profiles.length;
-        const maxSlide = totalSlides - 1;
+        const maxSlide = profiles.length - 1;
         const currentSlide = (sliderRef.current as any)?.innerSlider?.state?.currentSlide || 0;
-        
         if (direction === 'left' && currentSlide >= maxSlide) {
           requestAnimationFrame(() => {
-            if (sliderRef.current) {
-              sliderRef.current.slickGoTo(maxSlide);
-            }
+            sliderRef.current?.slickGoTo(maxSlide);
           });
         }
       }
     },
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: false,
-          variableWidth: true,
-          edgeFriction: 0.35,
-        }
-      }
-    ]
   };
 
+  // Back content builder (desktop flip cards only)
+  const getBackContent = (profile: ProfileData): React.ReactNode => {
+    if (profile.name === 'And More...') {
+      return (
+        <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+            <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>{profile.backstory}</p>
+          </div>
+        </div>
+      );
+    }
+    if (profile.name === 'Maybe You?') {
+      return (
+        <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+            <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>{profile.backstory}</p>
+            <a href="/careers" style={{ color: '#f7ba40', textDecoration: 'underline', fontSize: '1.1rem', fontWeight: 'bold', pointerEvents: 'auto' }}>
+              View Open Positions →
+            </a>
+          </div>
+        </div>
+      );
+    }
+    if (profile.backstory) {
+      return (
+        <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
+            <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
+          </div>
+          <div style={{ textAlign: 'left', flex: 1, overflowY: 'auto' }}>
+            <strong>Backstory:</strong>
+            <p style={{ marginBottom: '1rem' }}>{profile.backstory}</p>
+            {profile.funFact && (
+              <>
+                <strong>Fun Fact:</strong>
+                <p style={{ marginBottom: '1rem' }}>{profile.funFact}</p>
+              </>
+            )}
+            {profile.calendlyLink && (
+              <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <a href={profile.calendlyLink} target="_blank" rel="noopener noreferrer" style={{ color: '#f7ba40', textDecoration: 'underline', fontSize: '1.1rem', fontWeight: 'bold', pointerEvents: 'auto' }}>
+                  Book a meeting with me →
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <section className="bg-gradient-to-b from-[#2a1232] to-[#3a1945] flex flex-col items-center pt-16 pb-8">
@@ -205,94 +216,39 @@ const ProfileCardsRow = () => {
         </p>
       </div>
 
-      {/* Cards Container - React Slick */}
-      <div className="w-full profile-cards-slider-container">
-        <Slider ref={sliderRef} {...sliderSettings} className="profile-cards-slider">
-          {profiles.map((profile, index) => {
-            // Create back content for each card
-            let backContent: React.ReactNode = null;
-            
-            if (profile.name === "And More...") {
-              backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
-                  </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8' }}>
-                      {profile.backstory}
-                    </p>
-                  </div>
-                </div>
-              );
-            } else if (profile.name === "Maybe You?") {
-              backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
-                  </div>
-                  <div style={{ flex: 1, overflowY: 'auto' }}>
-                    <p style={{ fontSize: '1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
-                      {profile.backstory}
-                    </p>
-                    <a 
-                      href="/careers" 
-                      style={{ 
-                        color: '#f7ba40', 
-                        textDecoration: 'underline',
-                        fontSize: '1.1rem',
-                        fontWeight: 'bold',
-                        pointerEvents: 'auto'
-                      }}
-                    >
-                      View Open Positions →
-                    </a>
-                  </div>
-                </div>
-              );
-            } else if (profile.backstory) {
-              // For all team members with backstory
-              backContent = (
-                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <div style={{ marginBottom: '1.5rem' }}>
-                    <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{profile.name}</h3>
-                    <p style={{ color: '#f7ba40', fontSize: '1rem' }}>{profile.title}</p>
-                  </div>
-                  <div style={{ textAlign: 'left', flex: 1, overflowY: 'auto' }}>
-                    <strong>Backstory:</strong>
-                    <p style={{ marginBottom: '1rem' }}>{profile.backstory}</p>
-                    {profile.funFact && (
-                      <>
-                        <strong>Fun Fact:</strong>
-                        <p style={{ marginBottom: '1rem' }}>{profile.funFact}</p>
-                      </>
-                    )}
-                    {profile.calendlyLink && (
-                      <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-                        <a 
-                          href={profile.calendlyLink} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          style={{ 
-                            color: '#f7ba40', 
-                            textDecoration: 'underline',
-                            fontSize: '1.1rem',
-                            fontWeight: 'bold',
-                            pointerEvents: 'auto'
-                          }}
-                        >
-                          Book a meeting with me →
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            }
-            
-            return (
+      {/* Mobile: native CSS scroll — no JS touch handling, no react-slick conflicts */}
+      {isMobile ? (
+        <div
+          ref={mobileScrollRef}
+          className="mobile-cards-scroll"
+          onTouchStart={handleMobileTouchStart}
+          onTouchEnd={handleMobileTouchEnd}
+        >
+          {profiles.map((profile, index) => (
+            <div key={index} className="mobile-card-slide">
+              <ProfileCard
+                name={profile.name}
+                title={profile.title}
+                handle={profile.handle}
+                status={profile.status}
+                contactText="More Info"
+                avatarUrl={profile.avatarUrl}
+                iconUrl={profile.iconUrl}
+                showUserInfo={profile.showUserInfo !== false}
+                enableTilt={false}
+                enableMobileTilt={false}
+                enableFlip={false}
+                backContent={null}
+                onContactClick={() => router.push('/our-team')}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        /* Desktop: react-slick carousel (untouched) */
+        <div className="w-full profile-cards-slider-container">
+          <Slider ref={sliderRef} {...sliderSettings} className="profile-cards-slider">
+            {profiles.map((profile, index) => (
               <div key={index} className="profile-card-slide">
                 <ProfileCard
                   name={profile.name}
@@ -303,21 +259,17 @@ const ProfileCardsRow = () => {
                   avatarUrl={profile.avatarUrl}
                   iconUrl={profile.iconUrl}
                   showUserInfo={profile.showUserInfo !== false}
-                  enableTilt={!isMobile}
+                  enableTilt={true}
                   enableMobileTilt={false}
-                  enableFlip={!isMobile}
-                  backContent={backContent as any}
-                  onContactClick={() => {
-                    if (isMobile) {
-                      router.push('/our-team');
-                    }
-                  }}
+                  enableFlip={true}
+                  backContent={getBackContent(profile) as any}
+                  onContactClick={() => console.log(`Contact ${profile.name}`)}
                 />
               </div>
-            );
-          })}
-        </Slider>
-      </div>
+            ))}
+          </Slider>
+        </div>
+      )}
 
       {/* Animated Arrow - Desktop and Mobile */}
       <div className="arrow-wrapper">
