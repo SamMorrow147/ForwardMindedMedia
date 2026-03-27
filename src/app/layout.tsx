@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ThemeColorManager from "@/components/ThemeColorManager";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +30,6 @@ export default function RootLayout({
     <html lang="en" className="bg-black">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="dark" />
         <meta name="theme-color" content="#000000" />
         <link rel="stylesheet" href="https://use.typekit.net/qhq4tmi.css" />
         <link rel="preload" href="/Person.png" as="image" />
@@ -38,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
       >
+        <ThemeColorManager />
         <div className="min-h-screen bg-black">
           {children}
         </div>

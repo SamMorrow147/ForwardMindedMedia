@@ -49,8 +49,10 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
+  const [showDarkLogo, setShowDarkLogo] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const openRef = useRef(false);
+  const logoTimerRef = useRef(null);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
   const preLayerElsRef = useRef([]);
@@ -78,6 +80,9 @@ export const StaggeredMenu = ({
       const layers = preLayersRef.current.querySelectorAll('.sm-prelayer');
       gsap.set(layers, { x: '100%', opacity: 0 });
     }
+    return () => {
+      if (logoTimerRef.current) clearTimeout(logoTimerRef.current);
+    };
   }, []);
 
   // Track if we're on mobile (640px or less)
@@ -445,15 +450,36 @@ export const StaggeredMenu = ({
     openRef.current = target;
     setOpen(target);
     console.log('Setting open to:', target);
-    
+
+    // Clear any pending logo timer
+    if (logoTimerRef.current) {
+      clearTimeout(logoTimerRef.current);
+      logoTimerRef.current = null;
+    }
+
     if (target) {
       console.log('Opening menu...');
       onMenuOpen?.();
       playOpen();
+      // Delay logo swap until panel slide-out animation finishes (~0.65s panel + layer delays)
+      logoTimerRef.current = setTimeout(() => {
+        setShowDarkLogo(true);
+      }, 550);
+      // Update Safari theme-color to white when menu opens
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeColorMeta) themeColorMeta.setAttribute('content', '#ffffff');
     } else {
       console.log('Closing menu...');
       onMenuClose?.();
       playClose();
+      // Immediately revert logo on close
+      setShowDarkLogo(false);
+      // Restore theme-color based on current page
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeColorMeta) {
+        const isCaseStudy = window.location.pathname.startsWith('/case-studies');
+        themeColorMeta.setAttribute('content', isCaseStudy ? '#2a1232' : '#000000');
+      }
     }
     animateIcon(target);
     animateColor(target);
@@ -492,7 +518,7 @@ export const StaggeredMenu = ({
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <Link href="/" className="sm-logo" aria-label="Go to homepage">
           <img
-            src={(open && isMobile) ? '/Logo-Light copy.png' : (logoUrl || '/src/assets/logos/reactbits-gh-white.svg')}
+            src={(showDarkLogo && isMobile) ? '/Logo-Light copy.png' : (logoUrl || '/src/assets/logos/reactbits-gh-white.svg')}
             alt="Logo"
             className="sm-logo-img"
             draggable={false}

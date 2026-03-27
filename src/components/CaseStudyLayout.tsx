@@ -217,7 +217,7 @@ const CaseStudyLayout: React.FC<CaseStudyLayoutProps> = ({
       {/* Results with Metrics */}
       <section className="py-16">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-white mb-8" style={{ fontFamily: '"scandia-web", sans-serif' }}>
+          <h2 className="text-4xl font-bold text-white mb-8 text-left md:text-center" style={{ fontFamily: '"scandia-web", sans-serif' }}>
             Results
           </h2>
           
