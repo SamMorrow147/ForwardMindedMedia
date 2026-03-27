@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -22,6 +23,7 @@ interface ProfileData {
 }
 
 const ProfileCardsRow = () => {
+  const router = useRouter();
   const sliderRef = useRef<Slider>(null);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1920
@@ -104,6 +106,10 @@ const ProfileCardsRow = () => {
   const handleArrowClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (isMobile) {
+      router.push('/our-team');
+      return;
+    }
     if (sliderRef.current) {
       sliderRef.current.slickNext();
     }
@@ -148,8 +154,15 @@ const ProfileCardsRow = () => {
       }
     },
     onSwipe: (direction: string) => {
-      // Prevent swiping past the last card on desktop
-      if (!isMobile && sliderRef.current) {
+      // On mobile, any left swipe navigates to the Our Team page
+      if (isMobile) {
+        if (direction === 'left') {
+          router.push('/our-team');
+        }
+        return;
+      }
+      // On desktop, prevent swiping past the last card
+      if (sliderRef.current) {
         const totalSlides = profiles.length;
         const maxSlide = totalSlides - 1;
         const currentSlide = (sliderRef.current as any)?.innerSlider?.state?.currentSlide || 0;
@@ -292,9 +305,13 @@ const ProfileCardsRow = () => {
                   showUserInfo={profile.showUserInfo !== false}
                   enableTilt={!isMobile}
                   enableMobileTilt={false}
-                  enableFlip={true}
+                  enableFlip={!isMobile}
                   backContent={backContent as any}
-                  onContactClick={() => console.log(`Contact ${profile.name}`)}
+                  onContactClick={() => {
+                    if (isMobile) {
+                      router.push('/our-team');
+                    }
+                  }}
                 />
               </div>
             );
@@ -327,10 +344,10 @@ const ProfileCardsRow = () => {
       {/* Who We Are Button */}
       <div className="flex justify-center mt-2 mb-0">
         <a 
-          href="/who-we-are" 
+          href="/our-team" 
           className="btn-animated-team no-underline"
         >
-          <strong>Who We Are</strong>
+          <strong>View Full Roster</strong>
           <div id="container-stars-team">
             <div id="stars-team"></div>
           </div>
