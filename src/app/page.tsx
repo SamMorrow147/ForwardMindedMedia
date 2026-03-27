@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logo3DSection from "@/components/Logo3DSection";
 import HeroTextSection from "@/components/HeroTextSection";
 import Header from "@/components/Header";
@@ -15,48 +15,10 @@ import GradualBlur from "@/components/GradualBlur";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import AdobeFonts from "@/components/AdobeFonts";
 import LoadingScreen from "@/components/LoadingScreen";
+import { primaryNavItems as menuItems, socialNavItems as socialItems } from "@/data/siteNavigation";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAtBottom, setIsAtBottom] = useState(false);
-
-  // Detect when user is at bottom of page
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      
-      // Check if user is within 50px of bottom
-      const atBottom = scrollHeight - scrollTop - clientHeight < 50;
-      setIsAtBottom(atBottom);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Menu items configuration
-  const menuItems: Array<{ label: string; ariaLabel: string; link: string }> = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Who We Are', ariaLabel: 'Learn about us', link: '/who-we-are' },
-    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
-    { label: 'Our Team', ariaLabel: 'Meet our team', link: '/our-team' },
-    { label: 'Projects', ariaLabel: 'View our projects', link: '#recent-projects' },
-    { label: 'Blog', ariaLabel: 'Read our blog', link: '/blog' },
-    { label: 'Hometown Hype', ariaLabel: 'Community spotlight series', link: '/case-studies/local-brewery' },
-    { label: 'Media Verse', ariaLabel: 'Visit Media Verse', link: '/media-verse' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact', highlight: true }
-  ];
-
-  const socialItems: Array<{ label: string; link: string }> = [
-    { label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61562268475609' },
-    { label: 'Instagram', link: 'https://www.instagram.com/forwardmindedmedia/' },
-    { label: 'LinkedIn', link: 'https://www.linkedin.com/company/forward-minded-media' },
-    { label: 'TikTok', link: 'https://www.tiktok.com/@forwardmindedmedia?_r=1&_t=ZT-91Z7KwViAP7' }
-  ];
 
   return (
     <div>
@@ -107,25 +69,31 @@ export default function Home() {
       </div>
       <Footer />
       
-      {/* Global page-level blur effect at the bottom of the screen */}
-      <div style={{ 
-        opacity: isAtBottom ? 0 : 1, 
-        transition: 'opacity 0.3s ease-in-out',
-        pointerEvents: 'none'
-      }}>
-        <GradualBlur
-          target="page"
-          position="bottom"
-          height="8rem"
-          mobileHeight="2.5rem"
-          strength={3}
-          divCount={6}
-          curve="bezier"
-          exponential={true}
-          opacity={1}
-          responsive={true}
-        />
-      </div>
+      {/* Fixed top blur behind header (logo + menu); z-index below StaggeredMenu (2000+) */}
+      <GradualBlur
+        target="page"
+        position="top"
+        height="8rem"
+        mobileHeight="8rem"
+        strength={3}
+        divCount={6}
+        curve="bezier"
+        exponential={true}
+        opacity={1}
+        responsive={true}
+      />
+      {/* Fixed bottom blur — desktop only */}
+      <GradualBlur
+        target="page"
+        position="bottom"
+        height="8rem"
+        strength={3}
+        divCount={6}
+        curve="bezier"
+        exponential={true}
+        opacity={1}
+        className="desktop-only-blur"
+      />
     </div>
   );
 }

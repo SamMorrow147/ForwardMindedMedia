@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { primaryNavItems } from '@/data/siteNavigation';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -63,13 +64,17 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              <li><a href="/" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Home</a></li>
-              <li><a href="/who-we-are" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Who We Are</a></li>
-              <li><a href="/services" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Services</a></li>
-              <li><a href="/our-team" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Our Team</a></li>
-              <li><a href="/#recent-projects" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Projects</a></li>
-              <li><a href="/blog" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Blog</a></li>
-              <li><a href="/contact" className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300">Contact</a></li>
+              {primaryNavItems.map((item) => (
+                <li key={`${item.label}-${item.link}`}>
+                  <a
+                    href={item.link}
+                    className="text-gray-300 hover:text-[#f7ba40] transition-colors duration-300"
+                    aria-label={item.ariaLabel}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 

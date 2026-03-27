@@ -3,6 +3,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Desktop-only blur (hidden on mobile/tablet) */
+.desktop-only-blur {
+  display: none !important;
+}
+@media (min-width: 1025px) {
+  .desktop-only-blur {
+    display: block !important;
+  }
+}
+
 /* Basic styling */
 html {
   background-color: #000000;
