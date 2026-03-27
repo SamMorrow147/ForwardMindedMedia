@@ -26,9 +26,8 @@ const ProfileCardsRow = () => {
   const router = useRouter();
   const sliderRef = useRef<Slider>(null);
 
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== 'undefined' ? window.innerWidth < 768 : false
-  );
+  // Always start false to match the server render, then update after mount
+  const [isMobile, setIsMobile] = useState(false);
 
   const profiles: ProfileData[] = teamMembers;
 
@@ -44,15 +43,12 @@ const ProfileCardsRow = () => {
       }
     };
 
-    if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768);
-      window.addEventListener('resize', handleResize);
-    }
+    // Set the real value after hydration — safe because useEffect is client-only
+    setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
