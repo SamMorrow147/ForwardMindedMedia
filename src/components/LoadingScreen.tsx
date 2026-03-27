@@ -11,7 +11,7 @@ interface LoadingScreenProps {
 
 export default function LoadingScreen({ 
   onLoadingComplete,
-  minimumLoadTime = 2000 
+  minimumLoadTime = 500 
 }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -41,8 +41,8 @@ export default function LoadingScreen({
             if (onLoadingComplete) {
               onLoadingComplete();
             }
-          }, 1600); // 1500ms transition + 100ms buffer
-        }, 200);
+          }, 400); // ~375ms transition + 25ms buffer
+        }, 50);
       }
     };
     

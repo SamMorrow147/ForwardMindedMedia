@@ -63,7 +63,7 @@ export default function Home() {
       {/* Loading Screen - Always render, overlays on top */}
       <LoadingScreen 
         onLoadingComplete={() => setIsLoading(false)}
-        minimumLoadTime={3000}
+        minimumLoadTime={750}
       />
       
       {/* Adobe Fonts Loader */}

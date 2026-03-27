@@ -114,7 +114,7 @@ export const teamMembers: TeamMember[] = [
     funFact: "Ty has made a hole in one while golfing!"
   },
   {
-    name: "Luke Ryan",
+    name: "Luke Haines",
     title: "Senior Manager of Motion Graphics",
     handle: "luke",
     status: "Online",

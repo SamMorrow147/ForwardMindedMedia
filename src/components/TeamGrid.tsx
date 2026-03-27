@@ -23,22 +23,9 @@ const TeamGrid = () => {
 
   return (
     <section className="pb-16 px-6">
-      <motion.div 
-        className="container mx-auto max-w-7xl"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.1
-            }
-          }
-        }}
-      >
+      <div className="container mx-auto max-w-7xl">
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 lg:gap-16 [&>*]:isolate"  >
           {profiles.map((profile, index) => {
             // Create back content for each card
             let backContent: React.ReactNode = null;
@@ -231,22 +218,10 @@ const TeamGrid = () => {
               <motion.div
                 key={index}
                 className="flex justify-center items-start min-h-[550px]"
-                variants={{
-                  hidden: { 
-                    opacity: 0, 
-                    y: 40,
-                    scale: 0.9
-                  },
-                  visible: { 
-                    opacity: 1, 
-                    y: 0,
-                    scale: 1,
-                    transition: {
-                      duration: 0.5,
-                      ease: [0.25, 0.46, 0.45, 0.94]
-                    }
-                  }
-                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <ProfileCard
                   name={profile.name}
@@ -267,7 +242,7 @@ const TeamGrid = () => {
             );
           })}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

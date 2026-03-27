@@ -145,11 +145,15 @@
 
 @media (max-width: 768px) {
   .profile-card-slide {
-    width: 380px !important; /* Fixed width for mobile - matches card width */
+    width: 380px !important;
+    display: flex !important;
+    justify-content: center !important;
   }
   
   .profile-card-slide > div {
-    max-width: 380px;
+    width: 360px;
+    max-width: 360px;
+    flex-shrink: 0;
   }
 }
 
@@ -164,20 +168,27 @@
 
 /* Fix for overflow issues */
 .profile-cards-slider .slick-list {
-  overflow: visible; /* Keep visible for hover effects */
+  overflow: visible;
   margin: 0 -1.5rem;
 }
 
 @media (min-width: 769px) {
   .profile-cards-slider .slick-list {
     margin: 0 -2rem;
-    overflow: visible; /* Keep visible for hover effects */
+    overflow: visible;
   }
 }
 
 .profile-cards-slider .slick-track {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start; /* Don't stretch — prevents height-based stacking */
+}
+
+/* Isolate each slide's stacking context on mobile */
+@media (max-width: 768px) {
+  .profile-cards-slider .slick-slide {
+    isolation: isolate;
+  }
 }
 
 /* Ensure slides render properly */

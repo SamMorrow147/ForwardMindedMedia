@@ -327,10 +327,10 @@ const ProfileCardsRow = () => {
       {/* Who We Are Button */}
       <div className="flex justify-center mt-2 mb-0">
         <a 
-          href="/who-we-are" 
+          href="/our-team" 
           className="btn-animated-team no-underline"
         >
-          <strong>Who We Are</strong>
+          <strong>Our Full Line-up</strong>
           <div id="container-stars-team">
             <div id="stars-team"></div>
           </div>

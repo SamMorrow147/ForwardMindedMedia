@@ -335,7 +335,11 @@ const ProfileCardComponent = ({
         
         {/* Back of card */}
         {enableFlip && backContent && (
-          <div className={`pc-card pc-card-back-face ${!isFlipped ? 'flipped-away' : ''}`}>
+          <div
+            className={`pc-card pc-card-back-face ${!isFlipped ? 'flipped-away' : ''}`}
+            onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="pc-inside">
               <div className="pc-content pc-card-back-content">
                 {backContent}
