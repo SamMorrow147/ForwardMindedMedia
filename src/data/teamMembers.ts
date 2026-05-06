@@ -45,7 +45,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Doug Monson",
-    title: "Vice President of Ag",
+    title: "Vice President of AG",
     handle: "doug",
     status: "Available",
     avatarUrl: "/Employee Pics WebP 2/Doug2.webp",
