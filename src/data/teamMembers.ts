@@ -14,7 +14,7 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     name: "Jacob Ward",
-    title: "President & Founder",
+    title: "President",
     handle: "jacob",
     status: "Available",
     avatarUrl: "/Employee Pics WebP 2/Jake2.webp",
@@ -25,7 +25,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Wendy Betters",
-    title: "Vice President of Design",
+    title: "Vice President",
     handle: "wendy",
     status: "Online",
     avatarUrl: "/Employee Pics WebP 2/Wendy2.webp",
@@ -44,16 +44,6 @@ export const teamMembers: TeamMember[] = [
     funFact: "Dustin is an avid golfer, dedicated Minnesota Vikings fan, and Fantasy Football aficionado."
   },
   {
-    name: "McKenna Benjegerdes",
-    title: "Vice President of Accounting & Financial Strategy",
-    handle: "mckenna",
-    status: "Online",
-    avatarUrl: "/Employee Pics WebP 2/Macy2.webp",
-    iconUrl: "/4x/Asset%203@8x.png",
-    backstory: "McKenna is a devoted wife and mother to two boys, balancing family life with her role as a strategic and analytical financial leader, where she drives strategic decision-making and ensures financial excellence. An avid gardener and puzzle enthusiast, she also enjoys creating a welcoming, well-kept home.",
-    funFact: "McKenna is allergic to fun. JK. Her and her husband own a pheasant farm where they raise, release, and sell ring neck roosters and hens. They raise 3,000 every year."
-  },
-  {
     name: "Doug Monson",
     title: "Vice President of Ag",
     handle: "doug",
@@ -65,7 +55,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Bobby Faerber",
-    title: "Senior Manager of Videography",
+    title: "Vice President of Videography",
     handle: "bobby",
     status: "Online",
     avatarUrl: "/Employee Pics WebP 2/Bobby2.webp",
@@ -75,12 +65,12 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Kelsey Barchenger",
-    title: "Senior Project Manager",
+    title: "Senior Manager of Communications",
     handle: "kelsey",
     status: "Online",
     avatarUrl: "/Employee Pics WebP 2/Kelsey2.webp",
     iconUrl: "/4x/Asset%203@8x.png",
-    backstory: "Kelsey combines her expertise in journalism and PR as Hometown Hype host and Senior Project Manager. Through storytelling and strategic project management, she creates content that connects people and strengthens local communities.",
+    backstory: "Kelsey combines her expertise in journalism and PR as Hometown Hype host and Senior Manager of Communications. Through storytelling and strategic communications, she creates content that connects people and strengthens local communities.",
     funFact: "If shopping were a sport, Kelsey would be a gold medalist."
   },
   {
@@ -95,7 +85,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Magen Dittbenner",
-    title: "Senior Sales Associate and Social Media Coordinator",
+    title: "Senior Manager of Content Creation",
     handle: "magen",
     status: "Online",
     avatarUrl: "/Employee Pics WebP 2/Magen2.webp",
